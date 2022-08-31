@@ -1,0 +1,10 @@
+C:\Users\eduar\source\repos\TemplateApi\Database\bin\Debug\Database.dacpac
+C:\Users\eduar\source\repos\TemplateApi\Database\bin\Debug\Database.dll
+C:\Users\eduar\source\repos\TemplateApi\Database\bin\Debug\Database.pdb
+C:\Users\eduar\source\repos\TemplateApi\Database\obj\Debug\Database.sqlproj.AssemblyReference.cache
+C:\Users\eduar\source\repos\TemplateApi\Database\obj\Debug\Model.xml
+C:\Users\eduar\source\repos\TemplateApi\Database\obj\Debug\refactor.xml
+C:\Users\eduar\source\repos\TemplateApi\Database\obj\Debug\postdeploy.sql
+C:\Users\eduar\source\repos\TemplateApi\Database\obj\Debug\predeploy.sql
+C:\Users\eduar\source\repos\TemplateApi\Database\obj\Debug\Database.dll
+C:\Users\eduar\source\repos\TemplateApi\Database\obj\Debug\Database.pdb
