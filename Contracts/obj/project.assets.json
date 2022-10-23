@@ -337,19 +337,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\eduar\\.nuget\\packages\\": {}
+    "C:\\Users\\Ildebrand\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\eduar\\source\\repos\\TemplateApi\\Contracts\\Contracts.csproj",
+      "projectUniqueName": "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Contracts\\Contracts.csproj",
       "projectName": "Contracts",
-      "projectPath": "C:\\Users\\eduar\\source\\repos\\TemplateApi\\Contracts\\Contracts.csproj",
-      "packagesPath": "C:\\Users\\eduar\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\eduar\\source\\repos\\TemplateApi\\Contracts\\obj\\",
+      "projectPath": "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Contracts\\Contracts.csproj",
+      "packagesPath": "C:\\Users\\Ildebrand\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Contracts\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\eduar\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Ildebrand\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -399,7 +399,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.408\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.412\\RuntimeIdentifierGraph.json"
       }
     }
   }

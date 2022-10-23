@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Enums\Status\NewFile1.txt" />
+    <None Remove="Interfaces\Services\NewFile1.txt" />
+    <None Remove="Interfaces\Services\NewFile2.txt" />
+    <None Remove="Interfaces\Services\NewFile3.txt" />
+    <None Remove="Interfaces\Services\NewFile4.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Helpers\" />
   </ItemGroup>
 
