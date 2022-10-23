@@ -60,6 +60,16 @@
     <Folder Include="dbo\Tables" />
   </ItemGroup>
   <ItemGroup>
+    <Build Include="dbo\Tables\student.sql" />
+    <Build Include="dbo\Tables\professor.sql" />
+    <Build Include="dbo\Tables\patient_order.sql" />
+    <Build Include="dbo\Tables\empolyee.sql" />
+    <Build Include="dbo\Tables\patient_request.sql" />
+    <Build Include="dbo\Tables\schedule_professor.sql" />
+    <Build Include="dbo\Tables\appointment.sql" />
+    <Build Include="dbo\Tables\schedule.sql" />
+    <Build Include="dbo\Tables\patient.sql" />
+    <Build Include="dbo\Tables\notification.sql" />
     <Build Include="dbo\Tables\user.sql" />
   </ItemGroup>
   <ItemGroup>
