@@ -8,6 +8,7 @@ namespace Repository.Context
     public class TemplateDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         public TemplateDbContext(DbContextOptions<TemplateDbContext> options) : base(options)
         { }

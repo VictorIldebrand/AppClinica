@@ -17,9 +17,9 @@ namespace Contracts.Entities
         [Column("date")]
         public DateTime date { get; set; }
 
-        [Column("status")]
-        [Required]
-        public StatusEnum status { get; set; }
+        // [Column("status")]
+        // [Required]
+        // public StatusEnum status { get; set; }
 
         [Column("cancellation_reason")]
         public string cancellationReason { get; set; }

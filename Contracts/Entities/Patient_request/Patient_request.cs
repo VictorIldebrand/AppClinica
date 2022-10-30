@@ -23,9 +23,9 @@ namespace Contracts.Entities
         [Column("cancellation_reason")]
         public string cancellationReason { get; set; }
 
-        [Column("status")]
-        [Required]
-        public StatusEnum status { get; set; }
+        // [Column("status")]
+        // [Required]
+        // public StatusEnum status { get; set; }
 
         [Column("id_student")]
         public int idStudent { get; set; }

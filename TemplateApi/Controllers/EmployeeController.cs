@@ -1,10 +1,11 @@
-﻿using Contracts.DTO.EmployeeDTO;
-using Contracts.Interfaces.Services;
+﻿using Contracts.Interfaces.Services;
 using Contracts.TransactionObjects.Login;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Contracts.Utils;
+using Contracts.Dto.Employee;
+using Contracts.Entities;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
@@ -17,12 +18,12 @@ namespace TemplateApi.Controllers {
 
         [HttpPost("create")]
         [AllowAnonymous]
-        public async Task<IActionResult> CreateEmployee(EmployeeDTO employeeDTO) {
-            var employeeResult = await _employeeService.CreateEmployee(employeeDTO);
+        public async Task<IActionResult> CreateEmployee(EmployeeDto EmployeeDto) {
+            var employeeResult = await _employeeService.CreateEmployee(EmployeeDto);
             return Ok(employeeResult);
         }
 
-        [HttpGet("getLoggedEmployee")]
+        /*[HttpGet("getLoggedEmployee")]
         public async Task<IActionResult> GetLoggedEmployee() {
             var id = Employee.GetEmployeeId();
             var result = await _employeeService.GetEmployeeById(id);
@@ -37,7 +38,7 @@ namespace TemplateApi.Controllers {
         }
 
         [HttpPut("updateemployee")]
-        public async Task<IActionResult> UpdateEmployee(EmployeeDTO employee) {
+        public async Task<IActionResult> UpdateEmployee(EmployeeDto employee) {
             var result = await _employeeService.UpdateEmployee(employee);
             return Ok(result);
         }
@@ -46,6 +47,6 @@ namespace TemplateApi.Controllers {
         public async Task<IActionResult> DeleteEmployee(int id) {
             var result = await _employeeService.DeleteEmployee(id);
             return Ok(result);
-        }
+        }*/
     }
 }

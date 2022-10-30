@@ -1,36 +1,36 @@
-﻿using Contracts.DTO.NotificationDTO;
-using Contracts.Interfaces.Services;
-using Contracts.TransactionObjects.Login;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using Contracts.Utils;
+﻿// using Contracts.Dto.Notification;
+// using Contracts.Interfaces.Services;
+// using Contracts.TransactionObjects.Login;
+// using Microsoft.AspNetCore.Authorization;
+// using Microsoft.AspNetCore.Mvc;
+// using System.Threading.Tasks;
+// using Contracts.Utils;
 
-namespace TemplateApi.Controllers {
-    [Route("api/[controller]")]
-    [ApiController]
-    [Authorize]
-    public class NotificationController : Controller {
-        private readonly INotificationService _notificationService;
+// namespace TemplateApi.Controllers {
+//     [Route("api/[controller]")]
+//     [ApiController]
+//     [Authorize]
+//     public class NotificationController : Controller {
+//         private readonly INotificationService _notificationService;
 
-        public NotificationController(INotificationService notificationService) => _notificationService = notificationService;
+//         public NotificationController(INotificationService notificationService) => _notificationService = notificationService;
 
-        [HttpPost("create")
-        public async Task<IActionResult> CreateNotification(NotificationDTO notificationDTO) {
-            var notificationResult = await _notificationService.CreateNotification(notificationDTO);
-            return Ok(notificationResult);
-        }
+//         [HttpPost("create")]
+//         public async Task<IActionResult> CreateNotification(NotificationDto notificationDTO) {
+//             var notificationResult = await _notificationService.CreateNotification(notificationDTO);
+//             return Ok(notificationResult);
+//         }
 
-        [HttpGet("getnotification/{id}")]
-        public async Task<IActionResult> GetNotification(int id) {
-            var result = await _notificationService.GetnotificationById(id);
-            return Ok(result);
-        }
+//         [HttpGet("getnotification/{id}")]
+//         public async Task<IActionResult> GetNotification(int id) {
+//             var result = await _notificationService.GetnotificationById(id);
+//             return Ok(result);
+//         }
 
-        [HttpPut("deletenotification")]
-        public async Task<IActionResult> DeleteNotification(int id) {
-            var result = await _notificationService.Deletenotification(id);
-            return Ok(result);
-        }
-    }
-}
+//         [HttpPut("deletenotification")]
+//         public async Task<IActionResult> DeleteNotification(int id) {
+//             var result = await _notificationService.Deletenotification(id);
+//             return Ok(result);
+//         }
+//     }
+// }

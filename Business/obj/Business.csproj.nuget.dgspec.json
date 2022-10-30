@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Business\\Business.csproj": {}
+    "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Business\\Business.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Business\\Business.csproj": {
+    "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Business\\Business.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Business\\Business.csproj",
+        "projectUniqueName": "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Business\\Business.csproj",
         "projectName": "Business",
-        "projectPath": "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Business\\Business.csproj",
+        "projectPath": "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Business\\Business.csproj",
         "packagesPath": "C:\\Users\\Ildebrand\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Business\\obj\\",
+        "outputPath": "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Business\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ildebrand\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -28,8 +28,8 @@
           "net5.0": {
             "targetAlias": "net5.0",
             "projectReferences": {
-              "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Contracts\\Contracts.csproj": {
-                "projectPath": "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Contracts\\Contracts.csproj"
+              "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Contracts\\Contracts.csproj": {
+                "projectPath": "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Contracts\\Contracts.csproj"
               }
             }
           }
@@ -76,14 +76,14 @@
         }
       }
     },
-    "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Contracts\\Contracts.csproj": {
+    "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Contracts\\Contracts.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Contracts\\Contracts.csproj",
+        "projectUniqueName": "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Contracts\\Contracts.csproj",
         "projectName": "Contracts",
-        "projectPath": "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Contracts\\Contracts.csproj",
+        "projectPath": "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Contracts\\Contracts.csproj",
         "packagesPath": "C:\\Users\\Ildebrand\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Contracts\\obj\\",
+        "outputPath": "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Contracts\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Ildebrand\\AppData\\Roaming\\NuGet\\NuGet.Config",
