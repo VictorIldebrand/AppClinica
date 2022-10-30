@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\Contracts",
+    "\\Contracts\\TransactionObjects",
+    "\\Contracts\\TransactionObjects\\Appointment",
+    "\\Repository",
+    "\\Repository\\Context"
+  ],
+  "SelectedNode": "\\Repository\\Context\\TemplateDbContext.cs",
+  "PreviewInSolutionExplorer": false
+}
