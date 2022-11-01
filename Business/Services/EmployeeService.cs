@@ -10,7 +10,6 @@ using Contracts.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
-
 namespace Business.Services
 {
     public class EmployeeService : IEmployeeService
@@ -18,65 +17,49 @@ namespace Business.Services
         private readonly IMapper _Mapper;
         private readonly IConfiguration _configuration;
         private readonly IEmployeeRepository _employeeRepository;
-
-
         public EmployeeService(IMapper Mapper, IConfiguration configuration, IEmployeeRepository employeeRepository)
         {
             _Mapper = Mapper;
             _configuration = configuration;
             _employeeRepository = employeeRepository;
         }
-
-        public async Task<RequestResult<EmployeeDto>> CreateEmployee(EmployeeDto registerRequest)
+        public async Task<RequestResult<EmployeeMinDto>> CreateEmployee(EmployeeDto registerRequest)
         {
             try
             {
                 var employeeExists = await _employeeRepository.CheckIfUserExistsByEmail(registerRequest.Email);
-
                 if (employeeExists)
-                    return new RequestResult<EmployeeDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
-
+                    return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<Employee>(registerRequest);
                 model.active = true;
-
                 var response = await _employeeRepository.Register(model);
-
                 if (response.id == 0)
-                    return new RequestResult<EmployeeDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
-
-                var dto = _Mapper.Map<EmployeeDto>(response);
-
+                    return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
+                var dto = _Mapper.Map<EmployeeMinDto>(response);
                 /*var loginDto = new LoginResponseDto
                 {
                     Email = response.email,
                     Password = response.password
                 };*/
-
                 //var login = await Login(loginDto);
-
-
-                return new RequestResult<EmployeeDto>(dto);
+                return new RequestResult<EmployeeMinDto>(dto);
             }
             catch (Exception ex)
             {
-                return new RequestResult<EmployeeDto>(null, true, ex.Message);
+                return new RequestResult<EmployeeMinDto>(null, true, ex.Message);
             }
         }
-
         public Task<RequestResult<RequestAnswer>> DeleteEmployee(int id)
         {
             throw new NotImplementedException();
         }
-
         public Task<RequestResult<EmployeeDto>> GetEmployeeById(int id)
         {
             throw new NotImplementedException();
         }
-
-        public Task<RequestResult<RequestAnswer>> UpdateEmployee(EmployeeDto EmployeeDTO)
+        public Task<RequestResult<RequestAnswer>> UpdateEmployee(EmployeeDto EmployeeDto)
         {
             throw new NotImplementedException();
         }
     }
-
 }

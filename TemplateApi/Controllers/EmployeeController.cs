@@ -23,7 +23,7 @@ namespace TemplateApi.Controllers {
             return Ok(employeeResult);
         }
 
-        /*[HttpGet("getLoggedEmployee")]
+        [HttpGet("getLoggedEmployee")]
         public async Task<IActionResult> GetLoggedEmployee() {
             var id = Employee.GetEmployeeId();
             var result = await _employeeService.GetEmployeeById(id);
@@ -31,22 +31,22 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpGet("getemployee/{id}")]
+        [HttpGet("get/{id}")]
         public async Task<IActionResult> GetEmployee(int id) {
             var result = await _employeeService.GetEmployeeById(id);
             return Ok(result);
         }
 
-        [HttpPut("updateemployee")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateEmployee(EmployeeDto employee) {
             var result = await _employeeService.UpdateEmployee(employee);
             return Ok(result);
         }
 
-        [HttpPut("deleteemployee")]
+        [HttpPut("delete")]
         public async Task<IActionResult> DeleteEmployee(int id) {
             var result = await _employeeService.DeleteEmployee(id);
             return Ok(result);
-        }*/
+        }
     }
 }

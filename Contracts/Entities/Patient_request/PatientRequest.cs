@@ -1,4 +1,5 @@
 ﻿using Contracts.Entities.Attributes;
+using Contracts.Enums.Status;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -6,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Contracts.Entities
 {
     [Table("patient_request")]
-    public partial class Patient_request
+    public partial class PatientRequest
     {
         [Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -23,9 +24,9 @@ namespace Contracts.Entities
         [Column("cancellation_reason")]
         public string cancellationReason { get; set; }
 
-        // [Column("status")]
-        // [Required]
-        // public StatusEnum status { get; set; }
+        [Column("status")]
+        [Required]
+        public StatusEnum status { get; set; }
 
         [Column("id_student")]
         public int idStudent { get; set; }

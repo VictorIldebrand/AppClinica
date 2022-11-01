@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Contracts.Entities
 {
     [Table("schedule_professor")]
-    public partial class Schedule_professor
+    public partial class ScheduleProfessor
     {
         [Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

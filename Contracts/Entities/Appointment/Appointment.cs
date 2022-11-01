@@ -1,4 +1,5 @@
 ﻿using Contracts.Entities.Attributes;
+using Contracts.Enums.Status;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -17,9 +18,9 @@ namespace Contracts.Entities
         [Column("date")]
         public DateTime date { get; set; }
 
-        // [Column("status")]
-        // [Required]
-        // public StatusEnum status { get; set; }
+        [Column("status")]
+        [Required]
+        public StatusEnum status { get; set; }
 
         [Column("cancellation_reason")]
         public string cancellationReason { get; set; }

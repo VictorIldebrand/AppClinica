@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hQVHJNQrEb189Bf3FhpNTH7mcLDapgSLrAE7WQ/AydITbbuAYB7vA6IFYcbWqxOIfEjrxnlDLmuIx4pNT9S3Ng==",
+  "dgSpecHash": "yYM9YRwRV1TXRdT2/t/yh2idiualoIj2c146O/dA92DMw+EMBgyrv7kWv745eYVhn2AdjEi2Pn8BuuWhvbeRlQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ildebrand\\Desktop\\ProjetoClinica\\AppClinica\\Contracts\\Contracts.csproj",
+  "projectFilePath": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\Contracts\\Contracts.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ildebrand\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Ildebrand\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",

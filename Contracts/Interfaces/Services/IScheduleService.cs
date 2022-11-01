@@ -1,14 +1,15 @@
-﻿// using Contracts.RequestHandle;
-// using Contracts.TransactionObjects.Login;
-// using System.Threading.Tasks;
+﻿using Contracts.Dto.Schedule;
+using Contracts.RequestHandle;
+using Contracts.TransactionObjects.Login;
+using System.Threading.Tasks;
 
-// namespace Contracts.Interfaces.Services
-// {
-//     public interface IScheduleService
-//     {
-//         Task<RequestResult<RequestAnswer>> Create(ScheduleDTO ScheduleDTO);
-//         Task<RequestResult<ScheduleDTO>> GetScheduleById(int id);
-//         Task<RequestResult<RequestAnswer>> UpdateSchedule(ScheduleDTO ScheduleDTO);
-//         Task<RequestResult<RequestAnswer>> DeleteSchedule(int id);
-//     }
-// }
+namespace Contracts.Interfaces.Services
+{
+    public interface IScheduleService
+    {
+        Task<RequestResult<RequestAnswer>> Create(ScheduleDto ScheduleDTO);
+        Task<RequestResult<ScheduleDto>> GetScheduleById(int id);
+        Task<RequestResult<RequestAnswer>> UpdateSchedule(ScheduleDto ScheduleDTO);
+        Task<RequestResult<RequestAnswer>> DeleteSchedule(int id);
+    }
+}
