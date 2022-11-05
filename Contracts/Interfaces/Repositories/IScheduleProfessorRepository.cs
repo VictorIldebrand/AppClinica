@@ -5,5 +5,8 @@ namespace Contracts.Interfaces.Repositories {
         Task<ScheduleProfessor> GetScheduleProfessorById(int id);
         Task<ScheduleProfessor> GetScheduleProfessorByProfessorId(int idProfessor);
         Task<ScheduleProfessor> GetScheduleProfessorByScheduleId(int idSchedule);
+        Task<ScheduleProfessor> CreateScheduleProfessor(ScheduleProfessor scheduleProfessor);
+        Task UpdateScheduleProfessor(ScheduleProfessor scheduleProfessor);
+        Task DeleteScheduleProfessor(int id);
     }
 }

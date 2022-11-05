@@ -34,7 +34,7 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpPut("deleteappointment")]
+        [HttpDelete("deleteappointment")]
         public async Task<IActionResult> DeleteAppointment(int id) {
             var result = await _appointmentService.DeleteAppointment(id);
             return Ok(result);

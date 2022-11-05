@@ -19,15 +19,12 @@ namespace Business.Services
         private readonly IUserRepository _userRepository;
 
 
-
         public UserService(IMapper Mapper, IConfiguration configuration, IUserRepository userRepository)
         {
             _Mapper = Mapper;
             _configuration = configuration;
             _userRepository = userRepository;
         }
-
-
 
         public async Task<RequestResult<LoginResponseDto>> Register(UserDto registerRequest)
         {

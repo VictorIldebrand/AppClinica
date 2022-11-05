@@ -7,11 +7,12 @@ namespace Contracts.Interfaces.Services
 {
     public interface IStudentService
     {
-        Task<RequestResult<RequestAnswer>> Create(StudentDto StudentDTO);
-        Task<RequestResult<StudentDto>> Retrieve(int id);
+        Task<RequestResult<StudentDto>> CreateStudent(StudentDto StudentDto);
         Task<RequestResult<StudentDto>> GetStudentById(int id);
-        Task<RequestResult<RequestAnswer>> Update(StudentDto student);
-        Task<RequestResult<RequestAnswer>> Delete(int id);
+        Task<RequestResult<StudentDto>> GetStudentByEmail(string email);
+        Task<RequestResult<RequestAnswer>> UpdateStudent(StudentDto student);
+        Task<RequestResult<RequestAnswer>> DeleteStudent(int id);
         Task<RequestResult<RequestAnswer>> RequestPatient();
+        Task<RequestResult<StudentDto>> Login(StudentDto loginRequest);
     }
 }

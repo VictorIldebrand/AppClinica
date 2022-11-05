@@ -15,31 +15,18 @@ namespace Business.Services
 {
     public class AppointmentService : IAppointmentService
     {
+        private readonly IMapper _Mapper;
+        private readonly IConfiguration _configuration;
+        private readonly IAppointmentRepository _appointmentRepository;
 
-        public Task<RequestResult<AppointmentDto>> CreateAppointment(AppointmentDto registerRequest)
+        public AppointmentService(IMapper Mapper, IConfiguration configuration, IAppointmentRepository appointmentRepository)
         {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
-        public Task<RequestResult<AppointmentDto>> GetAppointmentByDate(DateTime date)
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            _Mapper = Mapper;
+            _configuration = configuration;
+            _appointmentRepository = appointmentRepository;
         }
 
-        public Task<RequestResult<RequestAnswer>> UpdateAppointment(AppointmentDto appointment)
+        public async Task<RequestResult<AppointmentDto>> CreateAppointment(AppointmentDto registerRequest)
         {
             try
             {
@@ -50,7 +37,32 @@ namespace Business.Services
                 throw;
             }
         }
-        public Task<RequestResult<RequestAnswer>> DeleteAppointment(int id)
+
+        public async Task<RequestResult<AppointmentDto>> GetAppointmentByDate(DateTime date)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<RequestResult<RequestAnswer>> UpdateAppointment(AppointmentDto appointment)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<RequestResult<RequestAnswer>> DeleteAppointment(int id)
         {
             try
             {

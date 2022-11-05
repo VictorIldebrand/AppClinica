@@ -18,7 +18,7 @@ namespace TemplateApi.Controllers {
         [HttpPost("create")]
         public async Task<IActionResult> CreateSchedule(ScheduleDto scheduleDTO)
         {
-            var scheduleResult = await _scheduleService.Create(scheduleDTO);
+            var scheduleResult = await _scheduleService.CreateSchedule(scheduleDTO);
             return Ok(scheduleResult);
         }
 
@@ -34,7 +34,7 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpPut("deleteSchedule")]
+        [HttpDelete("deleteSchedule")]
         public async Task<IActionResult> DeleteSchedule(int id) {
             var result = await _scheduleService.DeleteSchedule(id);
             return Ok(result);

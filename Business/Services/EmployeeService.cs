@@ -17,12 +17,14 @@ namespace Business.Services
         private readonly IMapper _Mapper;
         private readonly IConfiguration _configuration;
         private readonly IEmployeeRepository _employeeRepository;
+
         public EmployeeService(IMapper Mapper, IConfiguration configuration, IEmployeeRepository employeeRepository)
         {
             _Mapper = Mapper;
             _configuration = configuration;
             _employeeRepository = employeeRepository;
         }
+
         public async Task<RequestResult<EmployeeMinDto>> CreateEmployee(EmployeeDto registerRequest)
         {
             try
@@ -49,15 +51,18 @@ namespace Business.Services
                 return new RequestResult<EmployeeMinDto>(null, true, ex.Message);
             }
         }
-        public Task<RequestResult<RequestAnswer>> DeleteEmployee(int id)
+
+        public async Task<RequestResult<RequestAnswer>> DeleteEmployee(int id)
         {
             throw new NotImplementedException();
         }
-        public Task<RequestResult<EmployeeDto>> GetEmployeeById(int id)
+
+        public async Task<RequestResult<EmployeeDto>> GetEmployeeById(int id)
         {
             throw new NotImplementedException();
         }
-        public Task<RequestResult<RequestAnswer>> UpdateEmployee(EmployeeDto EmployeeDto)
+
+        public async Task<RequestResult<RequestAnswer>> UpdateEmployee(EmployeeDto EmployeeDto)
         {
             throw new NotImplementedException();
         }

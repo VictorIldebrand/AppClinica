@@ -1,4 +1,5 @@
 ﻿using Contracts.Entities.Attributes;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,5 +32,10 @@ namespace Contracts.Entities
 
         [Column("active")]
         public bool active { get; set; }
+
+        public static object GetEmployeeId()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

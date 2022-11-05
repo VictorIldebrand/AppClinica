@@ -17,14 +17,15 @@ namespace Business.Services
         private readonly IMapper _Mapper;
         private readonly IConfiguration _configuration;
         private readonly INotificationRepository _notificationRepository;
-        
+
         public NotificationService(IMapper Mapper, IConfiguration configuration, INotificationRepository notificationRepository)
         {
             _Mapper = Mapper;
             _configuration = configuration;
             _notificationRepository = notificationRepository;
         }
-        public Task<RequestResult<LoginResponseDto>> CreateNotification(NotificationDto notificationDto)
+
+        public async Task<RequestResult<LoginResponseDto>> CreateNotification(NotificationDto notificationDto)
         {
             try
             {
@@ -36,7 +37,7 @@ namespace Business.Services
             }
         }
 
-        public Task<RequestResult<NotificationDto>> GetNotificationById(int id)
+        public async Task<RequestResult<NotificationDto>> GetNotificationById(int id)
         {
             try
             {
@@ -48,7 +49,7 @@ namespace Business.Services
             }
         }
 
-        public Task<RequestResult<NotificationDto>> UpdateNotification(NotificationDto notificationDto) {
+        public async Task<RequestResult<NotificationDto>> UpdateNotification(NotificationDto notificationDto) {
             try
             {
                 throw new NotImplementedException();
@@ -59,7 +60,7 @@ namespace Business.Services
             }
         }
 
-        public Task<RequestResult<RequestAnswer>> DeleteNotification(int id)
+        public async Task<RequestResult<RequestAnswer>> DeleteNotification(int id)
         {
             try
             {

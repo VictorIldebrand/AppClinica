@@ -15,8 +15,18 @@ namespace Business.Services
 {
     public class PatientOrderService : IPatientOrderService
     {
+        private readonly IMapper _Mapper;
+        private readonly IConfiguration _configuration;
+        private readonly IPatientOrderRepository _patientOrderRepository;
 
-        public Task<RequestResult<PatientOrderDto>> CreatePatientOrder(PatientOrderDto registerRequest)
+        public PatientOrderService(IMapper Mapper, IConfiguration configuration, IPatientOrderRepository patientOrderRepository)
+        {
+            _Mapper = Mapper;
+            _configuration = configuration;
+            _patientOrderRepository = patientOrderRepository;
+        }
+
+        public async Task<RequestResult<PatientOrderDto>> CreatePatientOrder(PatientOrderDto registerRequest)
         {
             try
             {
@@ -28,7 +38,7 @@ namespace Business.Services
             }
         }
 
-        public Task<RequestResult<RequestAnswer>> UpdatePatientOrder(PatientOrderDto patient_order)
+        public async Task<RequestResult<RequestAnswer>> UpdatePatientOrder(PatientOrderDto patient_order)
         {
             try
             {
@@ -40,7 +50,7 @@ namespace Business.Services
             }
         }
 
-        public Task<RequestResult<RequestAnswer>> DeletePatientOrder(int id)
+        public async Task<RequestResult<RequestAnswer>> DeletePatientOrder(int id)
         {
             try
             {
@@ -52,7 +62,7 @@ namespace Business.Services
             }
         }
 
-        public Task<RequestResult<PatientOrderDto>> GetPatientOrderById(int id) {
+        public async Task<RequestResult<PatientOrderDto>> GetPatientOrderById(int id) {
             try
             {
                 throw new NotImplementedException();

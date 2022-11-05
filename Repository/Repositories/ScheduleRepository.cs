@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
+using System;
 
 namespace Repository.Repositories
 {
@@ -14,6 +15,11 @@ namespace Repository.Repositories
         public ScheduleRepository(TemplateDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<Schedule> GetScheduleById(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Schedule> CreateSchedule(Schedule schedule)
@@ -29,6 +35,7 @@ namespace Repository.Repositories
             _context.Schedules.Update(schedule);
             await _context.SaveChangesAsync();
         }
+
         public async Task DeleteSchedule(int id)
         {
             var schedule = await _context.Schedules.Where(u => u.id == id).FirstOrDefaultAsync();

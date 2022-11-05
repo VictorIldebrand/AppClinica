@@ -24,11 +24,27 @@ namespace Repository.Repositories
             return result.Entity;
         }
 
+        public async Task<Patient> GetPatientById(int id)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<Patient> GetPatientByEmailAndPassword(string email, string password)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public async Task<Patient> GetPatientByEmail(string email)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public async Task UpdatePatient(Patient patient)
         {
             _context.Patients.Update(patient);
             await _context.SaveChangesAsync();
         }
+        
         public async Task DeletePatient(int id)
         {
             var patient = await _context.Patients.Where(u => u.id == id).FirstOrDefaultAsync();

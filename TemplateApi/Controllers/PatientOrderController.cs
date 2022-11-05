@@ -4,40 +4,43 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Contracts.Utils;
-using Contracts.Dto.PatientOrder;
 using Contracts.Entities;
+using Contracts.RequestHandle;
+using Contracts.Dto.PatientOrder;
+using Business.Services;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PacientOrderController : Controller {
-        private readonly IPacientOrderService _pacientOrderService;
+    public class PatientOrderController : Controller
+    {
+        private readonly IPatientOrderService _patientOrderService;
 
-        public PacientOrderController(IPacientOrderService pacientOrderService) => _pacientOrderService = pacientOrderService;
+        public PatientOrderController(IPatientOrderService patientOrderService) => _patientOrderService = patientOrderService;
 
         [HttpPost("create")]
         [AllowAnonymous]
-        public async Task<IActionResult> CreatePacientOrder(PacientOrderDto PacientOrderDto) {
-            var pacientOrderResult = await _pacientOrderService.CreatePatientOrder(PacientOrderDto);
-            return Ok(pacientOrderResult);
+        public async Task<IActionResult> CreatePatientOrder(PatientOrderDto patientOrder) {
+            var patientOrderResult = await _patientOrderService.CreatePatientOrder(patientOrder);
+            return Ok(patientOrderResult);
         }
 
-        [HttpGet("getpacientorder/{id}")]
-        public async Task<IActionResult> GetPacientOrder(int id) {
-            var result = await _pacientOrderService.GetpacientOrderById(id);
+        [HttpGet("getpatientorder/{id}")]
+        public async Task<IActionResult> GetPatientOrder(int id) {
+            var result = await _patientOrderService.GetPatientOrderById(id);
             return Ok(result);
         }
 
-        [HttpPut("updatepacientorder")]
-        public async Task<IActionResult> UpdatePacientOrder(PacientOrderDto pacientOrder) {
-            var result = await _pacientOrderService.UpdatepacientOrder(pacientOrder);
+        [HttpPut("updatepatientorder")]
+        public async Task<IActionResult> UpdatePatientOrder(PatientOrderDto patientOrder) {
+            var result = await _patientOrderService.UpdatePatientOrder(patientOrder);
             return Ok(result);
         }
 
-        [HttpPut("deletepacientorder")]
-        public async Task<IActionResult> DeletePacientOrder(int id) {
-            var result = await _pacientOrderService.DeletepacientOrder(id);
+        [HttpDelete("deletepatientorder")]
+        public async Task<IActionResult> DeletePatientOrder(int id) {
+            var result = await _patientOrderService.DeletePatientOrder(id);
             return Ok(result);
         }
     }

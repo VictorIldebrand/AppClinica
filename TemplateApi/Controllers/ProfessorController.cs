@@ -23,13 +23,6 @@ namespace TemplateApi.Controllers {
             return Ok(professorResult);
         }
 
-        [HttpGet("getLoggedProfessor")]
-        public async Task<IActionResult> GetLoggedProfessor() {
-            var id = Professor.GetProfessorId();
-            var result = await _professorService.GetProfessorById(id);
-
-            return Ok(result);
-        }
 
         [HttpGet("getprofessor/{id}")]
         public async Task<IActionResult> GetProfessor(int id) {
@@ -43,7 +36,7 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpPut("deleteprofessor")]
+        [HttpDelete("deleteprofessor")]
         public async Task<IActionResult> DeleteProfessor(int id) {
             var result = await _professorService.DeleteProfessor(id);
             return Ok(result);

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Routing;
+﻿using Contracts.Entities;
+using Microsoft.AspNetCore.Routing;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;

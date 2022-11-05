@@ -19,7 +19,7 @@ namespace TemplateApi.Controllers {
         [HttpPost("create")]
         public async Task<IActionResult> CreateScheduleProfessor(ScheduleProfessorDto scheduleProfessorDto)
         {
-            var scheduleProfessorResult = await _scheduleProfessorService.Create(scheduleDto);
+            var scheduleProfessorResult = await _scheduleProfessorService.CreateScheduleProfessor(scheduleProfessorDto);
             return Ok(scheduleProfessorResult);
         }
 
@@ -30,12 +30,12 @@ namespace TemplateApi.Controllers {
         }
 
         [HttpPut("updateScheduleProfessor")]
-        public async Task<IActionResult> UpdateScheduleProfessor(ScheduleProfessorDto scheduleProfessor) {
-            var result = await _scheduleProfessorService.UpdateScheduleProfessor(scheduleProfessor);
+        public async Task<IActionResult> UpdateScheduleProfessor(ScheduleProfessorDto scheduleProfessorDto) {
+            var result = await _scheduleProfessorService.UpdateScheduleProfessor(scheduleProfessorDto);
             return Ok(result);
         }
 
-        [HttpPut("deleteScheduleProfessor")]
+        [HttpDelete("deleteScheduleProfessor")]
         public async Task<IActionResult> DeleteScheduleProfessor(int id) {
             var result = await _scheduleProfessorService.DeleteScheduleProfessor(id);
             return Ok(result);

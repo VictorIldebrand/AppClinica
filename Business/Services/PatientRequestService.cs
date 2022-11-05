@@ -15,8 +15,18 @@ namespace Business.Services
 {
     public class PatientRequestService : IPatientRequestService
     {
+        private readonly IMapper _Mapper;
+        private readonly IConfiguration _configuration;
+        private readonly IPatientRequestRepository _patientRequestRepository;
 
-        public Task<RequestResult<PatientRequest>> CreatePatientRequest(PatientRequest patient_request)
+        public PatientRequestService(IMapper Mapper, IConfiguration configuration, IPatientRequestRepository patientRequestRepository)
+        {
+            _Mapper = Mapper;
+            _configuration = configuration;
+            _patientRequestRepository = patientRequestRepository;
+        }
+
+        public async Task<RequestResult<PatientRequestDto>> CreatePatientRequest(PatientRequestDto patientRequestDto)
         {
             try
             {
@@ -27,7 +37,8 @@ namespace Business.Services
                 throw;
             }
         }
-        public Task<RequestResult<RequestAnswer>> UpdatePatientRequest(PatientRequestDto patientRequestDto)
+
+        public async Task<RequestResult<PatientRequestDto>> GetPatientRequestById(int id)
         {
             try
             {
@@ -38,7 +49,20 @@ namespace Business.Services
                 throw;
             }
         }
-        public Task<RequestResult<RequestAnswer>> DeletePatientRequest(int id)
+
+        public async Task<RequestResult<RequestAnswer>> UpdatePatientRequest(PatientRequestDto patientRequestDto)
+        {
+            try
+            {
+                throw new NotImplementedException();
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+        public async Task<RequestResult<RequestAnswer>> DeletePatientRequest(int id)
         {
             try
             {

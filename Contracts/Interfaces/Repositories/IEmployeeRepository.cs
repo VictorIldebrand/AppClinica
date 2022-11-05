@@ -9,6 +9,8 @@ namespace Contracts.Interfaces.Repositories {
         Task<Employee> GetEmployeeByEmailAndPassword(string email, string password);
         Task<bool> GetEmployeeByEmail(string email);
         Task<bool> CheckIfUserExistsByEmail(string email);
+        Task UpdateEmployee(Employee employee);
+        Task DeleteEmployee(int id);
     }
 }
 

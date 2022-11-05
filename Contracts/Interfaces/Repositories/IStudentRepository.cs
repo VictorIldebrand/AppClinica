@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 namespace Contracts.Interfaces.Repositories {
     public interface IStudentRepository {
         Task<Student> GetStudentById(int id);
-        Task UpdateStudent(StudentDto Student);
-        Task CreateStudent(StudentDto student);
+        Task UpdateStudent(Student Student);
+        Task<Student> CreateStudent(Student student);
         Task DeleteStudent(int id);
         Task<Student> GetStudentByEmailAndPassword(string email, string password);
         Task<Student> GetStudentByEmail(string email);

@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Contracts.Utils;
+using Contracts.Entities;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
@@ -22,14 +23,6 @@ namespace TemplateApi.Controllers {
             return Ok(PatientResult);
         }
 
-        [HttpGet("getLoggedPatient")]
-        public async Task<IActionResult> GetLoggedPatient() {
-            var id = Patient.GetPatientId();
-            var result = await _PatientService.GetPatientById(id);
-
-            return Ok(result);
-        }
-
         [HttpGet("getpatient/{id}")]
         public async Task<IActionResult> GetPatient(int id) {
             var result = await _PatientService.GetPatientById(id);
@@ -42,7 +35,7 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpPut("deletePatient")]
+        [HttpDelete("deletePatient")]
         public async Task<IActionResult> DeletePatient(int id) {
             var result = await _PatientService.DeletePatient(id);
             return Ok(result);

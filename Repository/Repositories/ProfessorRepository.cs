@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
+using System;
 
 namespace Repository.Repositories
 {
@@ -14,6 +15,21 @@ namespace Repository.Repositories
         public ProfessorRepository(TemplateDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<Professor> GetProfessorById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Professor> GetProfessorByEmailAndPassword(string email, string password)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<Professor> GetProfessorByEmail(string email)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<Professor> CreateProfessor(Professor professor)
@@ -29,6 +45,7 @@ namespace Repository.Repositories
             _context.Professors.Update(professor);
             await _context.SaveChangesAsync();
         }
+        
         public async Task DeleteProfessor(int id)
         {
             var professor = await _context.Professors.Where(u => u.id == id).FirstOrDefaultAsync();

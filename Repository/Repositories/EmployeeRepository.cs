@@ -17,33 +17,39 @@ namespace Repository.Repositories {
             _context = context;
         }
 
+        public Task<Employee> GetEmployeeById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Employee> Register(Employee employee) {
             var result = await _context.Employees.AddAsync(employee);
             await _context.SaveChangesAsync();
 
             return result.Entity;
         }
-        public async Task<bool> CheckIfUserExistsByEmail(string email) {
-            var result = await _context.Employees.AnyAsync(u => u.email == email && u.active);
-            return result;
-        }
-
-        public Task<Employee> GetEmployeeById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Employee> Register(User user)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public Task<Employee> GetEmployeeByEmailAndPassword(string email, string password)
         {
             throw new NotImplementedException();
         }
 
         public Task<bool> GetEmployeeByEmail(string email)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> CheckIfUserExistsByEmail(string email) {
+            var result = await _context.Employees.AnyAsync(u => u.email == email && u.active);
+            return result;
+        }
+
+        public Task UpdateEmployee(Employee employee)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteEmployee(int id)
         {
             throw new NotImplementedException();
         }

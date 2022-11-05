@@ -30,6 +30,7 @@ namespace Repository.Repositories
             _context.PatientOrders.Update(patient_order);
             await _context.SaveChangesAsync();
         }
+        
         public async Task DeletePatientOrder(int id)
         {
             var patient_order = await _context.PatientOrders.Where(u => u.id == id).FirstOrDefaultAsync();

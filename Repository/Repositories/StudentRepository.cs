@@ -29,6 +29,7 @@ namespace Repository.Repositories
             _context.Students.Update(student);
             await _context.SaveChangesAsync();
         }
+
         public async Task DeleteStudent(int id)
         {
             var student = await _context.Students.Where(u => u.id == id).FirstOrDefaultAsync();
@@ -37,39 +38,22 @@ namespace Repository.Repositories
             _context.Students.Update(student);
             await _context.SaveChangesAsync();
         }
-        /*
+
         public async Task<Student> GetStudentById(int id)
         {
-            return await _context.Students.Where(u => u.Id == id && u.Active).FirstOrDefaultAsync();
+            return await _context.Students.Where(u => u.id == id && u.active).FirstOrDefaultAsync();
         }
+
         public async Task<Student> GetStudentByEmailAndPassword(string email, string password)
         {
-            return await _context.Students.Where(x => x.Email == email && x.Password == password && x.Active).FirstOrDefaultAsync();
+            return await _context.Students.Where(x => x.email == email && x.password == password && x.active).FirstOrDefaultAsync();
         }
-        public async Task<string> GetStudentPasswordByStudentEmail(string email)
-        {
-            var result = await _context.Students.Where(u => u.Email == email && u.Active).Select(p => p.Password).FirstOrDefaultAsync();
-            return result;
-        }
-        public async Task<bool> CheckIfStudentExistsById(int id)
-        {
-            var result = await _context.Students.AnyAsync(u => u.Id == id && u.Active);
-            return result;
-        }
-        public async Task<bool> CheckIfStudentExistsByEmail(string email)
-        {
-            var result = await _context.Students.AnyAsync(u => u.Email == email && u.Active);
-            return result;
-        }
+
         public async Task<Student> GetStudentByEmail(string email)
         {
-            var result = await _context.Students.Where(u => u.Email == email && u.Active).FirstOrDefaultAsync();
+            var result = await _context.Students.Where(u => u.email == email && u.active).FirstOrDefaultAsync();
             return result;
         }
-        public async Task<string> GetStudentPasswordByUserEmail(string email)
-        {
-            throw new System.NotImplementedException();
-        }
-        */
+
     }
 }

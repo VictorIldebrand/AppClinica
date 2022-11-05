@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
+using System;
 
 namespace Repository.Repositories
 {
@@ -14,6 +15,16 @@ namespace Repository.Repositories
         public PatientRequestRepository(TemplateDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<PatientRequest> GetPatientRequestByStudentId(int idStudent)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<PatientRequest> GetPatientRequestById(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public async Task<PatientRequest> CreatePatientRequest(PatientRequest patient_request)
@@ -29,6 +40,7 @@ namespace Repository.Repositories
             _context.PatientRequests.Update(patient_request);
             await _context.SaveChangesAsync();
         }
+
         public async Task DeletePatientRequest(int id)
         {
             var patient_request = await _context.PatientRequests.Where(u => u.id == id).FirstOrDefaultAsync();
