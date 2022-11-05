@@ -1,10 +1,10 @@
-﻿using Contracts.DTO.ScheduleDTO;
-using Contracts.Interfaces.Services;
+﻿using Contracts.Interfaces.Services;
 using Contracts.TransactionObjects.Login;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Contracts.Utils;
+using Contracts.Dto.Schedule;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
@@ -16,9 +16,9 @@ namespace TemplateApi.Controllers {
         public ScheduleController(IScheduleService scheduleService) => _scheduleService = scheduleService;
 
         [HttpPost("create")]
-        public async Task<IActionResult> CreateSchedule(ScheduleDTO scheduleDTO)
+        public async Task<IActionResult> CreateSchedule(ScheduleDto scheduleDTO)
         {
-            var scheduleResult = await _scheduleService.Create(scheduleDTO);
+            var scheduleResult = await _scheduleService.CreateSchedule(scheduleDTO);
             return Ok(scheduleResult);
         }
 
@@ -29,12 +29,12 @@ namespace TemplateApi.Controllers {
         }
 
         [HttpPut("updateSchedule")]
-        public async Task<IActionResult> UpdateSchedule(ScheduleDTO schedule) {
+        public async Task<IActionResult> UpdateSchedule(ScheduleDto schedule) {
             var result = await _scheduleService.UpdateSchedule(schedule);
             return Ok(result);
         }
 
-        [HttpPut("deleteSchedule")]
+        [HttpDelete("deleteSchedule")]
         public async Task<IActionResult> DeleteSchedule(int id) {
             var result = await _scheduleService.DeleteSchedule(id);
             return Ok(result);

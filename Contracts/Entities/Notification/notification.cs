@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Contracts.Entities
 {
     [Table("notification")]
-    public partial class notification
+    public partial class Notification
     {
         [Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

@@ -2,10 +2,15 @@ using Contracts.Entities;
 using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Repositories {
-    public interface IEmployeeRepository {
+    public interface IEmployeeRepository
+    {
         Task<Employee> GetEmployeeById(int id);
-        Task<Employee> Register(User user);
+        Task<Employee> Register(Employee employee);
         Task<Employee> GetEmployeeByEmailAndPassword(string email, string password);
-        Task<Employee> GetEmployeeByEmail(string email);
+        Task<bool> GetEmployeeByEmail(string email);
+        Task<bool> CheckIfUserExistsByEmail(string email);
+        Task UpdateEmployee(Employee employee);
+        Task DeleteEmployee(int id);
     }
 }
+

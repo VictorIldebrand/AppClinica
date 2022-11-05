@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "1DxVz5SOcfk6CvA7n16+tKwS6KQFL2rj8EDBrj9yFc1D3AiyIr1GXGIFuJeMBt2sXlGNN1qrRdX8d5uwCvoH1w==",
+  "dgSpecHash": "GlnZohZ+KcUXX7fnUvJCoAEqDrnrqr2fCXnrhNfuy566iUmADk93JF6Uoi1EVkqRyvgzCjYzm4x6WMgcuAthKQ==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ildebrand\\Desktop\\API\\AppClinica\\template-api-csharp\\Business\\Business.csproj",
+  "projectFilePath": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\Business\\Business.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ildebrand\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Ildebrand\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",

@@ -8,6 +8,16 @@ namespace Repository.Context
     public class TemplateDbContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<PatientOrder> PatientOrders { get; set; }
+        public DbSet<PatientRequest> PatientRequests { get; set; }
+        public DbSet<Professor> Professors { get; set; }
+        public DbSet<ScheduleProfessor> ScheduleProfessors { get; set; }
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Student> Students { get; set; }
 
         public TemplateDbContext(DbContextOptions<TemplateDbContext> options) : base(options)
         { }
