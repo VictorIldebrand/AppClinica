@@ -7,6 +7,8 @@ using Contracts.Dto.Student;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Contracts.Interfaces.Repositories;
+using Contracts.TransactionObjects.Login;
+using Contracts.Utils;
 
 namespace Business.Services
 {
@@ -23,15 +25,37 @@ namespace Business.Services
             _studentRepository = studentRepository;
         }
 
-        public async Task<RequestResult<StudentDto>> CreateStudent(StudentDto StudentDto)
+        public async Task<RequestResult<StudentDto>> CreateStudent(StudentDto studentDto)
         {
             try
             {
-                throw new NotImplementedException();
+                var studentExists = await _studentRepository.CheckIfStudentExistsByEmail(studentDto.Email);
+
+                if (studentExists)
+                    return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentDuplicateCreateError.GetDescription());
+
+                var model = _Mapper.Map<Student>(studentDto);
+                model.active = true;
+
+                var response = await _studentRepository.CreateStudent(model);
+
+                if (response.id == 0)
+                    return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentCreateError.GetDescription());
+
+                var dto = _Mapper.Map<StudentDto>(response);
+                //var loginDto = new StudentDto
+                //{
+                //    Email = response.email,
+                //    Password = response.password,
+                //    Ra = response.ra
+                //};
+                //var  login = await Login(studentDto);
+
+                return new RequestResult<StudentDto>(dto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<StudentDto>(null, true, ex.Message);
             }
         }
 
@@ -39,11 +63,19 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var model = await _studentRepository.GetStudentById(id);
+
+                if (model == null)
+                    return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentNotFound.GetDescription());
+
+                var dto = _Mapper.Map<StudentDto>(model);
+                var result = new RequestResult<StudentDto>(dto);
+
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<StudentDto>(null, true, ex.Message);
             }
         }
 
@@ -51,11 +83,38 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var model = await _studentRepository.GetStudentByEmail(email);
+
+                if (model == null)
+                    return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentNotFound.GetDescription());
+
+                var dto = _Mapper.Map<StudentDto>(model);
+                var result = new RequestResult<StudentDto>(dto);
+
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<StudentDto>(null, true, ex.Message);
+            }
+        }
+
+        public async Task<RequestResult<StudentDto>> GetStudentByRa(string ra){
+            try
+            {
+                var model = await _studentRepository.GetStudentByRa(ra);
+
+                if (model == null)
+                    return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentNotFound.GetDescription());
+
+                var dto = _Mapper.Map<StudentDto>(model);
+                var result = new RequestResult<StudentDto>(dto);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new RequestResult<StudentDto>(null, true, ex.Message);
             }
         }
 
@@ -63,11 +122,19 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var studentCheck = await _studentRepository.CheckIfStudentExistsById(student.Id);
+
+                if (!studentCheck)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.StudentNotFound);
+
+                var model = _Mapper.Map<Student>(student);
+                await _studentRepository.UpdateStudent(model);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.StudentUpdateSuccess);
             }
             catch (Exception)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.StudentUpdateError, true);
             }
         }
 
@@ -75,11 +142,13 @@ namespace Business.Services
 		{
             try
             {
-                throw new NotImplementedException();
+                await _studentRepository.DeleteStudent(id);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.StudentDeleteSuccess);
             }
             catch (Exception)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.StudentDeleteError, true);
             }
         }
 
@@ -95,16 +164,32 @@ namespace Business.Services
             }
         }
 
-        public async Task<RequestResult<StudentDto>> Login(StudentDto loginRequest)
-		{
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
-        }
+        // public async Task<RequestResult<LoginResponseDto>> Login(StudentDto studentDto)
+		// {
+        //     try
+        //     {
+        //         var student = await _studentRepository.GetStudentByEmailAndPassword(studentDto.Email, studentDto.Password);
+
+        //         if (student == null)
+        //             return new RequestResult<LoginResponseDto>(null, true, RequestAnswer.StudentCredError.GetDescription());
+
+        //         var loginResponse = new LoginResponseDto
+        //         {
+        //             UserId = student.id,
+        //             UserName = student.name,
+        //             UserEmail = student.email,
+        //             Token = TokenService.GenerateStudentToken(student, _configuration["Settings:JwtSecret"])
+        //         };
+
+        //         var result = new RequestResult<LoginResponseDto>(loginResponse, false);
+
+        //         return result;
+        //     }
+        //     catch (Exception ex)
+        //     {
+        //         var msg = ex.Message.Contains("See the inner exception for details") ? ex.InnerException.Message : ex.Message;
+        //         return new RequestResult<LoginResponseDto>(null, true, msg);
+        //     }
+        // }
     }
 }

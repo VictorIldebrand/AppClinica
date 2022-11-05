@@ -11,11 +11,11 @@ namespace Repository.Repositories
     public class StudentRepository : IStudentRepository
     {
         private readonly TemplateDbContext _context;
+
         public StudentRepository(TemplateDbContext context)
         {
             _context = context;
         }
-
         public async Task<Student> CreateStudent(Student student)
         {
             var result = await _context.Students.AddAsync(student);
@@ -23,7 +23,6 @@ namespace Repository.Repositories
 
             return result.Entity;
         }
-
         public async Task UpdateStudent(Student student)
         {
             _context.Students.Update(student);
@@ -44,6 +43,30 @@ namespace Repository.Repositories
             return await _context.Students.Where(u => u.id == id && u.active).FirstOrDefaultAsync();
         }
 
+        public async Task<bool> CheckIfStudentExistsById(int id)
+        {
+            var result = await _context.Students.AnyAsync(u => u.id == id && u.active);
+            return result;
+        }
+
+        public async Task<bool> CheckIfStudentExistsByEmail(string email)
+        {
+            var result = await _context.Students.AnyAsync(u => u.email == email && u.active);
+            return result;
+        }
+
+        public async Task<bool> CheckIfStudentExistsByRa(string ra)
+        {
+            var result = await _context.Students.AnyAsync(u => u.ra == ra && u.active);
+            return result;
+        }
+
+        public async Task<string> GetStudentPasswordByEmail(string email)
+        {
+            var result = await _context.Students.Where(u => u.email == email && u.active).Select(p => p.password).FirstOrDefaultAsync();
+            return result;
+        }
+
         public async Task<Student> GetStudentByEmailAndPassword(string email, string password)
         {
             return await _context.Students.Where(x => x.email == email && x.password == password && x.active).FirstOrDefaultAsync();
@@ -55,5 +78,10 @@ namespace Repository.Repositories
             return result;
         }
 
+        public async Task<Student> GetStudentByRa(string ra)
+        {
+            var result = await _context.Students.Where(u => u.ra == ra && u.active).FirstOrDefaultAsync();
+            return result;
+        }
     }
 }

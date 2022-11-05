@@ -3,6 +3,7 @@ using Contracts.Dto.Appointment;
 using Contracts.Dto.Employee;
 using Contracts.DTO.User;
 using Contracts.Entities;
+using Contracts.Enums.Status;
 using Contracts.Interfaces.Repositories;
 using Contracts.Interfaces.Services;
 using Contracts.RequestHandle;
@@ -26,15 +27,21 @@ namespace Business.Services
             _appointmentRepository = appointmentRepository;
         }
 
-        public async Task<RequestResult<AppointmentDto>> CreateAppointment(AppointmentDto registerRequest)
+        public async Task<RequestResult<AppointmentDto>> CreateAppointment(AppointmentDto appointmentDto)
         {
             try
             {
-                throw new NotImplementedException();
+                var model = _Mapper.Map<Appointment>(appointmentDto);
+                model.status = StatusEnum.Confirmed;
+                var response = await _appointmentRepository.CreateAppointment(model);
+                if (response.id == 0)
+                    return new RequestResult<AppointmentDto>(null, true, RequestAnswer.AppointmentCreateError.GetDescription());
+                var dto = _Mapper.Map<AppointmentDto>(response);
+                return new RequestResult<AppointmentDto>(dto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<AppointmentDto>(null, true, ex.Message);
             }
         }
 
@@ -42,11 +49,19 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var model = await _appointmentRepository.GetAppointmentByDate(date);
+
+                if(model == null)
+                    return new RequestResult<AppointmentDto>(null, true, RequestAnswer.AppointmentNotFound.GetDescription());
+
+                var dto = _Mapper.Map<AppointmentDto>(model);
+                var result = new RequestResult<AppointmentDto>(dto);
+
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<AppointmentDto>(null, true, ex.Message);
             }
         }
 
@@ -54,11 +69,19 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var appointmentCheck = await _appointmentRepository.CheckIfAppointmentExistsById(appointment.Id);
+
+                if(!appointmentCheck)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentNotFound);
+
+                var model = _Mapper.Map<Appointment>(appointment);
+                await _appointmentRepository.UpdateAppointment(model);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentUpdateSuccess);
             }
             catch (Exception)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentUpdateError, true);
             }
         }
 
@@ -66,11 +89,13 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                await _appointmentRepository.DeleteAppointment(id);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentDeleteSuccess);
             }
             catch (Exception)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentDeleteError, true);
             }
         }
     }

@@ -12,6 +12,7 @@ namespace Repository.Repositories
     public class PatientRequestRepository : IPatientRequestRepository
     {
         private readonly TemplateDbContext _context;
+
         public PatientRequestRepository(TemplateDbContext context)
         {
             _context = context;

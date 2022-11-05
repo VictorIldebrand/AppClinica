@@ -29,14 +29,14 @@ namespace Business.Services
         {
             try
             {
-                var employeeExists = await _employeeRepository.CheckIfUserExistsByEmail(registerRequest.Email);
+                var employeeExists = await _employeeRepository.CheckIfEmployeeExistsByEmail(registerRequest.Email);
                 if (employeeExists)
-                    return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
+                    return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.EmployeeDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<Employee>(registerRequest);
                 model.active = true;
                 var response = await _employeeRepository.Register(model);
                 if (response.id == 0)
-                    return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
+                    return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.EmployeeCreateError.GetDescription());
                 var dto = _Mapper.Map<EmployeeMinDto>(response);
                 /*var loginDto = new LoginResponseDto
                 {
@@ -52,19 +52,77 @@ namespace Business.Services
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> DeleteEmployee(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public async Task<RequestResult<EmployeeDto>> GetEmployeeById(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var model = await _employeeRepository.GetEmployeeById(id);
+
+                if (model == null)
+                    return new RequestResult<EmployeeDto>(null, true, RequestAnswer.EmployeeNotFound.GetDescription());
+
+                var dto = _Mapper.Map<EmployeeDto>(model);
+                var result = new RequestResult<EmployeeDto>(dto);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new RequestResult<EmployeeDto>(null, true, ex.Message);
+            }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateEmployee(EmployeeDto EmployeeDto)
+        public async Task<RequestResult<EmployeeDto>> GetEmployeeByEmail(string email)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var model = await _employeeRepository.GetEmployeeByEmail(email);
+
+                if (model == null)
+                    return new RequestResult<EmployeeDto>(null, true, RequestAnswer.EmployeeNotFound.GetDescription());
+
+                var dto = _Mapper.Map<EmployeeDto>(model);
+                var result = new RequestResult<EmployeeDto>(dto);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new RequestResult<EmployeeDto>(null, true, ex.Message);
+            }
+        }
+
+        public async Task<RequestResult<RequestAnswer>> UpdateEmployee(EmployeeDto employeeDto)
+        {
+            try
+            {
+                var employeeCheck = await _employeeRepository.CheckIfEmployeeExistsByEmail(employeeDto.Email);
+
+                if (!employeeCheck)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeNotFound);
+
+                var model = _Mapper.Map<Employee>(employeeDto);
+                await _employeeRepository.UpdateEmployee(model);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeUpdateSuccess);
+            }
+            catch (Exception)
+            {
+                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeUpdateError, true);
+            }
+        }
+        public async Task<RequestResult<RequestAnswer>> DeleteEmployee(int id)
+        {
+            try
+            {
+                await _employeeRepository.DeleteEmployee(id);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeDeleteSuccess);
+            }
+            catch (Exception)
+            {
+                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeDeleteError, true);
+            }
         }
     }
 }

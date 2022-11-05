@@ -14,7 +14,6 @@ namespace Contracts.Entities
         public int id { get; set; }
 
         [Column("name")]
-        [SensitiveData]
         public string name { get; set; }
 
         [Column("active")]

@@ -5,12 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
+using System;
 
 namespace Repository.Repositories
 {
     public class NotificationRepository : INotificationRepository
     {
         private readonly TemplateDbContext _context;
+
         public NotificationRepository(TemplateDbContext context)
         {
             _context = context;
@@ -45,6 +47,15 @@ namespace Repository.Repositories
 
         public async Task<Notification> GetNotificationByStudentId(int idStudent) {
             return await _context.Notifications.Where(u => u.id == idStudent).FirstOrDefaultAsync();
+        }
+
+        public async Task<Notification> GetNotificationById(int id)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<bool> CheckIfNotificationExistsById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

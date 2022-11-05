@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Repository.Repositories {
     public class EmployeeRepository : IEmployeeRepository {
+
         private readonly TemplateDbContext _context;
 
         public EmployeeRepository(TemplateDbContext context) {
@@ -28,18 +29,23 @@ namespace Repository.Repositories {
 
             return result.Entity;
         }
-        
+
         public Task<Employee> GetEmployeeByEmailAndPassword(string email, string password)
         {
             throw new NotImplementedException();
         }
-
-        public Task<bool> GetEmployeeByEmail(string email)
+        
+        public Task<Employee> GetEmployeeByEmail(string email)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<bool> CheckIfUserExistsByEmail(string email) {
+        public async Task<bool> CheckIfEmployeeExistsById(int id) {
+            var result = await _context.Employees.AnyAsync(u => u.id == id && u.active);
+            return result;
+        }
+
+        public async Task<bool> CheckIfEmployeeExistsByEmail(string email) {
             var result = await _context.Employees.AnyAsync(u => u.email == email && u.active);
             return result;
         }

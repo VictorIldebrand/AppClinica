@@ -33,6 +33,11 @@ namespace Repository.Repositories
         {
             throw new System.NotImplementedException();
         }
+        public async Task<bool> CheckIfPatientExistsByEmail(string email)
+        {
+            var result = await _context.Patients.AnyAsync(u => u.email == email && u.active);
+            return result;
+        }
 
         public async Task<Patient> GetPatientByEmail(string email)
         {

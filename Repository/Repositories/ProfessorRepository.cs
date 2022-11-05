@@ -12,6 +12,7 @@ namespace Repository.Repositories
     public class ProfessorRepository : IProfessorRepository
     {
         private readonly TemplateDbContext _context;
+
         public ProfessorRepository(TemplateDbContext context)
         {
             _context = context;
@@ -26,7 +27,11 @@ namespace Repository.Repositories
         {
             throw new NotImplementedException();
         }
-
+        public async Task<bool> CheckIfPatientExistsByEmail(string email)
+        {
+            var result = await _context.Professors.AnyAsync(u => u.email == email && u.active);
+            return result;
+        }
         public async Task<Professor> GetProfessorByEmail(string email)
         {
             throw new NotImplementedException();

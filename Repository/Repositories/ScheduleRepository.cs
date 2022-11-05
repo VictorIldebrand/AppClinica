@@ -12,6 +12,7 @@ namespace Repository.Repositories
     public class ScheduleRepository : IScheduleRepository
     {
         private readonly TemplateDbContext _context;
+
         public ScheduleRepository(TemplateDbContext context)
         {
             _context = context;
@@ -19,7 +20,7 @@ namespace Repository.Repositories
 
         public async Task<Schedule> GetScheduleById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Schedules.Where(u => u.id == id && u.active).FirstOrDefaultAsync();
         }
 
         public async Task<Schedule> CreateSchedule(Schedule schedule)
@@ -43,6 +44,12 @@ namespace Repository.Repositories
 
             _context.Schedules.Update(schedule);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> CheckIfScheduleExistsById(int id)
+        {
+            var result = await _context.Schedules.AnyAsync(u => u.id == id && u.active);
+            return result;
         }
     }
 }

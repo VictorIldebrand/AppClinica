@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Contracts.Dto.Notification;
-using Contracts.DTO.User;
 using Contracts.Entities;
+using Contracts.Enums.Status;
 using Contracts.Interfaces.Repositories;
 using Contracts.Interfaces.Services;
 using Contracts.RequestHandle;
@@ -25,15 +25,21 @@ namespace Business.Services
             _notificationRepository = notificationRepository;
         }
 
-        public async Task<RequestResult<LoginResponseDto>> CreateNotification(NotificationDto notificationDto)
+        public async Task<RequestResult<NotificationDto>> CreateNotification(NotificationDto notificationDto)
         {
             try
             {
-                throw new NotImplementedException();
+                var model = _Mapper.Map<Notification>(notificationDto);
+                model.status = 0;
+                var response = await _notificationRepository.CreateNotification(model);
+                if (response.id == 0)
+                    return new RequestResult<NotificationDto>(null, true, RequestAnswer.NotificationCreateError.GetDescription());
+                var dto = _Mapper.Map<NotificationDto>(response);
+                return new RequestResult<NotificationDto>(dto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<NotificationDto>(null, true, ex.Message);
             }
         }
 
@@ -41,22 +47,38 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var model = await _notificationRepository.GetNotificationById(id);
+
+                if (model == null)
+                    return new RequestResult<NotificationDto>(null, true, RequestAnswer.NotificationNotFound.GetDescription());
+
+                var dto = _Mapper.Map<NotificationDto>(model);
+                var result = new RequestResult<NotificationDto>(dto);
+
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<NotificationDto>(null, true, ex.Message);
             }
         }
 
-        public async Task<RequestResult<NotificationDto>> UpdateNotification(NotificationDto notificationDto) {
+        public async Task<RequestResult<RequestAnswer>> UpdateNotification(NotificationDto notificationDto) {
             try
             {
-                throw new NotImplementedException();
+                var notificationCheck = await _notificationRepository.CheckIfNotificationExistsById(notificationDto.Id);
+
+                if (!notificationCheck)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.NotificationNotFound);
+
+                var model = _Mapper.Map<Notification>(notificationDto);
+                await _notificationRepository.UpdateNotification(model);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationUpdateSuccess);
             }
             catch (Exception)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationUpdateError, true);
             }
         }
 
@@ -64,12 +86,18 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                await _notificationRepository.DeleteNotification(id);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationDeleteSuccess);
             }
             catch (Exception)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationDeleteError, true);
             }
+        }
+        public async Task<RequestResult<NotificationDto>> CheckIfNotificationExistsById(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

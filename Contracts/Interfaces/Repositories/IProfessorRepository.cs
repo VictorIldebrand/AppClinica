@@ -5,6 +5,7 @@ namespace Contracts.Interfaces.Repositories {
     public interface IProfessorRepository {
         Task<Professor> GetProfessorById(int id);
         Task<Professor> GetProfessorByEmailAndPassword(string email, string password);
+        Task<bool> CheckIfPatientExistsByEmail(string email);
         Task<Professor> GetProfessorByEmail(string email);
         Task<Professor> CreateProfessor(Professor professor);
         Task UpdateProfessor(Professor professor);

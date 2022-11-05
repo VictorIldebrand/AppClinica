@@ -12,6 +12,7 @@ namespace Repository.Repositories
     public class ScheduleProfessorRepository : IScheduleProfessorRepository
     {
         private readonly TemplateDbContext _context;
+
         public ScheduleProfessorRepository(TemplateDbContext context)
         {
             _context = context;

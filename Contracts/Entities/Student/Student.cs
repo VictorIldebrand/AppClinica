@@ -35,7 +35,6 @@ namespace Contracts.Entities
         public string phone { get; set; }
 
         [Column("period")]
-        [SensitiveData]
         public string period { get; set; }
 
         [Column("active")]

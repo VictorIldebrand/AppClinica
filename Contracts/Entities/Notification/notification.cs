@@ -17,7 +17,6 @@ namespace Contracts.Entities
         [Column("id_student")]
         public int idStudent { get; set; }
 
-
         [Column("id_patient")]
         public int idPatient { get; set; }
 

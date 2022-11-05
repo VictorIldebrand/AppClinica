@@ -7,6 +7,7 @@ using Contracts.Dto.Patient;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Contracts.Interfaces.Repositories;
+using Contracts.Utils;
 
 namespace Business.Services
 {
@@ -27,11 +28,20 @@ namespace Business.Services
         {
             try
             {
-            throw new NotImplementedException();
+                var patientExists = await _patientRepository.CheckIfPatientExistsByEmail(patientDto.Email);
+                if (patientExists)
+                    return new RequestResult<PatientDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
+                var model = _Mapper.Map<Patient>(patientDto);
+                model.active = true;
+                var response = await _patientRepository.CreatePatient(model);
+                if (response.id == 0)
+                    return new RequestResult<PatientDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
+                var dto = _Mapper.Map<PatientDto>(response);
+                return new RequestResult<PatientDto>(dto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<PatientDto>(null, true, ex.Message);
             }
         }
 
@@ -39,11 +49,19 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var model = await _patientRepository.GetPatientById(id);
+
+                if (model == null)
+                    return new RequestResult<PatientDto>(null, true, RequestAnswer.PatientNotFound.GetDescription());
+
+                var dto = _Mapper.Map<PatientDto>(model);
+                var result = new RequestResult<PatientDto>(dto);
+
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<PatientDto>(null, true, ex.Message);
             }
         }
 
@@ -51,11 +69,19 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var patientCheck = await _patientRepository.CheckIfPatientExistsByEmail(patientDto.Email);
+
+                if(!patientCheck)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.PatientNotFound);
+                
+                var model = _Mapper.Map<Patient>(patientDto);
+                await _patientRepository.UpdatePatient(model);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateError, true);
             }
         }
 
@@ -63,11 +89,13 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                await _patientRepository.DeletePatient(id);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientDeleteSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientDeleteError, true);
             }
         }
     }

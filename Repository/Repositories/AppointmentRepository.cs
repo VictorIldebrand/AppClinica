@@ -14,9 +14,14 @@ namespace Repository.Repositories
     public class AppointmentRepository : IAppointmentRepository
     {
         private readonly TemplateDbContext _context;
+
         public AppointmentRepository(TemplateDbContext context)
         {
             _context = context;
+        }
+        public async Task<Appointment> GetAppointmentById(int id)
+        {
+            return await _context.Appointments.Where(a => a.id == id).FirstOrDefaultAsync();
         }
 
         public async Task<Appointment> CreateAppointment(Appointment appointment)
@@ -27,9 +32,9 @@ namespace Repository.Repositories
             return result.Entity;
         }
 
-        public async Task<Appointment> GetAppointmentById(int id)
+        public async Task<Appointment> GetAppointmentByDate(DateTime date)
         {
-            return await _context.Appointments.Where(a => a.id == id).FirstOrDefaultAsync();
+            throw new NotImplementedException();
         }
 
         public async Task UpdateAppointment(Appointment appointment)
@@ -47,7 +52,11 @@ namespace Repository.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public Task<List<Appointment>> GetAppointmentsByParameters(string especialidade, int professorId, int alunoId, int pacienteId, Enum status, DateTime data)
+        public async Task<List<Appointment>> GetAppointmentsByParameters(string especialidade, int professorId, int alunoId, int pacienteId, Enum status, DateTime data)
+        {
+            throw new NotImplementedException();
+        }
+        public async Task<bool> CheckIfAppointmentExistsById(int Id)
         {
             throw new NotImplementedException();
         }

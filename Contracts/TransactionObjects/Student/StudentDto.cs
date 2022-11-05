@@ -13,8 +13,6 @@ namespace Contracts.Dto.Student
         public bool Active { get; set; }
         //public string DataAcesso { get => DateTime.Now.ToString(); }
         //public DateTime data_da_consulta { get; set; }
-        //public string Money { get; set; }
-        //public string MoneyFormatted { get => $"R${Money},00" ; }
     }
 
 }

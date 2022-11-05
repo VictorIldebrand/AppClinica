@@ -7,5 +7,6 @@ namespace Contracts.Interfaces.Repositories {
         Task<Schedule> CreateSchedule(Schedule schedule);
         Task UpdateSchedule(Schedule schedule);
         Task DeleteSchedule(int id);
+        Task<bool> CheckIfScheduleExistsById(int id);
     }
 }
