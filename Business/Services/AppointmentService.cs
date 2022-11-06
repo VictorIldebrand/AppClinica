@@ -32,9 +32,9 @@ namespace Business.Services
             try
             {
                 var model = _Mapper.Map<Appointment>(appointmentDto);
-                model.status = StatusEnum.Confirmed;
+                model.Status = StatusEnum.Confirmed;
                 var response = await _appointmentRepository.CreateAppointment(model);
-                if (response.id == 0)
+                if (response.Id == 0)
                     return new RequestResult<AppointmentDto>(null, true, RequestAnswer.AppointmentCreateError.GetDescription());
                 var dto = _Mapper.Map<AppointmentDto>(response);
                 return new RequestResult<AppointmentDto>(dto);

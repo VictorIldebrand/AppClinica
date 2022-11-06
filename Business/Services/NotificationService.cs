@@ -95,9 +95,5 @@ namespace Business.Services
                 return new RequestResult<RequestAnswer>(RequestAnswer.NotificationDeleteError, true);
             }
         }
-        public async Task<RequestResult<NotificationDto>> CheckIfNotificationExistsById(int id)
-        {
-            throw new NotImplementedException();
-        }
     }
 }

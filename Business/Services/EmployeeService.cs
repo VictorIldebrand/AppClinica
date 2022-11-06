@@ -33,9 +33,9 @@ namespace Business.Services
                 if (employeeExists)
                     return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.EmployeeDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<Employee>(registerRequest);
-                model.active = true;
+                model.Active = true;
                 var response = await _employeeRepository.Register(model);
-                if (response.id == 0)
+                if (response.Id == 0)
                     return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.EmployeeCreateError.GetDescription());
                 var dto = _Mapper.Map<EmployeeMinDto>(response);
                 /*var loginDto = new LoginResponseDto
@@ -96,7 +96,7 @@ namespace Business.Services
         {
             try
             {
-                var employeeCheck = await _employeeRepository.CheckIfEmployeeExistsByEmail(employeeDto.Email);
+                var employeeCheck = await _employeeRepository.CheckIfEmployeeExistsById(employeeDto.Id);
 
                 if (!employeeCheck)
                     return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeNotFound);

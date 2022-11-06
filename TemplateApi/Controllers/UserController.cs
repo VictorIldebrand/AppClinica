@@ -25,6 +25,7 @@ namespace TemplateApi.Controllers
         }
 
         [HttpPut("updateUser")]
+        [AllowAnonymous]
         public async Task<IActionResult> Update(UserDto user)
         {
             var result = await _userService.UpdateUser(user);
@@ -32,6 +33,7 @@ namespace TemplateApi.Controllers
         }
 
         [HttpPut("deleteUser")]
+        [AllowAnonymous]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _userService.DeleteUser(id);
@@ -47,6 +49,7 @@ namespace TemplateApi.Controllers
         }
 
         [HttpGet("getUser/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUser(int id)
         {
             var result = await _userService.GetUserById(id);

@@ -4,7 +4,7 @@ namespace Contracts.Interfaces.Repositories {
     public interface INotificationRepository {
         Task<Notification> GetNotificationByPatientId(int idPatient);
         Task<Notification> GetNotificationByStudentId(int idStudent);
-        Task <Notification> GetNotificationById(int id);
+        Task<Notification> GetNotificationById(int id);
         Task<bool> CheckIfNotificationExistsById(int id);
         Task DeleteNotification(int id);
         Task UpdateNotification(Notification notification);

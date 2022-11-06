@@ -21,7 +21,7 @@ namespace Repository.Repositories
         }
         public async Task<Appointment> GetAppointmentById(int id)
         {
-            return await _context.Appointments.Where(a => a.id == id).FirstOrDefaultAsync();
+            return await _context.Appointments.Where(a => a.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<Appointment> CreateAppointment(Appointment appointment)
@@ -45,8 +45,8 @@ namespace Repository.Repositories
 
         public async Task DeleteAppointment(int id)
         {
-            var appointment = await _context.Appointments.Where(u => u.id == id).FirstOrDefaultAsync();
-            appointment.status = 0;
+            var appointment = await _context.Appointments.Where(u => u.Id == id).FirstOrDefaultAsync();
+            appointment.Status = 0;
 
             _context.Appointments.Update(appointment);
             await _context.SaveChangesAsync();

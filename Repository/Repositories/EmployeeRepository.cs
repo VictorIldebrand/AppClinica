@@ -18,9 +18,9 @@ namespace Repository.Repositories {
             _context = context;
         }
 
-        public Task<Employee> GetEmployeeById(int id)
+        public async Task<Employee> GetEmployeeById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Employees.Where(u => u.Id == id && u.Active).FirstOrDefaultAsync();
         }
 
         public async Task<Employee> Register(Employee employee) {
@@ -41,23 +41,28 @@ namespace Repository.Repositories {
         }
 
         public async Task<bool> CheckIfEmployeeExistsById(int id) {
-            var result = await _context.Employees.AnyAsync(u => u.id == id && u.active);
+            var result = await _context.Employees.AnyAsync(u => u.Id == id && u.Active);
             return result;
         }
 
         public async Task<bool> CheckIfEmployeeExistsByEmail(string email) {
-            var result = await _context.Employees.AnyAsync(u => u.email == email && u.active);
+            var result = await _context.Employees.AnyAsync(u => u.Email == email && u.Active);
             return result;
         }
 
-        public Task UpdateEmployee(Employee employee)
+        public async Task UpdateEmployee(Employee employee)
         {
-            throw new NotImplementedException();
+            _context.Employees.Update(employee);
+            await _context.SaveChangesAsync();
         }
 
-        public Task DeleteEmployee(int id)
+        public async Task DeleteEmployee(int id)
         {
-            throw new NotImplementedException();
+            var employee = await _context.Employees.Where(e => e.Id == id).FirstOrDefaultAsync();
+            employee.Active = false;
+
+            _context.Employees.Update(employee);
+            await _context.SaveChangesAsync();
         }
     }
 }

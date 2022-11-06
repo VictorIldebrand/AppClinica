@@ -44,11 +44,16 @@ namespace Repository.Repositories
 
         public async Task DeletePatientRequest(int id)
         {
-            var patient_request = await _context.PatientRequests.Where(u => u.id == id).FirstOrDefaultAsync();
-            patient_request.active = false;
+            var patient_request = await _context.PatientRequests.Where(u => u.Id == id).FirstOrDefaultAsync();
+            patient_request.Active = false;
 
             _context.PatientRequests.Update(patient_request);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> CheckIfPatientRequestExistsById(int id) {
+            var result = await _context.PatientRequests.AnyAsync(u => u.Id == id && u.Active);
+            return result;
         }
     }
 }

@@ -13,34 +13,34 @@ namespace Contracts.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Required]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Column("date")]
-        public DateTime date { get; set; }
+        public DateTime Date { get; set; }
 
         [Column("status")]
         [Required]
-        public StatusEnum status { get; set; }
+        public StatusEnum Status { get; set; }
 
         [Column("cancellation_reason")]
-        public string cancellationReason { get; set; }
+        public string CancellationReason { get; set; }
 
         [Column("id_schedule")]
-        public int idSchedule { get; set; }
+        public int IdSchedule { get; set; }
 
         [Column("id_patient")]
-        public int idPatient { get; set; }
+        public int IdPatient { get; set; }
 
         [Column("id_employee")]
-        public int idEmployee { get; set; }
+        public int IdEmployee { get; set; }
 
         [Column("new_patient")]
-        public bool newPatient { get; set; }
+        public bool NewPatient { get; set; }
 
         [Column("type")]
-        public string type { get; set; }
+        public string Type { get; set; }
 
         [Column("note")]
-        public string note { get; set; }
+        public string Note { get; set; }
     }
 }

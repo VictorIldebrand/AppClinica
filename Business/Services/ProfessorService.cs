@@ -28,7 +28,7 @@ namespace Business.Services
         {
             try
             {
-                var patientExists = await _professorRepository.CheckIfPatientExistsByEmail(professorDto.Email);
+                var patientExists = await _professorRepository.CheckIfProfessorExistsByEmail(professorDto.Email);
                 if (patientExists)
                     return new RequestResult<ProfessorDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<Professor>(professorDto);

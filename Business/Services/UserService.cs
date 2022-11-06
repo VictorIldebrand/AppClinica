@@ -58,6 +58,7 @@ namespace Business.Services
                 return new RequestResult<LoginResponseDto>(null, true, ex.Message);
             }
         }
+
         public async Task<RequestResult<LoginResponseDto>> Login(LoginRequestDto loginRequest)
         {
             try
@@ -85,6 +86,7 @@ namespace Business.Services
                 return new RequestResult<LoginResponseDto>(null, true, msg);
             }
         }
+
         public async Task<RequestResult<UserDto>> GetUserById(int id)
         {
             try
@@ -104,6 +106,7 @@ namespace Business.Services
                 return new RequestResult<UserDto>(null, true, ex.Message);
             }
         }
+
         public async Task<RequestResult<UserDto>> GetUserByEmail(string email)
         {
             try
@@ -123,6 +126,7 @@ namespace Business.Services
                 return new RequestResult<UserDto>(null, true, ex.Message);
             }
         }
+
         public async Task<RequestResult<RequestAnswer>> UpdateUser(UserDto user)
         {
             try

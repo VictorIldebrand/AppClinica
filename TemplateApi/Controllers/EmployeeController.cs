@@ -24,18 +24,21 @@ namespace TemplateApi.Controllers {
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEmployee(int id) {
             var result = await _employeeService.GetEmployeeById(id);
             return Ok(result);
         }
 
         [HttpPut("update")]
+        [AllowAnonymous]
         public async Task<IActionResult> UpdateEmployee(EmployeeDto employee) {
             var result = await _employeeService.UpdateEmployee(employee);
             return Ok(result);
         }
 
         [HttpDelete("delete")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteEmployee(int id) {
             var result = await _employeeService.DeleteEmployee(id);
             return Ok(result);

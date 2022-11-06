@@ -32,9 +32,9 @@ namespace Business.Services
                 if (patientExists)
                     return new RequestResult<PatientDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<Patient>(patientDto);
-                model.active = true;
+                model.Active = true;
                 var response = await _patientRepository.CreatePatient(model);
-                if (response.id == 0)
+                if (response.Id == 0)
                     return new RequestResult<PatientDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
                 var dto = _Mapper.Map<PatientDto>(response);
                 return new RequestResult<PatientDto>(dto);
@@ -79,7 +79,7 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateSuccess);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateError, true);
             }
@@ -93,7 +93,7 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.PatientDeleteSuccess);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new RequestResult<RequestAnswer>(RequestAnswer.PatientDeleteError, true);
             }

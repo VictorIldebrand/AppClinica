@@ -13,37 +13,37 @@ namespace Contracts.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Required]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Column("date_solicitation")]
-        public DateTime dateSolicitation { get; set; }
+        public DateTime DateSolicitation { get; set; }
 
         [Column("date_treatment")]
-        public DateTime dateTreatment { get; set; }
+        public DateTime DateTreatment { get; set; }
 
         [Column("cancellation_reason")]
-        public string cancellationReason { get; set; }
+        public string CancellationReason { get; set; }
 
         [Column("status")]
         [Required]
-        public StatusEnum status { get; set; }
+        public StatusEnum Status { get; set; }
 
         [Column("id_student")]
-        public int idStudent { get; set; }
+        public int IdStudent { get; set; }
 
         [Column("new_patient")]
-        public bool newPatient { get; set; }
+        public bool NewPatient { get; set; }
 
         [Column("id_schedule_professor")]
-        public int idScheduleProfessor { get; set; }
+        public int IdScheduleProfessor { get; set; }
 
         [Column("procedure")]
-        public string procedure { get; set; }
+        public string Procedure { get; set; }
 
         [Column("note")]
-        public string note { get; set; }
+        public string Note { get; set; }
 
         [Column("active")]
-        public bool active { get; set; }
+        public bool Active { get; set; }
     }
 }

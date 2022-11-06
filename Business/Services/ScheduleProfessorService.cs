@@ -7,6 +7,8 @@ using Contracts.Interfaces.Repositories;
 using Contracts.Dto.ScheduleProfessor;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using Contracts.Utils;
+using Contracts.Dto.Schedule;
 
 namespace Business.Services
 {
@@ -23,42 +25,55 @@ namespace Business.Services
             _scheduleProfessorRepository = scheduleProfessorRepository;
         }
 
-
-        public async  Task<RequestResult<RequestAnswer>> CreateScheduleProfessor(ScheduleProfessorDto ScheduleProfessorDto)
+        public async Task<RequestResult<ScheduleProfessorDto>> CreateScheduleProfessor(ScheduleProfessorDto ScheduleProfessorDto)
         {
             try
             {
-                throw new NotImplementedException();
+                var model = _Mapper.Map<ScheduleProfessor>(ScheduleProfessorDto);
+                var response = await _scheduleProfessorRepository.CreateScheduleProfessor(model);
+                if (response.id == 0)
+                    return new RequestResult<ScheduleProfessorDto>(null, true, RequestAnswer.ScheduleProfessorCreateError.GetDescription());
+                var dto = _Mapper.Map<ScheduleProfessorDto>(response);
+                return new RequestResult<ScheduleProfessorDto>(dto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<ScheduleProfessorDto>(null, true, ex.Message);
             }
         }
-
-
 
         public async Task<RequestResult<ScheduleProfessorDto>> GetScheduleProfessorById(int id)
         {
             try
             {
-                throw new NotImplementedException();
+                var model = await _scheduleProfessorRepository.GetScheduleProfessorById(id);
+
+                if (model == null)
+                    return new RequestResult<ScheduleProfessorDto>(null, true, RequestAnswer.ScheduleProfessorNotFound.GetDescription());
+
+                var dto = _Mapper.Map<ScheduleProfessorDto>(model);
+                var result = new RequestResult<ScheduleProfessorDto>(dto);
+
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<ScheduleProfessorDto>(null, true, ex.Message);
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateScheduleProfessor(ScheduleProfessorDto ScheduleProfessorDto)
+        public async Task<RequestResult<RequestAnswer>> UpdateScheduleProfessor(ScheduleProfessorDto scheduleProfessorDto)
         {
             try
             {
-                throw new NotImplementedException();
+                var model = _Mapper.Map<ScheduleProfessor>(scheduleProfessorDto);
+                await _scheduleProfessorRepository.UpdateScheduleProfessor(model);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleProfessorUpdateSuccess);
             }
             catch (Exception)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleProfessorUpdateError, true);
             }
         }
         
@@ -66,11 +81,13 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                await _scheduleProfessorRepository.DeleteScheduleProfessor(id);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleProfessorDeleteSuccess);
             }
             catch (Exception)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleProfessorDeleteError, true);
             }
         }
     }

@@ -28,13 +28,27 @@ namespace Business.Services
 
         public async Task<RequestResult<PatientRequestDto>> CreatePatientRequest(PatientRequestDto patientRequestDto)
         {
-            try
-            {
-                throw new NotImplementedException();
+            try{
+                var patientRequestExists = await _patientRequestRepository.CheckIfPatientRequestExistsById(patientRequestDto.Id);
+                if (patientRequestExists)
+                    return new RequestResult<PatientRequestDto>(null, true, RequestAnswer.PatientRequestDuplicateCreateError.GetDescription());
+                var model = _Mapper.Map<PatientRequest>(patientRequestDto);
+                model.Status = 0;
+                var response = await _patientRequestRepository.CreatePatientRequest(model);
+                if (response.Id == 0)
+                    return new RequestResult<PatientRequestDto>(null, true, RequestAnswer.PatientRequestCreateError.GetDescription());
+                var dto = _Mapper.Map<PatientRequestDto>(response);
+                /*var loginDto = new LoginResponseDto
+                {
+                    Email = response.email,
+                    Password = response.password
+                };*/
+                //var login = await Login(loginDto);
+                return new RequestResult<PatientRequestDto>(patientRequestDto);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<PatientRequestDto>(null, true, ex.Message);
             }
         }
 
@@ -42,11 +56,19 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var model = await _patientRequestRepository.GetPatientRequestById(id);
+
+                if (model == null)
+                    return new RequestResult<PatientRequestDto>(null, true, RequestAnswer.PatientRequestNotFound.GetDescription());
+
+                var dto = _Mapper.Map<PatientRequestDto>(model);
+                var result = new RequestResult<PatientRequestDto>(dto);
+
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<PatientRequestDto>(null, true, ex.Message);
             }
         }
 
@@ -54,11 +76,19 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var patientRequestCheck = await _patientRequestRepository.CheckIfPatientRequestExistsById(patientRequestDto.Id);
+
+                if (!patientRequestCheck)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestNotFound);
+
+                var model = _Mapper.Map<PatientRequest>(patientRequestDto);
+                await _patientRequestRepository.UpdatePatientRequest(model);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateSuccess);
             }
             catch (Exception)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateError, true);
             }
         }
 
@@ -66,11 +96,13 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                await _patientRequestRepository.DeletePatientRequest(id);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestDeleteSuccess);
             }
             catch (Exception)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestDeleteError, true);
             }
         }
     }

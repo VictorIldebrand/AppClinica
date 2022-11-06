@@ -27,10 +27,14 @@ namespace Repository.Repositories
         {
             throw new NotImplementedException();
         }
-        public async Task<bool> CheckIfPatientExistsByEmail(string email)
+        public async Task<bool> CheckIfProfessorExistsByEmail(string email)
         {
             var result = await _context.Professors.AnyAsync(u => u.email == email && u.active);
             return result;
+        }
+        public async Task<bool> CheckIfProfessorExistsById(int id)
+        {
+            throw new NotImplementedException();
         }
         public async Task<Professor> GetProfessorByEmail(string email)
         {
