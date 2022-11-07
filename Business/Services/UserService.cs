@@ -5,6 +5,7 @@ using Contracts.Interfaces.Repositories;
 using Contracts.Interfaces.Services;
 using Contracts.RequestHandle;
 using Contracts.TransactionObjects.Login;
+using Contracts.TransactionObjects.User;
 using Contracts.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -17,13 +18,20 @@ namespace Business.Services
         private readonly IMapper _Mapper;
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
+        private readonly IEmployeeService _employeeService;
+        private readonly IProfessorService _professorService;
+        private readonly IStudentService _studentService;
+        private readonly IPatientService _patientService;
 
-
-        public UserService(IMapper Mapper, IConfiguration configuration, IUserRepository userRepository)
+        public UserService(IMapper Mapper, IConfiguration configuration, IUserRepository userRepository, IEmployeeService employeeService, IProfessorService professorService, IStudentService studentService, IPatientService patientService)
         {
             _Mapper = Mapper;
             _configuration = configuration;
             _userRepository = userRepository;
+            _employeeService = employeeService;
+            _professorService = professorService;
+            _studentService = studentService;
+            _patientService = patientService;
         }
 
         public async Task<RequestResult<LoginResponseDto>> Register(UserDto registerRequest)
@@ -158,6 +166,32 @@ namespace Business.Services
             {
                 return new RequestResult<RequestAnswer>(RequestAnswer.UserDeleteError, true);
             }
+        }
+
+        public async Task<RequestResult<UserFilterDto>> GetUserFilter() 
+        {
+            var employeeModelList = await _employeeService.GetAllEmployees();
+            var dtoEmployeeList = _Mapper.Map<FilterInfoDto[]>(employeeModelList);
+
+            var patientModelList = await _patientService.GetAllPatients();
+            var dtoPatientList = _Mapper.Map<FilterInfoDto[]>(patientModelList);
+
+            var studentModelList = await _studentService.GetAllStudents();
+            var dtoStudentList = _Mapper.Map<FilterInfoDto[]>(studentModelList);
+
+            var professorModelList = await _professorService.GetAllProfessors();
+            var dtoProfessorList = _Mapper.Map<FilterInfoDto[]>(professorModelList);
+            var resultList = new UserFilterDto
+            {
+                employees = dtoEmployeeList,
+                professors = dtoProfessorList,
+                students = dtoStudentList,
+                patients = dtoPatientList
+            };
+
+            var result = new RequestResult<UserFilterDto>(resultList);
+
+            return result;
         }
     }
 }

@@ -6,6 +6,7 @@ using Contracts.Interfaces.Repositories;
 using Contracts.Interfaces.Services;
 using Contracts.RequestHandle;
 using Contracts.TransactionObjects.Login;
+using Contracts.TransactionObjects.User;
 using Contracts.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -62,6 +63,7 @@ namespace Business.Services
                     return new RequestResult<EmployeeDto>(null, true, RequestAnswer.EmployeeNotFound.GetDescription());
 
                 var dto = _Mapper.Map<EmployeeDto>(model);
+            
                 var result = new RequestResult<EmployeeDto>(dto);
 
                 return result;

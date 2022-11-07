@@ -35,7 +35,7 @@ namespace Repository.Repositories
         }
         public async Task<bool> CheckIfPatientExistsByEmail(string email)
         {
-            var result = await _context.Patients.AnyAsync(u => u.email == email && u.active);
+            var result = await _context.Patients.AnyAsync(u => u.Email == email && u.Active);
             return result;
         }
 
@@ -52,8 +52,8 @@ namespace Repository.Repositories
         
         public async Task DeletePatient(int id)
         {
-            var patient = await _context.Patients.Where(u => u.id == id).FirstOrDefaultAsync();
-            patient.active = false;
+            var patient = await _context.Patients.Where(u => u.Id == id).FirstOrDefaultAsync();
+            patient.Active = false;
 
             _context.Patients.Update(patient);
             await _context.SaveChangesAsync();
