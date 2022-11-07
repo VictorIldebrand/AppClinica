@@ -21,7 +21,7 @@ namespace TemplateApi.Controllers {
             return Ok(notificationResult);
         }
 
-        [HttpGet("getnotification/{id}")]
+        [HttpGet("get/{id}")]
         public async Task<IActionResult> GetNotification(int id) {
             var result = await _notificationService.GetNotificationById(id);
             return Ok(result);
@@ -33,7 +33,7 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpDelete("deletenotification")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeleteNotification(int id) {
             var result = await _notificationService.DeleteNotification(id);
             return Ok(result);

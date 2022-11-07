@@ -20,12 +20,12 @@ namespace Repository.Repositories
 
         public async Task<PatientRequest> GetPatientRequestByStudentId(int idStudent)
         {
-            throw new NotImplementedException();
+            return await _context.PatientRequests.Where(u => u.IdStudent == idStudent && u.Active).FirstOrDefaultAsync();
         }
 
         public async Task<PatientRequest> GetPatientRequestById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.PatientRequests.Where(u => u.Id == id && u.Active).FirstOrDefaultAsync();
         }
 
         public async Task<PatientRequest> CreatePatientRequest(PatientRequest patient_request)

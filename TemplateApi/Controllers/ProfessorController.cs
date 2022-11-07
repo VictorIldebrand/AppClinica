@@ -24,19 +24,19 @@ namespace TemplateApi.Controllers {
         }
 
 
-        [HttpGet("getprofessor/{id}")]
+        [HttpGet("get/{id}")]
         public async Task<IActionResult> GetProfessor(int id) {
             var result = await _professorService.GetProfessorById(id);
             return Ok(result);
         }
 
-        [HttpPut("updateprofessor")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdateProfessor(ProfessorDto professor) {
             var result = await _professorService.UpdateProfessor(professor);
             return Ok(result);
         }
 
-        [HttpDelete("deleteprofessor")]
+        [HttpDelete("delete{id}")]
         public async Task<IActionResult> DeleteProfessor(int id) {
             var result = await _professorService.DeleteProfessor(id);
             return Ok(result);

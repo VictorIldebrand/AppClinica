@@ -14,9 +14,10 @@ namespace TemplateApi.Controllers
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+
         public UserController(IUserService userService) => _userService = userService;
 
-        [HttpPost("register")]
+        [HttpPost("create")]
         [AllowAnonymous]
         public async Task<IActionResult> Register(UserDto registerRequest)
         {
@@ -24,7 +25,7 @@ namespace TemplateApi.Controllers
             return Ok(result);
         }
 
-        [HttpPut("updateUser")]
+        [HttpPut("update")]
         [AllowAnonymous]
         public async Task<IActionResult> Update(UserDto user)
         {
@@ -32,7 +33,7 @@ namespace TemplateApi.Controllers
             return Ok(result);
         }
 
-        [HttpPut("deleteUser")]
+        [HttpDelete("delete/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> Delete(int id)
         {
@@ -48,7 +49,7 @@ namespace TemplateApi.Controllers
             return Ok(auth);
         }
 
-        [HttpGet("getUser/{id}")]
+        [HttpGet("get/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetUser(int id)
         {
@@ -56,7 +57,7 @@ namespace TemplateApi.Controllers
             return Ok(result);
         }
         
-        [HttpDelete("getLoggedUser")]
+        [HttpGet("getLogged")]
         public async Task<IActionResult> GetLoggedUser()
         {
             var id = User.GetUserId();
@@ -64,6 +65,5 @@ namespace TemplateApi.Controllers
 
             return Ok(result);
         }
-
     }
 }

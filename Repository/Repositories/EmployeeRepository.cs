@@ -32,12 +32,12 @@ namespace Repository.Repositories {
 
         public Task<Employee> GetEmployeeByEmailAndPassword(string email, string password)
         {
-            throw new NotImplementedException();
+            return await _context.Employees.Where(x => x.Email == email && x.Password == password && x.Active).FirstOrDefaultAsync();
         }
         
         public Task<Employee> GetEmployeeByEmail(string email)
         {
-            throw new NotImplementedException();
+            return await _context.Employees.Where(u => u.Email == email && u.Active).FirstOrDefaultAsync();
         }
 
         public async Task<bool> CheckIfEmployeeExistsById(int id) {

@@ -37,7 +37,7 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("delete/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> DeleteEmployee(int id) {
             var result = await _employeeService.DeleteEmployee(id);

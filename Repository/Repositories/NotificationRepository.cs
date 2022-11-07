@@ -42,20 +42,22 @@ namespace Repository.Repositories
         }
 
         public async Task<Notification> GetNotificationByPatientId(int idPatient) {
-            return await _context.Notifications.Where(u => u.id == idPatient).FirstOrDefaultAsync();
+            return await _context.Notifications.Where(u => u.idPatient == idPatient).FirstOrDefaultAsync();
         }
 
         public async Task<Notification> GetNotificationByStudentId(int idStudent) {
-            return await _context.Notifications.Where(u => u.id == idStudent).FirstOrDefaultAsync();
+            return await _context.Notifications.Where(u => u.idStudent == idStudent).FirstOrDefaultAsync();
         }
 
         public async Task<Notification> GetNotificationById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Notifications.Where(u => u.id == id).FirstOrDefaultAsync();
         }
+
         public async Task<bool> CheckIfNotificationExistsById(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Notifications.AnyAsync(u => u.Id == id);
+            return result;
         }
     }
 }

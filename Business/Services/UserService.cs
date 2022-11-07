@@ -154,6 +154,7 @@ namespace Business.Services
                 return new RequestResult<RequestAnswer>(RequestAnswer.UserUpdateError, true);
             }
         }
+        
         public async Task<RequestResult<RequestAnswer>> DeleteUser(int id)
         {
             try

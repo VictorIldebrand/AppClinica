@@ -11,6 +11,7 @@ namespace Repository.Repositories
     public class PatientRepository : IPatientRepository
     {
         private readonly TemplateDbContext _context;
+
         public PatientRepository(TemplateDbContext context)
         {
             _context = context;
@@ -33,6 +34,7 @@ namespace Repository.Repositories
         {
             throw new System.NotImplementedException();
         }
+        
         public async Task<bool> CheckIfPatientExistsByEmail(string email)
         {
             var result = await _context.Patients.AnyAsync(u => u.Email == email && u.Active);

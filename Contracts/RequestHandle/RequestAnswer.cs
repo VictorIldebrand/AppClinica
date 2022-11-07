@@ -304,33 +304,33 @@ namespace Contracts.RequestHandle
 
         #endregion
 
-        #region PatientOrder
+        // #region PatientOrder
 
-        [Display(Description = "Solicitação de paciente não encontrado.")]
-        PatientOrderNotFound,
+        // [Display(Description = "Solicitação de paciente não encontrado.")]
+        // PatientOrderNotFound,
 
-        [Display(Description = "Solicitação de paciente criado com sucesso!")]
-        PatientOrderCreateSuccess,
+        // [Display(Description = "Solicitação de paciente criado com sucesso!")]
+        // PatientOrderCreateSuccess,
 
-        [Display(Description = "Erro ao registrar o solicitação de paciente.")]
-        PatientOrderCreateError,
+        // [Display(Description = "Erro ao registrar o solicitação de paciente.")]
+        // PatientOrderCreateError,
 
-        [Display(Description = "Solicitação de paciente já cadastrado.")]
-        PatientOrderDuplicateCreateError,
+        // [Display(Description = "Solicitação de paciente já cadastrado.")]
+        // PatientOrderDuplicateCreateError,
 
-        [Display(Description = "Solicitação de paciente atualizado com sucesso!")]
-        PatientOrderUpdateSuccess,
+        // [Display(Description = "Solicitação de paciente atualizado com sucesso!")]
+        // PatientOrderUpdateSuccess,
 
-        [Display(Description = "Erro ao atualizar o solicitação de paciente.")]
-        PatientOrderUpdateError,
+        // [Display(Description = "Erro ao atualizar o solicitação de paciente.")]
+        // PatientOrderUpdateError,
 
-        [Display(Description = "Solicitação de paciente excluído com sucesso!")]
-        PatientOrderDeleteSuccess,
+        // [Display(Description = "Solicitação de paciente excluído com sucesso!")]
+        // PatientOrderDeleteSuccess,
 
-        [Display(Description = "Erro ao excluir o solicitação de paciente.")]
-        PatientOrderDeleteError,
+        // [Display(Description = "Erro ao excluir o solicitação de paciente.")]
+        // PatientOrderDeleteError,
 
-        #endregion
+        // #endregion
 
         #region ScheduleProfessor
 

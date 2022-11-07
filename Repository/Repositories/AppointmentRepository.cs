@@ -19,6 +19,7 @@ namespace Repository.Repositories
         {
             _context = context;
         }
+
         public async Task<Appointment> GetAppointmentById(int id)
         {
             return await _context.Appointments.Where(a => a.Id == id).FirstOrDefaultAsync();
@@ -34,7 +35,7 @@ namespace Repository.Repositories
 
         public async Task<Appointment> GetAppointmentByDate(DateTime date)
         {
-            throw new NotImplementedException();
+            return await _context.Appointments.Where(a => a.Date == date).FirstOrDefaultAsync();
         }
 
         public async Task UpdateAppointment(Appointment appointment)
@@ -56,9 +57,11 @@ namespace Repository.Repositories
         {
             throw new NotImplementedException();
         }
+
         public async Task<bool> CheckIfAppointmentExistsById(int Id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Appointments.AnyAsync(u => u.Id == id && u.Active);
+            return result;
         }
     }
 }

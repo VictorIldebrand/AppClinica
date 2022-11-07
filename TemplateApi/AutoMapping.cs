@@ -22,7 +22,7 @@ namespace TemplateApi
             EmployeeMap();
             AppointmentMap();
             NotificationMap();
-            PatientOrderMap();
+            // PatientOrderMp();
             PatientMap();
             PatientRequestMap();
             ProfessorMap();
@@ -61,13 +61,13 @@ namespace TemplateApi
             CreateMap<Notification, NotificationMinDto>().ReverseMap();
         }
 
-        private void PatientOrderMap()
-        {
-            CreateMap<PatientOrder, PatientOrderDto>();
-            CreateMap<PatientOrder, PatientOrderDto>().ReverseMap();
-            CreateMap<PatientOrder, PatientOrderMinDto>();
-            CreateMap<PatientOrder, PatientOrderMinDto>().ReverseMap();
-        }
+        // private void PatientOrderMap()
+        // {
+        //     CreateMap<PatientOrder, PatientOrderDto>();
+        //     CreateMap<PatientOrder, PatientOrderDto>().ReverseMap();
+        //     CreateMap<PatientOrder, PatientOrderMinDto>();
+        //     CreateMap<PatientOrder, PatientOrderMinDto>().ReverseMap();
+        // }
 
         private void PatientMap()
         {

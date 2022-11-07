@@ -20,25 +20,30 @@ namespace Repository.Repositories
 
         public async Task<Professor> GetProfessorById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Professors.Where(u => u.id == id && u.active).FirstOrDefaultAsync();
         }
 
         public async Task<Professor> GetProfessorByEmailAndPassword(string email, string password)
         {
-            throw new NotImplementedException();
+            return await _context.Professors.Where(x => x.email == email && x.password == password && x.active).FirstOrDefaultAsync();
         }
+
         public async Task<bool> CheckIfProfessorExistsByEmail(string email)
         {
             var result = await _context.Professors.AnyAsync(u => u.email == email && u.active);
             return result;
         }
+
         public async Task<bool> CheckIfProfessorExistsById(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Professors.AnyAsync(u => u.email == email && u.active);
+            return result;
         }
+
         public async Task<Professor> GetProfessorByEmail(string email)
         {
-            throw new NotImplementedException();
+            var result = await _context.Professors.Where(u => u.email == email && u.active).FirstOrDefaultAsync();
+            return result;
         }
 
         public async Task<Professor> CreateProfessor(Professor professor)

@@ -23,19 +23,19 @@ namespace TemplateApi.Controllers {
             return Ok(PatientResult);
         }
 
-        [HttpGet("getpatient/{id}")]
+        [HttpGet("get/{id}")]
         public async Task<IActionResult> GetPatient(int id) {
             var result = await _PatientService.GetPatientById(id);
             return Ok(result);
         }
 
-        [HttpPut("updatePatient")]
+        [HttpPut("update")]
         public async Task<IActionResult> UpdatePatient(PatientDto Patient) {
             var result = await _PatientService.UpdatePatient(Patient);
             return Ok(result);
         }
 
-        [HttpDelete("deletePatient")]
+        [HttpDelete("delete/{id}")]
         public async Task<IActionResult> DeletePatient(int id) {
             var result = await _PatientService.DeletePatient(id);
             return Ok(result);

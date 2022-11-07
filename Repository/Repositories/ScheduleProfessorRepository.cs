@@ -20,17 +20,17 @@ namespace Repository.Repositories
 
         public async Task<ScheduleProfessor> GetScheduleProfessorById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.ScheduleProfessors.Where(u => u.Id == id).FirstOrDefaultAsync();
         }
 
         public async Task<ScheduleProfessor> GetScheduleProfessorByProfessorId(int idProfessor)
         {
-            throw new NotImplementedException();
+            return await _context.ScheduleProfessors.Where(u => u.IdProfessor == idProfessor).FirstOrDefaultAsync();
         }
 
         public async Task<ScheduleProfessor> GetScheduleProfessorByScheduleId(int idSchedule)
         {
-            throw new NotImplementedException();
+            return await _context.ScheduleProfessors.Where(u => u.idSchedule == idSchedule).FirstOrDefaultAsync();
         }
 
         public async Task<ScheduleProfessor> CreateScheduleProfessor(ScheduleProfessor schedule_professor)

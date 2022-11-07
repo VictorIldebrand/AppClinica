@@ -16,6 +16,7 @@ namespace Repository.Repositories
         {
             _context = context;
         }
+
         public async Task<Student> CreateStudent(Student student)
         {
             var result = await _context.Students.AddAsync(student);
@@ -23,6 +24,7 @@ namespace Repository.Repositories
 
             return result.Entity;
         }
+        
         public async Task UpdateStudent(Student student)
         {
             _context.Students.Update(student);
