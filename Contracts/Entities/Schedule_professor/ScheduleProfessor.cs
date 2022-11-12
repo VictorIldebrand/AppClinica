@@ -12,13 +12,13 @@ namespace Contracts.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Required]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Column("id_schedule")]
-        public int idSchedule { get; set; }
+        public int IdSchedule { get; set; }
 
         [Column("id_professor")]
-        public int idProfessor { get; set; }
+        public int IdProfessor { get; set; }
 
     }
 }

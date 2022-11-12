@@ -11,12 +11,12 @@ namespace Contracts.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Required]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Column("name")]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [Column("active")]
-        public bool active { get; set; }
+        public bool Active { get; set; }
     }
 }

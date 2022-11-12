@@ -65,5 +65,13 @@ namespace TemplateApi.Controllers
 
             return Ok(result);
         }
+
+        [HttpGet("getAll")]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _userService.GetUserFilter();
+
+            return Ok(result);
+        }
     }
 }

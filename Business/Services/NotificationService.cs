@@ -30,9 +30,9 @@ namespace Business.Services
             try
             {
                 var model = _Mapper.Map<Notification>(notificationDto);
-                model.status = 0;
+                model.Read = false;
                 var response = await _notificationRepository.CreateNotification(model);
-                if (response.id == 0)
+                if (response.Id == 0)
                     return new RequestResult<NotificationDto>(null, true, RequestAnswer.NotificationCreateError.GetDescription());
                 var dto = _Mapper.Map<NotificationDto>(response);
                 return new RequestResult<NotificationDto>(dto);
@@ -62,6 +62,27 @@ namespace Business.Services
                 return new RequestResult<NotificationDto>(null, true, ex.Message);
             }
         }
+
+        public async Task<RequestResult<NotificationDto[]>> GetAllNotification()
+        {
+            try
+            {
+                Notification[] model = await _notificationRepository.GetAllNotification();
+
+                if (model == null)
+                    return new RequestResult<NotificationDto[]>(new NotificationDto[1]);
+
+                var dto = _Mapper.Map<NotificationDto[]>(model);
+                var result = new RequestResult<NotificationDto[]>(dto);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                return new RequestResult<NotificationDto[]>(null, true, ex.Message);
+            }
+        }
+
 
         public async Task<RequestResult<RequestAnswer>> UpdateNotification(NotificationDto notificationDto) {
             try

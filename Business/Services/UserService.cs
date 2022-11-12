@@ -169,30 +169,33 @@ namespace Business.Services
             }
         }
 
-        public async Task<RequestResult<UserFilterDto>> GetUserFilter() 
-        {
-            var employeeModelList = await _employeeService.GetAllEmployees();
-            var dtoEmployeeList = _Mapper.Map<FilterInfoDto[]>(employeeModelList);
+        public async Task<RequestResult<UserFilterDto>> GetUserFilter() {
+            try {
+                var employeeModelList = await _employeeService.GetAllEmployees();
+                var dtoEmployeeList = _Mapper.Map<FilterInfoDto[]>(employeeModelList);
 
-            var patientModelList = await _patientService.GetAllPatients();
-            var dtoPatientList = _Mapper.Map<FilterInfoDto[]>(patientModelList);
+                var patientModelList = await _patientService.GetAllPatients();
+                var dtoPatientList = _Mapper.Map<FilterInfoDto[]>(patientModelList);
 
-            var studentModelList = await _studentService.GetAllStudents();
-            var dtoStudentList = _Mapper.Map<FilterInfoDto[]>(studentModelList);
+                var studentModelList = await _studentService.GetAllStudents();
+                var dtoStudentList = _Mapper.Map<FilterInfoDto[]>(studentModelList);
 
-            var professorModelList = await _professorService.GetAllProfessors();
-            var dtoProfessorList = _Mapper.Map<FilterInfoDto[]>(professorModelList);
-            var resultList = new UserFilterDto
-            {
-                employees = dtoEmployeeList,
-                professors = dtoProfessorList,
-                students = dtoStudentList,
-                patients = dtoPatientList
-            };
+                var professorModelList = await _professorService.GetAllProfessors();
+                var dtoProfessorList = _Mapper.Map<FilterInfoDto[]>(professorModelList);
 
-            var result = new RequestResult<UserFilterDto>(resultList);
+                var resultList = new UserFilterDto {
+                    employees = dtoEmployeeList,
+                    professors = dtoProfessorList,
+                    students = dtoStudentList,
+                    patients = dtoPatientList
+                };
 
-            return result;
+                var result = new RequestResult<UserFilterDto>(resultList);
+
+                return result;
+            } catch (Exception) {
+                return new RequestResult<UserFilterDto>(null, true, RequestAnswer.UserFilterError.GetDescription());
+            }
         }
     }
 }

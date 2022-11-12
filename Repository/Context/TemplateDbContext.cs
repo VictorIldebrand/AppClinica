@@ -12,7 +12,7 @@ namespace Repository.Context
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Patient> Patients { get; set; }
-        public DbSet<PatientOrder> PatientOrders { get; set; }
+        //public DbSet<PatientOrder> PatientOrders { get; set; }
         public DbSet<PatientRequest> PatientRequests { get; set; }
         public DbSet<Professor> Professors { get; set; }
         public DbSet<ScheduleProfessor> ScheduleProfessors { get; set; }

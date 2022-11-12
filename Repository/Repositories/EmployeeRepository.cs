@@ -30,12 +30,12 @@ namespace Repository.Repositories {
             return result.Entity;
         }
 
-        public Task<Employee> GetEmployeeByEmailAndPassword(string email, string password)
+        public async Task<Employee> GetEmployeeByEmailAndPassword(string email, string password)
         {
             return await _context.Employees.Where(x => x.Email == email && x.Password == password && x.Active).FirstOrDefaultAsync();
         }
         
-        public Task<Employee> GetEmployeeByEmail(string email)
+        public async Task<Employee> GetEmployeeByEmail(string email)
         {
             return await _context.Employees.Where(u => u.Email == email && u.Active).FirstOrDefaultAsync();
         }
@@ -47,6 +47,11 @@ namespace Repository.Repositories {
 
         public async Task<bool> CheckIfEmployeeExistsByEmail(string email) {
             var result = await _context.Employees.AnyAsync(u => u.Email == email && u.Active);
+            return result;
+        }
+
+        public async Task<bool> CheckIfEmployeeIsAdminById(int id, bool is_admin) {
+            var result = await _context.Employees.AnyAsync(u => u.Id == id && u.IsAdmin == true && u.Active);
             return result;
         }
 
@@ -63,6 +68,11 @@ namespace Repository.Repositories {
 
             _context.Employees.Update(employee);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Employee[]> GetAllEmployees(){
+            var employees = await _context.Employees.Where(x => x.Active).ToArrayAsync();
+            return employees;
         }
     }
 }

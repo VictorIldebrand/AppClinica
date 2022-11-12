@@ -32,9 +32,9 @@ namespace Business.Services
                 //if (scheduleExists)
                 //    return new RequestResult<ScheduleMinDto>(null, true, RequestAnswer.ScheduleDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<Schedule>(ScheduleDto);
-                model.active = true;
+                model.Active = true;
                 var response = await _scheduleRepository.CreateSchedule(model);
-                if (response.id == 0)
+                if (response.Id == 0)
                     return new RequestResult<ScheduleMinDto>(null, true, RequestAnswer.ScheduleCreateError.GetDescription());
                 var dto = _Mapper.Map<ScheduleMinDto>(response);
                 return new RequestResult<ScheduleMinDto>(dto);

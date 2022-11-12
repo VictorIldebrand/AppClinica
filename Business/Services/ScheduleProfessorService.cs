@@ -31,7 +31,7 @@ namespace Business.Services
             {
                 var model = _Mapper.Map<ScheduleProfessor>(ScheduleProfessorDto);
                 var response = await _scheduleProfessorRepository.CreateScheduleProfessor(model);
-                if (response.id == 0)
+                if (response.Id == 0)
                     return new RequestResult<ScheduleProfessorDto>(null, true, RequestAnswer.ScheduleProfessorCreateError.GetDescription());
                 var dto = _Mapper.Map<ScheduleProfessorDto>(response);
                 return new RequestResult<ScheduleProfessorDto>(dto);

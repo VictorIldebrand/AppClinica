@@ -12,20 +12,23 @@ namespace Contracts.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Required]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Column("id_student")]
-        public int idStudent { get; set; }
+        public int IdStudent { get; set; }
 
         [Column("id_patient")]
-        public int idPatient { get; set; }
+        public int IdPatient { get; set; }
 
-        [Column("status")]
+        [Column("id_employee")]
+        public int IdEmployee { get; set; }
+
+        [Column("read")]
         [Required]
-        public int status { get; set; }
+        public Boolean Read { get; set; }
 
         [Column("message")]
         [Required]
-        public String message { get; set; }
+        public String Message { get; set; }
     }
 }

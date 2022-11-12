@@ -8,6 +8,7 @@ using Contracts.Dto.Professor;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Contracts.Utils;
+using Contracts.TransactionObjects.User;
 
 namespace Business.Services
 {
@@ -32,9 +33,9 @@ namespace Business.Services
                 if (patientExists)
                     return new RequestResult<ProfessorDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<Professor>(professorDto);
-                model.active = true;
+                model.Active = true;
                 var response = await _professorRepository.CreateProfessor(model);
-                if (response.id == 0)
+                if (response.Id == 0)
                     return new RequestResult<ProfessorDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
                 var dto = _Mapper.Map<ProfessorDto>(response);
                 return new RequestResult<ProfessorDto>(dto);
@@ -63,6 +64,15 @@ namespace Business.Services
             {
                 return new RequestResult<ProfessorDto>(null, true, ex.Message);
             }
+        }
+
+        public async Task<FilterInfoDto[]> GetAllProfessor()
+        {
+            Professor[] professors = await _professorRepository.GetAllProfessors();
+
+            var array = _Mapper.Map<FilterInfoDto[]>(professors);
+
+            return array;
         }
 
         public async Task<RequestResult<RequestAnswer>> UpdateProfessor(ProfessorDto professorDto)
@@ -98,5 +108,13 @@ namespace Business.Services
                 return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDeleteError, true);
             }
         }
+        public async Task<FilterInfoDto[]> GetAllProfessors() {
+            Professor[] professors = await _professorRepository.GetAllProfessors();
+            
+            var array = _Mapper.Map<FilterInfoDto[]>(professors);
+
+            return array;
+        }
+        
     }
 }

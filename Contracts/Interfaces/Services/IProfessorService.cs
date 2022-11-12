@@ -1,6 +1,7 @@
 ﻿using Contracts.Dto.Professor;
 using Contracts.RequestHandle;
 using Contracts.TransactionObjects.Login;
+using Contracts.TransactionObjects.User;
 using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Services {
@@ -9,5 +10,6 @@ namespace Contracts.Interfaces.Services {
         Task<RequestResult<ProfessorDto>> GetProfessorById(int id);
         Task<RequestResult<RequestAnswer>> UpdateProfessor(ProfessorDto ProfessorDto);
         Task<RequestResult<RequestAnswer>> DeleteProfessor(int id);
+        Task<FilterInfoDto[]> GetAllProfessors();
     }
 }

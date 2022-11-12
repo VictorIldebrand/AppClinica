@@ -27,7 +27,12 @@ namespace Repository.Repositories
 
         public async Task<Patient> GetPatientById(int id)
         {
-            throw new System.NotImplementedException();
+            return await _context.Patients.Where(u => u.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<Patient[]> GetAllPatients()
+        {
+            return await _context.Patients.Where(u => u.Active).ToArrayAsync();
         }
 
         public async Task<Patient> GetPatientByEmailAndPassword(string email, string password)

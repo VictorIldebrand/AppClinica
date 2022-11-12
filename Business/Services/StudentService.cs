@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Contracts.Interfaces.Repositories;
 using Contracts.TransactionObjects.Login;
 using Contracts.Utils;
+using Contracts.TransactionObjects.User;
 
 namespace Business.Services
 {
@@ -35,11 +36,11 @@ namespace Business.Services
                     return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentDuplicateCreateError.GetDescription());
 
                 var model = _Mapper.Map<Student>(studentDto);
-                model.active = true;
+                model.Active = true;
 
                 var response = await _studentRepository.CreateStudent(model);
 
-                if (response.id == 0)
+                if (response.Id == 0)
                     return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentCreateError.GetDescription());
 
                 var dto = _Mapper.Map<StudentDto>(response);
@@ -77,6 +78,15 @@ namespace Business.Services
             {
                 return new RequestResult<StudentDto>(null, true, ex.Message);
             }
+        }
+
+        public async Task<FilterInfoDto[]> GetAllStudents()
+        {
+            Student[] students = await _studentRepository.GetAllStudents();
+
+            var array = _Mapper.Map<FilterInfoDto[]>(students);
+
+            return array;
         }
 
         public async Task<RequestResult<StudentDto>> GetStudentByEmail(string email)

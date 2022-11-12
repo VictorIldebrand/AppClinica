@@ -3,7 +3,7 @@ using Contracts.Dto.Appointment;
 using Contracts.Dto.Employee;
 using Contracts.Dto.Notification;
 using Contracts.Dto.Patient;
-using Contracts.Dto.PatientOrder;
+//using Contracts.Dto.PatientOrder;
 using Contracts.Dto.PatientRequest;
 using Contracts.Dto.Professor;
 using Contracts.Dto.Schedule;
@@ -11,6 +11,7 @@ using Contracts.Dto.ScheduleProfessor;
 using Contracts.Dto.Student;
 using Contracts.DTO.User;
 using Contracts.Entities;
+using Contracts.TransactionObjects.User;
 
 namespace TemplateApi
 {
@@ -51,6 +52,8 @@ namespace TemplateApi
             CreateMap<Employee, EmployeeDto>().ReverseMap();
             CreateMap<Employee, EmployeeMinDto>();
             CreateMap<Employee, EmployeeMinDto>().ReverseMap();
+            CreateMap<Employee, FilterInfoDto>();
+            CreateMap<Employee, FilterInfoDto>().ReverseMap();
         }
 
         private void NotificationMap()
@@ -75,6 +78,8 @@ namespace TemplateApi
             CreateMap<Patient, PatientDto>().ReverseMap();
             CreateMap<Patient, PatientMinDto>();
             CreateMap<Patient, PatientMinDto>().ReverseMap();
+            CreateMap<Patient, FilterInfoDto>();
+            CreateMap<Patient, FilterInfoDto>().ReverseMap();
         }
 
         private void PatientRequestMap()
@@ -91,6 +96,8 @@ namespace TemplateApi
             CreateMap<Professor, ProfessorDto>().ReverseMap();
             CreateMap<Professor, ProfessorMinDto>();
             CreateMap<Professor, ProfessorMinDto>().ReverseMap();
+            CreateMap<Professor, FilterInfoDto>();
+            CreateMap<Professor, FilterInfoDto>().ReverseMap();
         }
 
         private void ScheduleProfessorMap()
@@ -115,6 +122,8 @@ namespace TemplateApi
             CreateMap<Student, StudentDto>().ReverseMap();
             CreateMap<Student, StudentMinDto>();
             CreateMap<Student, StudentMinDto>().ReverseMap();
+            CreateMap<Student, FilterInfoDto>();
+            CreateMap<Student, FilterInfoDto>().ReverseMap();
         }
     }
 }

@@ -30,7 +30,7 @@ namespace Repository.Repositories
 
         public async Task<ScheduleProfessor> GetScheduleProfessorByScheduleId(int idSchedule)
         {
-            return await _context.ScheduleProfessors.Where(u => u.idSchedule == idSchedule).FirstOrDefaultAsync();
+            return await _context.ScheduleProfessors.Where(u => u.IdSchedule == idSchedule).FirstOrDefaultAsync();
         }
 
         public async Task<ScheduleProfessor> CreateScheduleProfessor(ScheduleProfessor schedule_professor)
@@ -49,7 +49,7 @@ namespace Repository.Repositories
         
         public async Task DeleteScheduleProfessor(int id)
         {
-            var schedule_professor = await _context.ScheduleProfessors.Where(u => u.id == id).FirstOrDefaultAsync();
+            var schedule_professor = await _context.ScheduleProfessors.Where(u => u.Id == id).FirstOrDefaultAsync();
             //schedule_professor.Active = false;
 
             _context.ScheduleProfessors.Update(schedule_professor);

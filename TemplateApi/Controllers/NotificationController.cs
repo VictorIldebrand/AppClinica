@@ -27,6 +27,12 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
+        [HttpGet("get/{all}")]
+        public async Task<IActionResult> GetAllNotification(int id) {
+            var result = await _notificationService.GetAllNotification();
+            return Ok(result);
+        }
+
         [HttpPut("update")]
         public async Task<IActionResult> UpdateNotification(NotificationDto notification) {
             var result = await _notificationService.UpdateNotification(notification);

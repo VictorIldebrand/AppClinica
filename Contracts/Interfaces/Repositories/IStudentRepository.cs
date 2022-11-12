@@ -15,5 +15,6 @@ namespace Contracts.Interfaces.Repositories {
         Task<Student> GetStudentByEmailAndPassword(string email, string password);
         Task<Student> GetStudentByEmail(string email);
         Task<Student> GetStudentByRa(string ra);
-    }
+        Task<Student[]> GetAllStudents();
+    }   
 }

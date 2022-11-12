@@ -127,5 +127,13 @@ namespace Business.Services
                 return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeDeleteError, true);
             }
         }
+
+        public async Task<FilterInfoDto[]> GetAllEmployees() {
+            Employee[] employees = await _employeeRepository.GetAllEmployees();
+
+            var array = _Mapper.Map<FilterInfoDto[]>(employees);
+
+            return array;
+        }
     }
 }

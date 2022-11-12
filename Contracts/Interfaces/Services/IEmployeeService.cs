@@ -1,6 +1,7 @@
 ﻿using Contracts.Dto.Employee;
 using Contracts.RequestHandle;
 using Contracts.TransactionObjects.Login;
+using Contracts.TransactionObjects.User;
 using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Services {
@@ -9,5 +10,7 @@ namespace Contracts.Interfaces.Services {
         Task<RequestResult<EmployeeDto>> GetEmployeeById(int id);
         Task<RequestResult<RequestAnswer>> UpdateEmployee(EmployeeDto EmployeeDTO);
         Task<RequestResult<RequestAnswer>> DeleteEmployee(int id);
+
+        Task<FilterInfoDto[]> GetAllEmployees();
     }
 }

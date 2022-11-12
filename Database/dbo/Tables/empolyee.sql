@@ -4,5 +4,6 @@
   [password] varchar(255),
   [name] varchar(255),
   [phone] varchar(255),
-  [active] bit
+  [active] bit,
+  [is_admin] integer
 )

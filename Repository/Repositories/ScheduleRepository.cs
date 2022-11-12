@@ -20,7 +20,7 @@ namespace Repository.Repositories
 
         public async Task<Schedule> GetScheduleById(int id)
         {
-            return await _context.Schedules.Where(u => u.id == id && u.active).FirstOrDefaultAsync();
+            return await _context.Schedules.Where(u => u.Id == id && u.Active).FirstOrDefaultAsync();
         }
 
         public async Task<Schedule> CreateSchedule(Schedule schedule)
@@ -39,8 +39,8 @@ namespace Repository.Repositories
 
         public async Task DeleteSchedule(int id)
         {
-            var schedule = await _context.Schedules.Where(u => u.id == id).FirstOrDefaultAsync();
-            schedule.active = false;
+            var schedule = await _context.Schedules.Where(u => u.Id == id).FirstOrDefaultAsync();
+            schedule.Active = false;
 
             _context.Schedules.Update(schedule);
             await _context.SaveChangesAsync();
@@ -48,7 +48,7 @@ namespace Repository.Repositories
 
         public async Task<bool> CheckIfScheduleExistsById(int id)
         {
-            var result = await _context.Schedules.AnyAsync(u => u.id == id && u.active);
+            var result = await _context.Schedules.AnyAsync(u => u.Id == id && u.Active);
             return result;
         }
     }

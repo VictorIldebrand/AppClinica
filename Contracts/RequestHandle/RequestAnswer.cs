@@ -42,6 +42,9 @@ namespace Contracts.RequestHandle
         [Display(Description = "Ocorreu um error ao tentar fazer o login.")]
         LoginError,
 
+        [Display(Description = "Erro no UserFilter")]
+        UserFilterError,
+
         #endregion
 
         #region Student

@@ -34,24 +34,27 @@ namespace Repository.Repositories
 
         public async Task DeleteNotification(int id)
         {
-            var notification = await _context.Notifications.Where(u => u.id == id).FirstOrDefaultAsync();
-            notification.status = 0;
+            var notification = await _context.Notifications.Where(u => u.Id == id).FirstOrDefaultAsync();
 
             _context.Notifications.Update(notification);
             await _context.SaveChangesAsync();
         }
 
         public async Task<Notification> GetNotificationByPatientId(int idPatient) {
-            return await _context.Notifications.Where(u => u.idPatient == idPatient).FirstOrDefaultAsync();
+            return await _context.Notifications.Where(u => u.IdPatient == idPatient).FirstOrDefaultAsync();
         }
 
         public async Task<Notification> GetNotificationByStudentId(int idStudent) {
-            return await _context.Notifications.Where(u => u.idStudent == idStudent).FirstOrDefaultAsync();
+            return await _context.Notifications.Where(u => u.IdStudent == idStudent).FirstOrDefaultAsync();
         }
 
         public async Task<Notification> GetNotificationById(int id)
         {
-            return await _context.Notifications.Where(u => u.id == id).FirstOrDefaultAsync();
+            return await _context.Notifications.Where(u => u.Id == id).FirstOrDefaultAsync();
+        }
+
+        public async Task<Notification[]> GetAllNotification() {
+            return await _context.Notifications.Where(u => !u.Read).ToArrayAsync(); //0->Notifications NOT read yet 
         }
 
         public async Task<bool> CheckIfNotificationExistsById(int id)

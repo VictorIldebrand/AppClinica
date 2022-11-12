@@ -8,6 +8,7 @@ using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Contracts.Interfaces.Repositories;
 using Contracts.Utils;
+using Contracts.TransactionObjects.User;
 
 namespace Business.Services
 {
@@ -65,6 +66,15 @@ namespace Business.Services
             }
         }
 
+        public async Task<FilterInfoDto[]> GetAllPatients()
+        {
+            Patient[] patients  = await _patientRepository.GetAllPatients();
+
+            var array = _Mapper.Map<FilterInfoDto[]>(patients);
+
+            return array;
+        }
+
         public async Task<RequestResult<RequestAnswer>> UpdatePatient(PatientDto patientDto)
         {
             try
@@ -98,5 +108,6 @@ namespace Business.Services
                 return new RequestResult<RequestAnswer>(RequestAnswer.PatientDeleteError, true);
             }
         }
+
     }
 }

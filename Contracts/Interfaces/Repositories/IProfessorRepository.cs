@@ -11,5 +11,6 @@ namespace Contracts.Interfaces.Repositories {
         Task<Professor> CreateProfessor(Professor professor);
         Task UpdateProfessor(Professor professor);
         Task DeleteProfessor(int id);
+        Task<Professor[]> GetAllProfessors();
     }
 }

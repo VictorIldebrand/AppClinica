@@ -58,9 +58,9 @@ namespace Repository.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<bool> CheckIfAppointmentExistsById(int Id)
+        public async Task<bool> CheckIfAppointmentExistsById(int id)
         {
-            var result = await _context.Appointments.AnyAsync(u => u.Id == id && u.Active);
+            var result = await _context.Appointments.AnyAsync(u => u.Id == id);
             return result;
         }
     }
