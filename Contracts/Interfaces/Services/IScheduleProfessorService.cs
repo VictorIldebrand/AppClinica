@@ -1,6 +1,5 @@
 using Contracts.Dto.ScheduleProfessor;
 using Contracts.RequestHandle;
-using Contracts.TransactionObjects.Login;
 using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Services {

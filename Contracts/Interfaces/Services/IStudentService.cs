@@ -1,11 +1,9 @@
 ﻿using Contracts.Dto.Student;
 using Contracts.RequestHandle;
-using Contracts.TransactionObjects.Login;
 using Contracts.TransactionObjects.User;
 using System.Threading.Tasks;
 
-namespace Contracts.Interfaces.Services
-{
+namespace Contracts.Interfaces.Services {
     public interface IStudentService
     {
         Task<RequestResult<StudentDto>> CreateStudent(StudentDto StudentDto);

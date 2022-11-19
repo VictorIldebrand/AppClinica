@@ -8,7 +8,6 @@ using Contracts.Dto.ScheduleProfessor;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Contracts.Utils;
-using Contracts.Dto.Schedule;
 
 namespace Business.Services
 {

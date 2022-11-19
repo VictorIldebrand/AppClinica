@@ -1,11 +1,8 @@
 ﻿using Contracts.Interfaces.Services;
-using Contracts.TransactionObjects.Login;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Contracts.Utils;
 using Contracts.Dto.Employee;
-using Contracts.Entities;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]

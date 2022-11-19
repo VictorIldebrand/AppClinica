@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
 using Repository.Context;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
-using System;
 
 namespace Repository.Repositories
 {

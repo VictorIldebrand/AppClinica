@@ -1,18 +1,14 @@
 ﻿using AutoMapper;
-using Contracts.Dto.Employee;
 using Contracts.Dto.PatientRequest;
-using Contracts.DTO.User;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
 using Contracts.Interfaces.Services;
 using Contracts.RequestHandle;
-using Contracts.TransactionObjects.Login;
 using Contracts.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
-namespace Business.Services
-{
+namespace Business.Services {
     public class PatientRequestService : IPatientRequestService
     {
         private readonly IMapper _Mapper;

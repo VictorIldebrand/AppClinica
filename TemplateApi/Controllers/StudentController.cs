@@ -1,11 +1,8 @@
 ﻿using Contracts.Interfaces.Services;
-using Contracts.TransactionObjects.Login;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Contracts.Utils;
 using Contracts.Dto.Student;
-using Contracts.Entities;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
@@ -24,6 +21,7 @@ namespace TemplateApi.Controllers {
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(int id)
         {
             var result = await _studentService.GetStudentById(id);
@@ -31,18 +29,21 @@ namespace TemplateApi.Controllers {
         }
 
         [HttpPut("update")]
+        [AllowAnonymous]
         public async Task<IActionResult> Update(StudentDto student) {
             var result = await _studentService.UpdateStudent(student);
             return Ok(result);
         }
 
         [HttpPost("request-patient")]
+        [AllowAnonymous]
         public async Task<IActionResult> RequestPatient() {
             var result = await _studentService.RequestPatient();
             return Ok(result);
         }
 
         [HttpDelete("delete/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _studentService.DeleteStudent(id);

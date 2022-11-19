@@ -1,9 +1,7 @@
 using Contracts.Interfaces.Services;
-using Contracts.TransactionObjects.Login;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Contracts.Utils;
 using Contracts.Dto.PatientRequest;
 
 namespace TemplateApi.Controllers {
@@ -23,18 +21,21 @@ namespace TemplateApi.Controllers {
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPatientRequest(int id) {
             var result = await _patientRequestService.GetPatientRequestById(id);
             return Ok(result);
         }
 
         [HttpPut("update")]
+        [AllowAnonymous]
         public async Task<IActionResult> UpdatePatient(PatientRequestDto patientRequestDto) {
             var result = await _patientRequestService.UpdatePatientRequest(patientRequestDto);
             return Ok(result);
         }
 
         [HttpDelete("delete/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeletePatientRequest(int id) {
             var result = await _patientRequestService.DeletePatientRequest(id);
             return Ok(result);

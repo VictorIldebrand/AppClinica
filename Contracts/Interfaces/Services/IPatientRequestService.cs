@@ -1,7 +1,5 @@
-using Contracts.Dto.Patient;
 using Contracts.Dto.PatientRequest;
 using Contracts.RequestHandle;
-using Contracts.TransactionObjects.Login;
 using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Services {

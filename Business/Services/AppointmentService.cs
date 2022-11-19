@@ -1,19 +1,15 @@
 ﻿using AutoMapper;
 using Contracts.Dto.Appointment;
-using Contracts.Dto.Employee;
-using Contracts.DTO.User;
 using Contracts.Entities;
 using Contracts.Enums.Status;
 using Contracts.Interfaces.Repositories;
 using Contracts.Interfaces.Services;
 using Contracts.RequestHandle;
-using Contracts.TransactionObjects.Login;
 using Contracts.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
-namespace Business.Services
-{
+namespace Business.Services {
     public class AppointmentService : IAppointmentService
     {
         private readonly IMapper _Mapper;
@@ -97,6 +93,10 @@ namespace Business.Services
             {
                 return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentDeleteError, true);
             }
+        }
+
+        public Task<RequestResult<AppointmentDto>> GetAppointments() {
+            throw new NotImplementedException();
         }
     }
 }

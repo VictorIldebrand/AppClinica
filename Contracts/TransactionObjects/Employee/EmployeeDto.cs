@@ -8,7 +8,6 @@ namespace Contracts.Dto.Employee
         public string Email { get; set; }
         public string Password { get; set; }
         public string Phone { get; set; }
-        public bool Active { get; set; }
         public bool IsAdmin { get; set; }
     }
 }

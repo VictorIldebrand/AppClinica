@@ -4,13 +4,10 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
-using Contracts.Dto.Appointment;
-using Contracts.RequestHandle;
 using System;
 using System.Collections.Generic;
 
-namespace Repository.Repositories
-{
+namespace Repository.Repositories {
     public class AppointmentRepository : IAppointmentRepository
     {
         private readonly TemplateDbContext _context;
@@ -53,9 +50,9 @@ namespace Repository.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<Appointment>> GetAppointmentsByParameters(string especialidade, int professorId, int alunoId, int pacienteId, Enum status, DateTime data)
+        public async Task<Appointment[]> GetAppointments()
         {
-            throw new NotImplementedException();
+            return await _context.Appointments.Where(a => a.Id > 0).ToArrayAsync();
         }
 
         public async Task<bool> CheckIfAppointmentExistsById(int id)

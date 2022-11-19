@@ -1,6 +1,5 @@
 ﻿using Contracts.Dto.Patient;
 using Contracts.RequestHandle;
-using Contracts.TransactionObjects.Login;
 using Contracts.TransactionObjects.User;
 using System.Threading.Tasks;
 

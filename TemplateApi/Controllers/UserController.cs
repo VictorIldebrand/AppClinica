@@ -67,6 +67,7 @@ namespace TemplateApi.Controllers
         }
 
         [HttpGet("getAll")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetAll()
         {
             var result = await _userService.GetUserFilter();

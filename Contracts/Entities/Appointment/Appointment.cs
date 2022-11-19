@@ -1,11 +1,9 @@
-﻿using Contracts.Entities.Attributes;
-using Contracts.Enums.Status;
+﻿using Contracts.Enums.Status;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Contracts.Entities
-{
+namespace Contracts.Entities {
     [Table("appointment")]
     public partial class Appointment
     {

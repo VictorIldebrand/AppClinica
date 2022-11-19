@@ -1,10 +1,7 @@
 using Contracts.Interfaces.Services;
-using Contracts.TransactionObjects.Login;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Contracts.Utils;
-using Contracts.Dto.Schedule;
 using Contracts.Dto.ScheduleProfessor;
 
 namespace TemplateApi.Controllers {
@@ -17,6 +14,7 @@ namespace TemplateApi.Controllers {
         public ScheduleProfessorController(IScheduleProfessorService scheduleProfessorService) => _scheduleProfessorService = scheduleProfessorService;
 
         [HttpPost("create")]
+        [AllowAnonymous]
         public async Task<IActionResult> CreateScheduleProfessor(ScheduleProfessorDto scheduleProfessorDto)
         {
             var scheduleProfessorResult = await _scheduleProfessorService.CreateScheduleProfessor(scheduleProfessorDto);
@@ -24,18 +22,21 @@ namespace TemplateApi.Controllers {
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetScheduleProfessor(int id) {
             var result = await _scheduleProfessorService.GetScheduleProfessorById(id);
             return Ok(result);
         }
 
         [HttpPut("update")]
+        [AllowAnonymous]
         public async Task<IActionResult> UpdateScheduleProfessor(ScheduleProfessorDto scheduleProfessorDto) {
             var result = await _scheduleProfessorService.UpdateScheduleProfessor(scheduleProfessorDto);
             return Ok(result);
         }
 
         [HttpDelete("delete/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteScheduleProfessor(int id) {
             var result = await _scheduleProfessorService.DeleteScheduleProfessor(id);
             return Ok(result);

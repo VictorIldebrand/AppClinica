@@ -7,7 +7,6 @@ using Contracts.Dto.Student;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Contracts.Interfaces.Repositories;
-using Contracts.TransactionObjects.Login;
 using Contracts.Utils;
 using Contracts.TransactionObjects.User;
 

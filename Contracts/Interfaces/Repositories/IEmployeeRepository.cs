@@ -1,5 +1,4 @@
 using Contracts.Entities;
-using Contracts.TransactionObjects.User;
 using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Repositories {

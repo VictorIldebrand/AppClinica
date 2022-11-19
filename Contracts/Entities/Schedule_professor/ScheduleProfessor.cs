@@ -1,10 +1,7 @@
-﻿using Contracts.Entities.Attributes;
-using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Contracts.Entities
-{
+namespace Contracts.Entities {
     [Table("schedule_professor")]
     public partial class ScheduleProfessor
     {

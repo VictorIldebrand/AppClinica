@@ -1,18 +1,15 @@
 ﻿using AutoMapper;
 using Contracts.Dto.Employee;
-using Contracts.DTO.User;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
 using Contracts.Interfaces.Services;
 using Contracts.RequestHandle;
-using Contracts.TransactionObjects.Login;
 using Contracts.TransactionObjects.User;
 using Contracts.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
-namespace Business.Services
-{
+namespace Business.Services {
     public class EmployeeService : IEmployeeService
     {
         private readonly IMapper _Mapper;

@@ -1,17 +1,14 @@
 ﻿using AutoMapper;
 using Contracts.Dto.Notification;
 using Contracts.Entities;
-using Contracts.Enums.Status;
 using Contracts.Interfaces.Repositories;
 using Contracts.Interfaces.Services;
 using Contracts.RequestHandle;
-using Contracts.TransactionObjects.Login;
 using Contracts.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Threading.Tasks;
-namespace Business.Services
-{
+namespace Business.Services {
     public class NotificationService : INotificationService
     {
         private readonly IMapper _Mapper;

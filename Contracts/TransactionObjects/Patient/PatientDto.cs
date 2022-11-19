@@ -11,6 +11,5 @@ namespace Contracts.Dto.Patient
         public string Numfolder { get; set; }
         public string Cpf { get; set; }
         public string Phone { get; set; }
-        public bool Active { get; set; }
     }
 }

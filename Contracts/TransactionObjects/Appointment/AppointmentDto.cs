@@ -5,7 +5,7 @@ namespace Contracts.Dto.Appointment
     public class AppointmentDto
     {
         public int Id { get; set; }
-        public TimestampAttribute Date { get; set; }
+        public TimestampAttribute DateTime { get; set; }
         public int Status { get; set; }
         public string CancellationReason { get; set; }
         public string PatientRequestId { get; set; }
