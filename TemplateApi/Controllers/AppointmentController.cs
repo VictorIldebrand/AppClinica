@@ -28,7 +28,7 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpGet("get/{id}")]
+        [HttpGet("get")]
         [AllowAnonymous]
         public async Task<IActionResult> GetAppointments() {
             var result = await _appointmentService.GetAppointments();

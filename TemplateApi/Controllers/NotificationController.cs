@@ -27,9 +27,9 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpGet("get/{all}")]
+        [HttpGet("get")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAllNotification(int id) {
+        public async Task<IActionResult> GetAllNotification() {
             var result = await _notificationService.GetAllNotification();
             return Ok(result);
         }
