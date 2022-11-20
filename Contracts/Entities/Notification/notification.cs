@@ -12,21 +12,18 @@ namespace Contracts.Entities {
         [Required]
         public int Id { get; set; }
 
-        [Column("id_student")]
-        public int IdStudent { get; set; }
+        [Column("id_appointment")]
+        public Appointment Appointment { get; set; }
 
-        [Column("id_patient")]
-        public int IdPatient { get; set; }
-
-        [Column("id_employee")]
-        public int IdEmployee { get; set; }
+        [Column("id_patient_request")]
+        public PatientRequest PatientRequest { get; set; }
 
         [Column("read")]
         [Required]
-        public Boolean Read { get; set; }
+        public bool Read { get; set; }
 
         [Column("message")]
         [Required]
-        public String Message { get; set; }
+        public string Message { get; set; }
     }
 }

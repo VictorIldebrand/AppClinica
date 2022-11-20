@@ -18,7 +18,7 @@ namespace Repository.Repositories
 
         public async Task<PatientRequest> GetPatientRequestByStudentId(int idStudent)
         {
-            return await _context.PatientRequests.Where(u => u.IdStudent == idStudent && u.Active).FirstOrDefaultAsync();
+            return await _context.PatientRequests.Where(u => u.Student.Id == idStudent && u.Active).FirstOrDefaultAsync();
         }
 
         public async Task<PatientRequest> GetPatientRequestById(int id)

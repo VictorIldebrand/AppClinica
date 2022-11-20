@@ -32,7 +32,7 @@ namespace Repository.Repositories {
 
         public async Task<Appointment> GetAppointmentByDate(DateTime date)
         {
-            return await _context.Appointments.Where(a => a.Date == date).FirstOrDefaultAsync();
+            return await _context.Appointments.Where(a => a.DateAndTime == date).FirstOrDefaultAsync();
         }
 
         public async Task UpdateAppointment(Appointment appointment)

@@ -37,12 +37,12 @@ namespace Repository.Repositories {
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Notification> GetNotificationByPatientId(int idPatient) {
-            return await _context.Notifications.Where(u => u.IdPatient == idPatient).FirstOrDefaultAsync();
+        public async Task<Notification> GetNotificationByPatientId(int idPatientRequest) {
+            return await _context.Notifications.Where(u => u.PatientRequest.Id == idPatientRequest).FirstOrDefaultAsync();
         }
 
-        public async Task<Notification> GetNotificationByStudentId(int idStudent) {
-            return await _context.Notifications.Where(u => u.IdStudent == idStudent).FirstOrDefaultAsync();
+        public async Task<Notification> GetNotificationByStudentId(int idAppointment) {
+            return await _context.Notifications.Where(u => u.Appointment.Id == idAppointment).FirstOrDefaultAsync();
         }
 
         public async Task<Notification> GetNotificationById(int id)

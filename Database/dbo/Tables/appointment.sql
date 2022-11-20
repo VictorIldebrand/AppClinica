@@ -6,7 +6,11 @@
   [id_schedule] integer,
   [id_patient] integer,
   [id_employee] integer,
+  [id_student] integer,
   [new_patient] bit,
   [type] varchar(512),
-  [note] varchar(512)
+  [note] varchar(512),
+  [duration] varchar(30),
+  [companion] BIT, 
+  [location] VARCHAR(50)
 )

@@ -16,6 +16,10 @@ namespace Contracts.Entities {
         [SensitiveData]
         public string Email { get; set; }
 
+        [Column("cpf")]
+        [SensitiveData]
+        public string Cpf { get; set; }
+
         [Column("password")]
         [SensitiveData]
         public string Password { get; set; }

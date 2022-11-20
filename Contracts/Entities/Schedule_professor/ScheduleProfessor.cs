@@ -12,10 +12,10 @@ namespace Contracts.Entities {
         public int Id { get; set; }
 
         [Column("id_schedule")]
-        public int IdSchedule { get; set; }
+        public Schedule Schedule { get; set; }
 
         [Column("id_professor")]
-        public int IdProfessor { get; set; }
+        public Professor Professor { get; set; }
 
     }
 }

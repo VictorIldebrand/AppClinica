@@ -27,13 +27,13 @@ namespace Contracts.Entities {
         public StatusEnum Status { get; set; }
 
         [Column("id_student")]
-        public int IdStudent { get; set; }
+        public Student Student { get; set; }
 
         [Column("new_patient")]
         public bool NewPatient { get; set; }
 
         [Column("id_schedule_professor")]
-        public int IdScheduleProfessor { get; set; }
+        public ScheduleProfessor ScheduleProfessor { get; set; }
 
         [Column("procedure")]
         public string Procedure { get; set; }

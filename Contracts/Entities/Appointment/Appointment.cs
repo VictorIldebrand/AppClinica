@@ -14,7 +14,7 @@ namespace Contracts.Entities {
         public int Id { get; set; }
 
         [Column("date")]
-        public DateTime Date { get; set; }
+        public DateTime DateAndTime { get; set; }
 
         [Column("status")]
         [Required]
@@ -24,13 +24,16 @@ namespace Contracts.Entities {
         public string CancellationReason { get; set; }
 
         [Column("id_schedule")]
-        public int IdSchedule { get; set; }
+        public Schedule Schedule { get; set; }
 
         [Column("id_patient")]
-        public int IdPatient { get; set; }
+        public Patient Patient { get; set; }
 
         [Column("id_employee")]
-        public int IdEmployee { get; set; }
+        public Employee Employee { get; set; }
+
+        [Column("id_student")]
+        public Student Student { get; set; }
 
         [Column("new_patient")]
         public bool NewPatient { get; set; }
@@ -40,5 +43,14 @@ namespace Contracts.Entities {
 
         [Column("note")]
         public string Note { get; set; }
+
+        [Column("duration")]
+        public string Duration { get; set; }
+
+        [Column("companion")]
+        public bool Companion { get; set; }
+
+        [Column("locaton")]
+        public string Location { get; set; }
     }
 }

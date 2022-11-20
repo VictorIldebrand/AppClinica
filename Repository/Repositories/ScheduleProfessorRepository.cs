@@ -22,12 +22,12 @@ namespace Repository.Repositories {
 
         public async Task<ScheduleProfessor> GetScheduleProfessorByProfessorId(int idProfessor)
         {
-            return await _context.ScheduleProfessors.Where(u => u.IdProfessor == idProfessor).FirstOrDefaultAsync();
+            return await _context.ScheduleProfessors.Where(u => u.Professor.Id == idProfessor).FirstOrDefaultAsync();
         }
 
         public async Task<ScheduleProfessor> GetScheduleProfessorByScheduleId(int idSchedule)
         {
-            return await _context.ScheduleProfessors.Where(u => u.IdSchedule == idSchedule).FirstOrDefaultAsync();
+            return await _context.ScheduleProfessors.Where(u => u.Schedule.Id == idSchedule).FirstOrDefaultAsync();
         }
 
         public async Task<ScheduleProfessor> CreateScheduleProfessor(ScheduleProfessor schedule_professor)
