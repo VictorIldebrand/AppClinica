@@ -7,7 +7,6 @@ namespace Contracts.Dto.Patient
         public string Name { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public string NumEnrollment { get; set; }
         public string Numfolder { get; set; }
         public string Cpf { get; set; }
         public string Phone { get; set; }

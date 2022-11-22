@@ -10,8 +10,6 @@ namespace Contracts.Dto.Student
         public string Password { get; set; }
         public string Phone { get; set; }
         public string Period { get; set; }
-        //public string DataAcesso { get => DateTime.Now.ToString(); }
-        //public DateTime data_da_consulta { get; set; }
     }
 
 }
