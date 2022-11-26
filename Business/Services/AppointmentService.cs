@@ -15,6 +15,7 @@ namespace Business.Services {
         private readonly IMapper _Mapper;
         private readonly IConfiguration _configuration;
         private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IPatientRepository _patientRepository;
 
         public AppointmentService(IMapper Mapper, IConfiguration configuration, IAppointmentRepository appointmentRepository)
         {
@@ -27,6 +28,10 @@ namespace Business.Services {
         {
             try
             {
+                
+                var patient = await _patientRepository.GetPatientById(appointmentDto.IdPatient);
+                //if(patient.)
+                
                 var model = _Mapper.Map<Appointment>(appointmentDto);
                 model.Status = StatusEnum.Confirmed;
                 var response = await _appointmentRepository.CreateAppointment(model);
@@ -61,19 +66,24 @@ namespace Business.Services {
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateAppointment(AppointmentDto appointment)
+        public async Task<RequestResult<RequestAnswer>> UpdateAppointment(AppointmentDto appointment) 
         {
             try
             {
-                var appointmentCheck = await _appointmentRepository.CheckIfAppointmentExistsById(appointment.Id);
+                var appointmentDatabase = await _appointmentRepository.GetAppointmentById(appointment.Id); 
 
-                if(!appointmentCheck)
+                if(appointmentDatabase != null) {
+                    if(Rules.Check48HoursBefore(appointmentDatabase.DateAndTime, DateTime.Now)){
+                        var model = _Mapper.Map<Appointment>(appointment);
+                        await _appointmentRepository.UpdateAppointment(model);
+
+                        return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentUpdateSuccess);
+                    }else{
+                        return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentLessThan48Hours);
+                    }
+                }else{
                     return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentNotFound);
-
-                var model = _Mapper.Map<Appointment>(appointment);
-                await _appointmentRepository.UpdateAppointment(model);
-
-                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentUpdateSuccess);
+                }
             }
             catch (Exception)
             {
@@ -85,9 +95,14 @@ namespace Business.Services {
         {
             try
             {
-                await _appointmentRepository.DeleteAppointment(id);
-
-                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentDeleteSuccess);
+                var appointment = await _appointmentRepository.GetAppointmentById(id); 
+                
+                if(Rules.Check48HoursBefore(appointment.DateAndTime, DateTime.Now)){ 
+                    await _appointmentRepository.DeleteAppointment(id);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentDeleteSuccess);
+                }else{
+                    return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentLessThan48Hours); 
+                }          
             }
             catch (Exception)
             {

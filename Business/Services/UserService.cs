@@ -22,6 +22,10 @@ namespace Business.Services
         private readonly IProfessorService _professorService;
         private readonly IStudentService _studentService;
         private readonly IPatientService _patientService;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IStudentRepository _studentRepository;
+        private readonly IProfessorRepository _professorRepository;
+        private readonly IPatientRepository _patientRepository;
 
         public UserService(IMapper Mapper, IConfiguration configuration, IUserRepository userRepository, IEmployeeService employeeService, IProfessorService professorService, IStudentService studentService, IPatientService patientService)
         {
@@ -71,9 +75,32 @@ namespace Business.Services
         {
             try
             {
-                var user = await _userRepository.GetUserByEmailAndPassword(loginRequest.Email, loginRequest.Password);
 
-                if (user == null)
+                User user = new User();
+                // Coletar dos 4 repositórios Student, Patient, Professor, Employee
+                // Verificar para cada retorno se existe, se existir, montar o obj user e gerar o token
+                var employee = await _employeeRepository.GetEmployeeByEmailAndPassword(loginRequest.Email, loginRequest.Password);
+                var student = await _studentRepository.GetStudentByEmailAndPassword(loginRequest.Email, loginRequest.Password);
+                var patient = await _patientRepository.GetPatientByEmailAndPassword(loginRequest.Email, loginRequest.Password);
+                var professor = await _professorRepository.GetProfessorByEmailAndPassword(loginRequest.Email, loginRequest.Password);
+
+                if (employee != null){
+                    user.Id = employee.Id;
+                    user.Email = employee.Email;
+                    user.Password = employee.Password;
+                } else if(student != null){
+                    user.Id = student.Id;
+                    user.Email = student.Email;
+                    user.Password = student.Password;
+                } else if(patient != null){
+                    user.Id = patient.Id;
+                    user.Email = patient.Email;
+                    user.Password = patient.Password;
+                } else if(professor != null){
+                    user.Id = professor.Id;
+                    user.Email = professor.Email;
+                    user.Password = professor.Password;
+                } else
                     return new RequestResult<LoginResponseDto>(null, true, RequestAnswer.UserCredError.GetDescription());
 
                 var loginResponse = new LoginResponseDto

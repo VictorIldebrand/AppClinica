@@ -249,12 +249,18 @@ namespace Contracts.RequestHandle
         [Display(Description = "Erro ao excluir o requerimento de paciente.")]
         PatientRequestDeleteError,
 
+        [Display(Description = "O requerimento so pode ser realizado em até 48 horas antes da Consulta.")]
+        PatientRequest48HoursBefore,
+
         #endregion
 
         #region Appointment
 
         [Display(Description = "Consulta não encontrada.")]
         AppointmentNotFound,
+
+        [Display(Description = "So é possivel realizar alteração na consulta até 48 horas da mesma.")]
+        AppointmentLessThan48Hours,
 
         [Display(Description = "Consulta criada com sucesso!")]
         AppointmentCreateSuccess,

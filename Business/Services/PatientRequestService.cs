@@ -30,17 +30,22 @@ namespace Business.Services {
                     return new RequestResult<PatientRequestDto>(null, true, RequestAnswer.PatientRequestDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<PatientRequest>(patientRequestDto);
                 model.Status = 0;
-                var response = await _patientRequestRepository.CreatePatientRequest(model);
-                if (response.Id == 0)
-                    return new RequestResult<PatientRequestDto>(null, true, RequestAnswer.PatientRequestCreateError.GetDescription());
-                var dto = _Mapper.Map<PatientRequestDto>(response);
-                /*var loginDto = new LoginResponseDto
-                {
-                    Email = response.email,
-                    Password = response.password
-                };*/
-                //var login = await Login(loginDto);
-                return new RequestResult<PatientRequestDto>(patientRequestDto);
+            
+                if (Rules.Check48HoursBefore(patientRequestDto.DataSolicitation, patientRequestDto.DataTreatment)) {
+                    var response = await _patientRequestRepository.CreatePatientRequest(model);
+                    if (response.Id == 0)
+                        return new RequestResult<PatientRequestDto>(null, true, RequestAnswer.PatientRequestCreateError.GetDescription());
+
+                    var dto = _Mapper.Map<PatientRequestDto>(response);
+                    /*var loginDto = new LoginResponseDto
+                    {
+                        Email = response.email,
+                        Password = response.password
+                    };*/
+                    //var login = await Login(loginDto);
+                    return new RequestResult<PatientRequestDto>(patientRequestDto);
+                } else
+                    return new RequestResult<PatientRequestDto>(null, true, RequestAnswer.PatientRequest48HoursBefore.GetDescription());
             }
             catch (Exception ex)
             {
