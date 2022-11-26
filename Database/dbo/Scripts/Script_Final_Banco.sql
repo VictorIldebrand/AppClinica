@@ -29,7 +29,7 @@ CREATE TABLE [employee] (
   [name] varchar(255),
   [phone] varchar(255),
   [active] bit,
-  [is_admin] integer, 
+  [is_admin] bit,
 )
 GO
 
