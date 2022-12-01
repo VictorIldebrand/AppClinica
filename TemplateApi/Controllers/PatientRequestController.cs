@@ -7,7 +7,7 @@ using Contracts.Dto.PatientRequest;
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PatientRequestController : Controller {
         private readonly IPatientRequestService _patientRequestService;
 

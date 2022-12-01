@@ -7,7 +7,7 @@ using Contracts.Dto.Employee;
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class EmployeeController : Controller {
         private readonly IEmployeeService _employeeService;
 

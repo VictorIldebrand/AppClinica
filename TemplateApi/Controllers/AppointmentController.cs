@@ -8,7 +8,7 @@ using System;
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class AppointmentController : Controller {
         private readonly IAppointmentService _appointmentService;
 

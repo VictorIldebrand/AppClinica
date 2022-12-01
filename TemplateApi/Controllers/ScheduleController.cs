@@ -7,7 +7,7 @@ using Contracts.Dto.Schedule;
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ScheduleController : Controller {
         private readonly IScheduleService _scheduleService;
 

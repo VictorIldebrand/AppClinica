@@ -5,7 +5,7 @@
 //     public class PatientOrderMinDto
 //     {
 //         public int Id { get; set; }
-//         public TimestampAttribute DateSolicitation { get; set; }
+//         public DateTime DateSolicitation { get; set; }
 //         public int Status { get; set; }
 //         public string PatientId { get; set; }
 //         public string Speciality { get; set; }

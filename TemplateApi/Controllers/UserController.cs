@@ -10,7 +10,7 @@ namespace TemplateApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;

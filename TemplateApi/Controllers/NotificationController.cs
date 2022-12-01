@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class NotificationController : Controller {
         private readonly INotificationService _notificationService;
 

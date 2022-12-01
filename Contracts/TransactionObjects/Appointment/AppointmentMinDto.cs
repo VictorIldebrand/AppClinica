@@ -1,4 +1,5 @@
 ﻿using Contracts.Enums.Status;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace Contracts.Dto.Appointment
@@ -6,8 +7,8 @@ namespace Contracts.Dto.Appointment
     public class AppointmentMinDto
     {
         public int Id { get; set; }
-        public TimestampAttribute DateTime { get; set; }
-        public StatusEnum Status { get; set; }
+        public DateTime DateTime { get; set; }
+        public DateTime Status { get; set; }
         public string CancellationReason { get; set; }
         public int IdSchedule { get; set; }
         public int IdPatient { get; set; }

@@ -17,11 +17,12 @@ namespace Business.Services {
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IPatientRepository _patientRepository;
 
-        public AppointmentService(IMapper Mapper, IConfiguration configuration, IAppointmentRepository appointmentRepository)
+        public AppointmentService(IMapper Mapper, IConfiguration configuration, IAppointmentRepository appointmentRepository, IPatientRepository patientRepository)
         {
             _Mapper = Mapper;
             _configuration = configuration;
             _appointmentRepository = appointmentRepository;
+            _patientRepository = patientRepository;
         }
 
         public async Task<RequestResult<AppointmentDto>> CreateAppointment(AppointmentDto appointmentDto)

@@ -7,7 +7,7 @@ using Contracts.Dto.Professor;
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ProfessorController : Controller {
         private readonly IProfessorService _professorService;
 
