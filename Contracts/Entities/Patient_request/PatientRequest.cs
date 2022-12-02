@@ -24,7 +24,7 @@ namespace Contracts.Entities {
 
         [Column("status")]
         [Required]
-        public StatusEnum Status { get; set; }
+        public bool Status { get; set; }
 
         [Column("id_student")]
         public Student Student { get; set; }

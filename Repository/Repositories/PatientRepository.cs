@@ -26,7 +26,7 @@ namespace Repository.Repositories
 
         public async Task<Patient> GetPatientById(int id)
         {
-            return await _context.Patients.Where(u => u.Id == id).FirstOrDefaultAsync();
+            return await _context.Patients.Where(u => u.Id == id && u.Active).FirstOrDefaultAsync();
         }
 
         public async Task<Patient[]> GetAllPatients()

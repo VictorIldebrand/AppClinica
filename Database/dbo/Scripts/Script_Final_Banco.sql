@@ -74,7 +74,7 @@ CREATE TABLE [patient_request] (
   [id] integer PRIMARY KEY NOT NULL IDENTITY(1, 1),
   [date_solicitation] date,
   [date_treatment] date,
-  [status] varchar(10) NOT NULL CHECK (status IN('cancelado','atendido','avaliado')),
+  [status] bit,
   [id_student] integer,
   [new_patient] bit,
   [id_schedule_professor] integer,

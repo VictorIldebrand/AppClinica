@@ -27,7 +27,7 @@ namespace Business.Services
         private readonly IProfessorRepository _professorRepository;
         private readonly IPatientRepository _patientRepository;
 
-        public UserService(IMapper Mapper, IConfiguration configuration, IUserRepository userRepository, IEmployeeService employeeService, IProfessorService professorService, IStudentService studentService, IPatientService patientService)
+        public UserService(IMapper Mapper, IConfiguration configuration, IUserRepository userRepository, IEmployeeService employeeService, IProfessorService professorService, IStudentService studentService, IPatientService patientService, IEmployeeRepository employeeRepository, IStudentRepository studentRepository, IProfessorRepository professorRepository, IPatientRepository patientRepository)
         {
             _Mapper = Mapper;
             _configuration = configuration;
@@ -36,6 +36,10 @@ namespace Business.Services
             _professorService = professorService;
             _studentService = studentService;
             _patientService = patientService;
+            _employeeRepository = employeeRepository;
+            _studentRepository = studentRepository;
+            _professorRepository = professorRepository;
+            _patientRepository = patientRepository;
         }
 
         public async Task<RequestResult<LoginResponseDto>> Register(UserDto registerRequest)

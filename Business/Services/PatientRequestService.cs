@@ -29,7 +29,7 @@ namespace Business.Services {
                 if (patientRequestExists)
                     return new RequestResult<PatientRequestDto>(null, true, RequestAnswer.PatientRequestDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<PatientRequest>(patientRequestDto);
-                model.Status = 0;
+                model.Status = true;
             
                 if (Rules.Check48HoursBefore(patientRequestDto.DataSolicitation, patientRequestDto.DataTreatment)) {
                     var response = await _patientRequestRepository.CreatePatientRequest(model);

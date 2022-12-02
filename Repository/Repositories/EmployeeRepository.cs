@@ -47,7 +47,7 @@ namespace Repository.Repositories {
         }
 
         public async Task<bool> CheckIfEmployeeIsAdminById(int id, bool is_admin) {
-            var result = await _context.Employees.AnyAsync(u => u.Id == id && u.IsAdmin == true && u.Active);
+            var result = await _context.Employees.AnyAsync(u => u.Id == id && u.IsAdmin && u.Active);
             return result;
         }
 
