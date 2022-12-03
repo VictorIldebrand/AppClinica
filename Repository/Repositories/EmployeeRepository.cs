@@ -60,6 +60,9 @@ namespace Repository.Repositories {
         public async Task DeleteEmployee(int id)
         {
             var employee = await _context.Employees.Where(e => e.Id == id).FirstOrDefaultAsync();
+            if(!employee.Active){
+                throw new Exception("Funcionário já removido");
+            }
             employee.Active = false;
 
             _context.Employees.Update(employee);

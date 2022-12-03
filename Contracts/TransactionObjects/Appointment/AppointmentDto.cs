@@ -6,7 +6,6 @@ namespace Contracts.Dto.Appointment
 {
     public class AppointmentDto
     {
-        public int Id { get; set; }
         public DateTime DateTime { get; set; }
         public StatusEnum Status{ get; set; }
         public string CancellationReason { get; set; }

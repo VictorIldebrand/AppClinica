@@ -4,7 +4,6 @@
 // {
 //     public class PatientOrderDto
 //     {
-//         public int Id { get; set; }
 //         public DateTime DateSolicitation { get; set; }
 //         public int Status { get; set; }
 //         public string PatientId { get; set; }

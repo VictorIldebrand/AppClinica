@@ -28,9 +28,6 @@ namespace Business.Services
         {
             try
             {
-                //var scheduleExists = await _scheduleRepository.CheckIfscheduleExistsByEmail(registerRequest.Email);
-                //if (scheduleExists)
-                //    return new RequestResult<ScheduleMinDto>(null, true, RequestAnswer.ScheduleDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<Schedule>(ScheduleDto);
                 model.Active = true;
                 var response = await _scheduleRepository.CreateSchedule(model);

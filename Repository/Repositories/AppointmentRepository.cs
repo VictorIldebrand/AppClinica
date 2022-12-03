@@ -44,6 +44,9 @@ namespace Repository.Repositories {
         public async Task DeleteAppointment(int id)
         {
             var appointment = await _context.Appointments.Where(u => u.Id == id).FirstOrDefaultAsync();
+            if(appointment.Status == 0){
+                throw new Exception("Consulta já removida");
+            }
             appointment.Status = 0;
 
             _context.Appointments.Update(appointment);

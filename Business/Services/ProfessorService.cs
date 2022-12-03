@@ -25,24 +25,24 @@ namespace Business.Services
             _professorRepository = professorRepository;
         }
 
-        public async Task<RequestResult<ProfessorDto>> CreateProfessor(ProfessorDto professorDto)
+        public async Task<RequestResult<ProfessorMinDto>> CreateProfessor(ProfessorDto professorDto)
         {
             try
             {
                 var patientExists = await _professorRepository.CheckIfProfessorExistsByEmail(professorDto.Email);
                 if (patientExists)
-                    return new RequestResult<ProfessorDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
+                    return new RequestResult<ProfessorMinDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<Professor>(professorDto);
                 model.Active = true;
                 var response = await _professorRepository.CreateProfessor(model);
                 if (response.Id == 0)
-                    return new RequestResult<ProfessorDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
-                var dto = _Mapper.Map<ProfessorDto>(response);
-                return new RequestResult<ProfessorDto>(dto);
+                    return new RequestResult<ProfessorMinDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
+                var dto = _Mapper.Map<ProfessorMinDto>(response);
+                return new RequestResult<ProfessorMinDto>(dto);
             }
             catch (Exception ex)
             {
-                return new RequestResult<ProfessorDto>(null, true, ex.Message);
+                return new RequestResult<ProfessorMinDto>(null, true, ex.Message);
             }
         }
 

@@ -22,7 +22,7 @@ namespace Business.Services {
             _notificationRepository = notificationRepository;
         }
 
-        public async Task<RequestResult<NotificationDto>> CreateNotification(NotificationDto notificationDto)
+        public async Task<RequestResult<NotificationMinDto>> CreateNotification(NotificationDto notificationDto)
         {
             try
             {
@@ -30,13 +30,13 @@ namespace Business.Services {
                 model.Read = false;
                 var response = await _notificationRepository.CreateNotification(model);
                 if (response.Id == 0)
-                    return new RequestResult<NotificationDto>(null, true, RequestAnswer.NotificationCreateError.GetDescription());
-                var dto = _Mapper.Map<NotificationDto>(response);
-                return new RequestResult<NotificationDto>(dto);
+                    return new RequestResult<NotificationMinDto>(null, true, RequestAnswer.NotificationCreateError.GetDescription());
+                var dto = _Mapper.Map<NotificationMinDto>(response);
+                return new RequestResult<NotificationMinDto>(dto);
             }
             catch (Exception ex)
             {
-                return new RequestResult<NotificationDto>(null, true, ex.Message);
+                return new RequestResult<NotificationMinDto>(null, true, ex.Message);
             }
         }
 

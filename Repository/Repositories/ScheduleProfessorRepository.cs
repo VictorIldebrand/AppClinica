@@ -47,9 +47,11 @@ namespace Repository.Repositories {
         public async Task DeleteScheduleProfessor(int id)
         {
             var schedule_professor = await _context.ScheduleProfessors.Where(u => u.Id == id).FirstOrDefaultAsync();
-            //schedule_professor.Active = false;
+            if(!schedule_professor){
+                throw new Exception("Agenda de professor já removida");
+            }
 
-            _context.ScheduleProfessors.Update(schedule_professor);
+            _context.ScheduleProfessors.Delete(schedule_professor);
             await _context.SaveChangesAsync();
         }
     }

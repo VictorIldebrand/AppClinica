@@ -25,14 +25,14 @@ namespace Business.Services
             _studentRepository = studentRepository;
         }
 
-        public async Task<RequestResult<StudentDto>> CreateStudent(StudentDto studentDto)
+        public async Task<RequestResult<StudentMinDto>> CreateStudent(StudentDto studentDto)
         {
             try
             {
                 var studentExists = await _studentRepository.CheckIfStudentExistsByEmail(studentDto.Email);
 
                 if (studentExists)
-                    return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentDuplicateCreateError.GetDescription());
+                    return new RequestResult<StudentMinDto>(null, true, RequestAnswer.StudentDuplicateCreateError.GetDescription());
 
                 var model = _Mapper.Map<Student>(studentDto);
                 model.Active = true;
@@ -40,22 +40,15 @@ namespace Business.Services
                 var response = await _studentRepository.CreateStudent(model);
 
                 if (response.Id == 0)
-                    return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentCreateError.GetDescription());
+                    return new RequestResult<StudentMinDto>(null, true, RequestAnswer.StudentCreateError.GetDescription());
 
-                var dto = _Mapper.Map<StudentDto>(response);
-                //var loginDto = new StudentDto
-                //{
-                //    Email = response.email,
-                //    Password = response.password,
-                //    Ra = response.ra
-                //};
-                //var  login = await Login(studentDto);
+                var dto = _Mapper.Map<StudentMinDto>(response);
 
-                return new RequestResult<StudentDto>(dto);
+                return new RequestResult<StudentMinDto>(dto);
             }
             catch (Exception ex)
             {
-                return new RequestResult<StudentDto>(null, true, ex.Message);
+                return new RequestResult<StudentMinDto>(null, true, ex.Message);
             }
         }
 

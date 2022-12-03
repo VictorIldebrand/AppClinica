@@ -29,10 +29,6 @@ namespace Business.Services {
         {
             try
             {
-                
-                var patient = await _patientRepository.GetPatientById(appointmentDto.IdPatient);
-                //if(patient.)
-                
                 var model = _Mapper.Map<Appointment>(appointmentDto);
                 model.Status = StatusEnum.Confirmed;
                 var response = await _appointmentRepository.CreateAppointment(model);

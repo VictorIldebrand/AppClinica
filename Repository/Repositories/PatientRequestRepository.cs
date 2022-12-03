@@ -43,6 +43,9 @@ namespace Repository.Repositories
         public async Task DeletePatientRequest(int id)
         {
             var patient_request = await _context.PatientRequests.Where(u => u.Id == id).FirstOrDefaultAsync();
+            if(!patient_request.Active){
+                throw new Exception("Requisição de paciente já removida");
+            }
             patient_request.Active = false;
 
             _context.PatientRequests.Update(patient_request);

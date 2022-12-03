@@ -25,24 +25,24 @@ namespace Business.Services
             _patientRepository = patientRepository;
         }
 
-        public async Task<RequestResult<PatientDto>> CreatePatient(PatientDto patientDto)
+        public async Task<RequestResult<PatientMinDto>> CreatePatient(PatientDto patientDto)
         {
             try
             {
                 var patientExists = await _patientRepository.CheckIfPatientExistsByEmail(patientDto.Email);
                 if (patientExists)
-                    return new RequestResult<PatientDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
+                    return new RequestResult<PatientMinDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<Patient>(patientDto);
                 model.Active = true;
                 var response = await _patientRepository.CreatePatient(model);
                 if (response.Id == 0)
-                    return new RequestResult<PatientDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
-                var dto = _Mapper.Map<PatientDto>(response);
-                return new RequestResult<PatientDto>(dto);
+                    return new RequestResult<PatientMinDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
+                var dto = _Mapper.Map<PatientMinDto>(response);
+                return new RequestResult<PatientMinDto>(dto);
             }
             catch (Exception ex)
             {
-                return new RequestResult<PatientDto>(null, true, ex.Message);
+                return new RequestResult<PatientMinDto>(null, true, ex.Message);
             }
         }
 

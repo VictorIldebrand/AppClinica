@@ -32,16 +32,12 @@ namespace Business.Services {
                     return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.EmployeeDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<Employee>(registerRequest);
                 model.Active = true;
+
                 var response = await _employeeRepository.Register(model);
                 if (response.Id == 0)
                     return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.EmployeeCreateError.GetDescription());
                 var dto = _Mapper.Map<EmployeeMinDto>(response);
-                /*var loginDto = new LoginResponseDto
-                {
-                    Email = response.email,
-                    Password = response.password
-                };*/
-                //var login = await Login(loginDto);
+
                 return new RequestResult<EmployeeMinDto>(dto);
             }
             catch (Exception ex)

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Services {
     public interface IAppointmentService {
-        Task<RequestResult<AppointmentDto>> CreateAppointment(AppointmentDto registerRequest);
+        Task<RequestResult<AppointmentMinDto>> CreateAppointment(AppointmentDto registerRequest);
         Task<RequestResult<AppointmentDto>> GetAppointmentByDate(DateTime date);
         Task<RequestResult<AppointmentDto>> GetAppointments();
         Task<RequestResult<RequestAnswer>> UpdateAppointment(AppointmentDto appointment);

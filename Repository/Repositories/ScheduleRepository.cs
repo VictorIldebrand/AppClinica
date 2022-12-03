@@ -38,6 +38,9 @@ namespace Repository.Repositories
         public async Task DeleteSchedule(int id)
         {
             var schedule = await _context.Schedules.Where(u => u.Id == id).FirstOrDefaultAsync();
+            if(!schedule.Active){
+                throw new Exception("Agenda já removida");
+            }
             schedule.Active = false;
 
             _context.Schedules.Update(schedule);

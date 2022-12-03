@@ -5,7 +5,6 @@ namespace Contracts.Dto.PatientRequest
 {
     public class PatientRequestDto
     {
-        public int Id { get; set; }
         public DateTime DataSolicitation { get; set; }
         public DateTime DataTreatment { get; set; }
         public bool Status { get; set; }

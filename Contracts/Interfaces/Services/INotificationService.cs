@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Services {
     public interface INotificationService {
-        Task<RequestResult<NotificationDto>> CreateNotification(NotificationDto notification);
+        Task<RequestResult<NotificationMinDto>> CreateNotification(NotificationDto notification);
         Task<RequestResult<NotificationDto>> GetNotificationById(int id);
         Task<RequestResult<NotificationDto[]>> GetAllNotification();
         Task<RequestResult<RequestAnswer>> UpdateNotification(NotificationDto notification);

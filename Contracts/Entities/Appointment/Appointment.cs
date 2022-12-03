@@ -50,7 +50,7 @@ namespace Contracts.Entities {
         [Column("companion")]
         public bool Companion { get; set; }
 
-        [Column("locaton")]
+        [Column("location")]
         public string Location { get; set; }
     }
 }

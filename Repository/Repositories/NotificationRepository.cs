@@ -32,8 +32,11 @@ namespace Repository.Repositories {
         public async Task DeleteNotification(int id)
         {
             var notification = await _context.Notifications.Where(u => u.Id == id).FirstOrDefaultAsync();
+            if(!notification){
+                throw new Exception("Notificação já removida");
+            }
 
-            _context.Notifications.Update(notification);
+            _context.Notifications.Delete(notification);
             await _context.SaveChangesAsync();
         }
 

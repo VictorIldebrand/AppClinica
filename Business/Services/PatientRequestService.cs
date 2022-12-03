@@ -22,34 +22,25 @@ namespace Business.Services {
             _patientRequestRepository = patientRequestRepository;
         }
 
-        public async Task<RequestResult<PatientRequestDto>> CreatePatientRequest(PatientRequestDto patientRequestDto)
+        public async Task<RequestResult<PatientRequestMinDto>> CreatePatientRequest(PatientRequestDto patientRequestDto)
         {
             try{
-                var patientRequestExists = await _patientRequestRepository.CheckIfPatientRequestExistsById(patientRequestDto.Id);
-                if (patientRequestExists)
-                    return new RequestResult<PatientRequestDto>(null, true, RequestAnswer.PatientRequestDuplicateCreateError.GetDescription());
                 var model = _Mapper.Map<PatientRequest>(patientRequestDto);
                 model.Status = true;
             
                 if (Rules.Check48HoursBefore(patientRequestDto.DataSolicitation, patientRequestDto.DataTreatment)) {
                     var response = await _patientRequestRepository.CreatePatientRequest(model);
                     if (response.Id == 0)
-                        return new RequestResult<PatientRequestDto>(null, true, RequestAnswer.PatientRequestCreateError.GetDescription());
+                        return new RequestResult<PatientRequestMinDto>(null, true, RequestAnswer.PatientRequestCreateError.GetDescription());
 
-                    var dto = _Mapper.Map<PatientRequestDto>(response);
-                    /*var loginDto = new LoginResponseDto
-                    {
-                        Email = response.email,
-                        Password = response.password
-                    };*/
-                    //var login = await Login(loginDto);
-                    return new RequestResult<PatientRequestDto>(patientRequestDto);
+                    var dto = _Mapper.Map<PatientRequestMinDto>(response);
+                    return new RequestResult<PatientRequestMinDto>(patientRequestDto);
                 } else
-                    return new RequestResult<PatientRequestDto>(null, true, RequestAnswer.PatientRequest48HoursBefore.GetDescription());
+                    return new RequestResult<PatientRequestMinDto>(null, true, RequestAnswer.PatientRequest48HoursBefore.GetDescription());
             }
             catch (Exception ex)
             {
-                return new RequestResult<PatientRequestDto>(null, true, ex.Message);
+                return new RequestResult<PatientRequestMinDto>(null, true, ex.Message);
             }
         }
 

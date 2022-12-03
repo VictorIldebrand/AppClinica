@@ -33,6 +33,9 @@ namespace Repository.Repositories
         public async Task DeleteStudent(int id)
         {
             var student = await _context.Students.Where(u => u.Id == id).FirstOrDefaultAsync();
+            if(!student.Active){
+                throw new Exception("Aluno já removido");
+            }
             student.Active = false;
 
             _context.Students.Update(student);
