@@ -16,7 +16,10 @@ namespace Business.Services {
         private readonly IConfiguration _configuration;
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IPatientRepository _patientRepository;
-
+        private readonly IScheduleRepository _scheduleRepository;
+        private readonly IStudentRepository _studentRepository;
+        private readonly IEmployeeRepository _employeeRepository;
+        
         public AppointmentService(IMapper Mapper, IConfiguration configuration, IAppointmentRepository appointmentRepository, IPatientRepository patientRepository)
         {
             _Mapper = Mapper;
@@ -25,21 +28,52 @@ namespace Business.Services {
             _patientRepository = patientRepository;
         }
 
-        public async Task<RequestResult<AppointmentDto>> CreateAppointment(AppointmentDto appointmentDto)
+        public async Task<RequestResult<RequestAnswer>> CreateAppointment(AppointmentDto appointmentDto)
         {
             try
             {
                 var model = _Mapper.Map<Appointment>(appointmentDto);
-                model.Status = StatusEnum.Confirmed;
+                model.Status = StatusEnum.Created;
+
+                //Check if the patient, schedule, employee and student exists
+                if(appointmentDto.IdPatient != null) {
+                    var responsePatient  = await _patientRepository.GetPatientById(appointmentDto.IdPatient);
+                    if(responsePatient == null) { 
+                        return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
+                    }
+                    model.Patient = responsePatient;
+                }
+
+                if(appointmentDto.IdSchedule != null) {
+                    var responseSchedule  = await _scheduleRepository.GetScheduleById(appointmentDto.IdSchedule);
+                    if(responseSchedule == null)
+                        return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
+                    model.Schedule = responseSchedule;
+                }
+
+                if(appointmentDto.IdStudent != null) {
+                    var responseStudent  = await _studentRepository.GetStudentById(appointmentDto.IdStudent);
+                    if(responseStudent == null)
+                        return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError,true);
+                    model.Student = responseStudent;
+                }
+
+                if(appointmentDto.IdEmployee != null) {
+                    var responseEmployee  = await _employeeRepository.GetEmployeeById(appointmentDto.IdEmployee);
+                    if(responseEmployee == null)
+                        return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
+                    model.Employee = responseEmployee;
+                }
+
                 var response = await _appointmentRepository.CreateAppointment(model);
                 if (response.Id == 0)
-                    return new RequestResult<AppointmentDto>(null, true, RequestAnswer.AppointmentCreateError.GetDescription());
-                var dto = _Mapper.Map<AppointmentDto>(response);
-                return new RequestResult<AppointmentDto>(dto);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateSuccess);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new RequestResult<AppointmentDto>(null, true, ex.Message);
+                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
             }
         }
 
@@ -63,11 +97,11 @@ namespace Business.Services {
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateAppointment(AppointmentDto appointment) 
+        public async Task<RequestResult<RequestAnswer>> UpdateAppointment(AppointmentDto appointment, int id) 
         {
             try
             {
-                var appointmentDatabase = await _appointmentRepository.GetAppointmentById(appointment.Id); 
+                var appointmentDatabase = await _appointmentRepository.GetAppointmentById(id); 
 
                 if(appointmentDatabase != null) {
                     if(Rules.Check48HoursBefore(appointmentDatabase.DateAndTime, DateTime.Now)){
@@ -76,10 +110,10 @@ namespace Business.Services {
 
                         return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentUpdateSuccess);
                     }else{
-                        return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentLessThan48Hours);
+                        return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentLessThan48Hours, true);
                     }
                 }else{
-                    return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentNotFound);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentNotFound, true);
                 }
             }
             catch (Exception)
@@ -98,7 +132,7 @@ namespace Business.Services {
                     await _appointmentRepository.DeleteAppointment(id);
                     return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentDeleteSuccess);
                 }else{
-                    return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentLessThan48Hours); 
+                    return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentLessThan48Hours, true); 
                 }          
             }
             catch (Exception)

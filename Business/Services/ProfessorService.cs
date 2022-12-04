@@ -25,24 +25,24 @@ namespace Business.Services
             _professorRepository = professorRepository;
         }
 
-        public async Task<RequestResult<ProfessorMinDto>> CreateProfessor(ProfessorDto professorDto)
+        public async Task<RequestResult<RequestAnswer>> CreateProfessor(ProfessorDto professorDto)
         {
             try
             {
                 var patientExists = await _professorRepository.CheckIfProfessorExistsByEmail(professorDto.Email);
                 if (patientExists)
-                    return new RequestResult<ProfessorMinDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
+                    return new RequestResult<RequestAnswer>(RequestAnswer.UserDuplicateCreateError, true);
                 var model = _Mapper.Map<Professor>(professorDto);
                 model.Active = true;
                 var response = await _professorRepository.CreateProfessor(model);
                 if (response.Id == 0)
-                    return new RequestResult<ProfessorMinDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
-                var dto = _Mapper.Map<ProfessorMinDto>(response);
-                return new RequestResult<ProfessorMinDto>(dto);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.UserCreateError, true);
+                
+                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateSuccess);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new RequestResult<ProfessorMinDto>(null, true, ex.Message);
+                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateError, true);
             }
         }
 
@@ -75,11 +75,11 @@ namespace Business.Services
             return array;
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateProfessor(ProfessorDto professorDto)
+        public async Task<RequestResult<RequestAnswer>> UpdateProfessor(ProfessorDto professorDto, int id)
         {
             try
             {
-                var professorCheck = await _professorRepository.CheckIfProfessorExistsById(professorDto.Id);
+                var professorCheck = await _professorRepository.CheckIfProfessorExistsById(id);
 
                 if (!professorCheck)
                     return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorNotFound);

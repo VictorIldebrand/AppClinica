@@ -27,10 +27,10 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpPut("update")]
+        [HttpPut("update/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdatePatient(PatientRequestDto patientRequestDto) {
-            var result = await _patientRequestService.UpdatePatientRequest(patientRequestDto);
+        public async Task<IActionResult> UpdatePatient(PatientRequestDto patientRequestDto, int id) {
+            var result = await _patientRequestService.UpdatePatientRequest(patientRequestDto, id);
             return Ok(result);
         }
 

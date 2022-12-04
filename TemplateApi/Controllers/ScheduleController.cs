@@ -28,14 +28,14 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpPut("update")]
+        [HttpPut("update/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateSchedule(ScheduleDto schedule) {
-            var result = await _scheduleService.UpdateSchedule(schedule);
+        public async Task<IActionResult> UpdateSchedule(ScheduleDto schedule, int id) {
+            var result = await _scheduleService.UpdateSchedule(schedule, id);
             return Ok(result);
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("delete/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> DeleteSchedule(int id) {
             var result = await _scheduleService.DeleteSchedule(id);

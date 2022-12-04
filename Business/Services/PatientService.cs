@@ -25,24 +25,24 @@ namespace Business.Services
             _patientRepository = patientRepository;
         }
 
-        public async Task<RequestResult<PatientMinDto>> CreatePatient(PatientDto patientDto)
+        public async Task<RequestResult<RequestAnswer>> CreatePatient(PatientDto patientDto)
         {
             try
             {
                 var patientExists = await _patientRepository.CheckIfPatientExistsByEmail(patientDto.Email);
                 if (patientExists)
-                    return new RequestResult<PatientMinDto>(null, true, RequestAnswer.UserDuplicateCreateError.GetDescription());
+                    return new RequestResult<RequestAnswer>(RequestAnswer.UserDuplicateCreateError, true);
                 var model = _Mapper.Map<Patient>(patientDto);
                 model.Active = true;
                 var response = await _patientRepository.CreatePatient(model);
                 if (response.Id == 0)
-                    return new RequestResult<PatientMinDto>(null, true, RequestAnswer.UserCreateError.GetDescription());
+                    return new RequestResult<RequestAnswer>(RequestAnswer.UserCreateError, true);
                 var dto = _Mapper.Map<PatientMinDto>(response);
-                return new RequestResult<PatientMinDto>(dto);
+                return new RequestResult<RequestAnswer>(RequestAnswer.UserCreateSuccess);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new RequestResult<PatientMinDto>(null, true, ex.Message);
+                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
             }
         }
 
@@ -75,14 +75,14 @@ namespace Business.Services
             return array;
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdatePatient(PatientDto patientDto)
+        public async Task<RequestResult<RequestAnswer>> UpdatePatient(PatientDto patientDto, int id)
         {
             try
             {
-                var patientCheck = await _patientRepository.CheckIfPatientExistsByEmail(patientDto.Email);
+                var patientCheck = await _patientRepository.CheckIfPatientExistsById(id);
 
                 if(!patientCheck)
-                    return new RequestResult<RequestAnswer>(RequestAnswer.PatientNotFound);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.PatientNotFound, true);
                 
                 var model = _Mapper.Map<Patient>(patientDto);
                 await _patientRepository.UpdatePatient(model);

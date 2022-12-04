@@ -24,7 +24,7 @@ namespace Business.Services
             _scheduleRepository = scheduleRepository;
         }
 
-        public async Task<RequestResult<ScheduleMinDto>> CreateSchedule(ScheduleDto ScheduleDto)
+        public async Task<RequestResult<RequestAnswer>> CreateSchedule(ScheduleDto ScheduleDto)
         {
             try
             {
@@ -32,13 +32,13 @@ namespace Business.Services
                 model.Active = true;
                 var response = await _scheduleRepository.CreateSchedule(model);
                 if (response.Id == 0)
-                    return new RequestResult<ScheduleMinDto>(null, true, RequestAnswer.ScheduleCreateError.GetDescription());
-                var dto = _Mapper.Map<ScheduleMinDto>(response);
-                return new RequestResult<ScheduleMinDto>(dto);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleCreateError, true);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleCreateSuccess);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new RequestResult<ScheduleMinDto>(null, true, ex.Message);
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleCreateError, true);
             }
         }
 
@@ -62,14 +62,14 @@ namespace Business.Services
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateSchedule(ScheduleDto schedule)
+        public async Task<RequestResult<RequestAnswer>> UpdateSchedule(ScheduleDto schedule, int id)
         {
             try
             {
-                var scheduleCheck = await _scheduleRepository.CheckIfScheduleExistsById(schedule.Id);
+                var scheduleCheck = await _scheduleRepository.CheckIfScheduleExistsById(id);
 
                 if (!scheduleCheck)
-                    return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleNotFound);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleNotFound, true);
 
                 var model = _Mapper.Map<Schedule>(schedule);
                 await _scheduleRepository.UpdateSchedule(model);

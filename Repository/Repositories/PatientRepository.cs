@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
+using System;
 
 namespace Repository.Repositories
 {
@@ -39,15 +40,15 @@ namespace Repository.Repositories
             throw new System.NotImplementedException();
         }
         
-        public async Task<bool> CheckIfPatientExistsByEmail(string email)
+        public async Task<bool> CheckIfPatientExistsById(int id)
         {
-            var result = await _context.Patients.AnyAsync(u => u.Email == email && u.Active);
+            var result = await _context.Patients.AnyAsync(u => u.Id == id && u.Active);
             return result;
         }
 
-        public async Task<Patient> GetPatientByEmail(string email)
-        {
-            throw new System.NotImplementedException();
+        public async Task<bool> CheckIfPatientExistsByEmail(string email) {
+            var result = await _context.Patients.AnyAsync(u => u.Email == email && u.Active);
+            return result;
         }
 
         public async Task UpdatePatient(Patient patient)
@@ -66,6 +67,10 @@ namespace Repository.Repositories
 
             _context.Patients.Update(patient);
             await _context.SaveChangesAsync();
+        }
+
+        public Task<Patient> GetPatientByEmail(string email) {
+            throw new NotImplementedException();
         }
     }
 }

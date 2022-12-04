@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
+using System;
 
 namespace Repository.Repositories {
     public class ScheduleProfessorRepository : IScheduleProfessorRepository
@@ -47,11 +48,11 @@ namespace Repository.Repositories {
         public async Task DeleteScheduleProfessor(int id)
         {
             var schedule_professor = await _context.ScheduleProfessors.Where(u => u.Id == id).FirstOrDefaultAsync();
-            if(!schedule_professor){
+            if(schedule_professor == null){
                 throw new Exception("Agenda de professor já removida");
             }
 
-            _context.ScheduleProfessors.Delete(schedule_professor);
+            _context.ScheduleProfessors.Remove(schedule_professor);
             await _context.SaveChangesAsync();
         }
     }

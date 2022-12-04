@@ -22,7 +22,7 @@ namespace Business.Services {
             _patientRequestRepository = patientRequestRepository;
         }
 
-        public async Task<RequestResult<PatientRequestMinDto>> CreatePatientRequest(PatientRequestDto patientRequestDto)
+        public async Task<RequestResult<RequestAnswer>> CreatePatientRequest(PatientRequestDto patientRequestDto)
         {
             try{
                 var model = _Mapper.Map<PatientRequest>(patientRequestDto);
@@ -31,16 +31,15 @@ namespace Business.Services {
                 if (Rules.Check48HoursBefore(patientRequestDto.DataSolicitation, patientRequestDto.DataTreatment)) {
                     var response = await _patientRequestRepository.CreatePatientRequest(model);
                     if (response.Id == 0)
-                        return new RequestResult<PatientRequestMinDto>(null, true, RequestAnswer.PatientRequestCreateError.GetDescription());
+                        return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestCreateError, true);
 
-                    var dto = _Mapper.Map<PatientRequestMinDto>(response);
-                    return new RequestResult<PatientRequestMinDto>(patientRequestDto);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestCreateSuccess);
                 } else
-                    return new RequestResult<PatientRequestMinDto>(null, true, RequestAnswer.PatientRequest48HoursBefore.GetDescription());
+                    return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequest48HoursBefore, true);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new RequestResult<PatientRequestMinDto>(null, true, ex.Message);
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestCreateError, true);
             }
         }
 
@@ -64,11 +63,11 @@ namespace Business.Services {
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdatePatientRequest(PatientRequestDto patientRequestDto)
+        public async Task<RequestResult<RequestAnswer>> UpdatePatientRequest(PatientRequestDto patientRequestDto, int id)
         {
             try
             {
-                var patientRequestCheck = await _patientRequestRepository.CheckIfPatientRequestExistsById(patientRequestDto.Id);
+                var patientRequestCheck = await _patientRequestRepository.CheckIfPatientRequestExistsById(id);
 
                 if (!patientRequestCheck)
                     return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestNotFound);

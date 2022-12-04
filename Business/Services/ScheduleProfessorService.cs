@@ -24,20 +24,20 @@ namespace Business.Services
             _scheduleProfessorRepository = scheduleProfessorRepository;
         }
 
-        public async Task<RequestResult<ScheduleProfessorMinDto>> CreateScheduleProfessor(ScheduleProfessorDto ScheduleProfessorDto)
+        public async Task<RequestResult<RequestAnswer>> CreateScheduleProfessor(ScheduleProfessorDto ScheduleProfessorDto)
         {
             try
             {
                 var model = _Mapper.Map<ScheduleProfessor>(ScheduleProfessorDto);
                 var response = await _scheduleProfessorRepository.CreateScheduleProfessor(model);
                 if (response.Id == 0)
-                    return new RequestResult<ScheduleProfessorMinDto>(null, true, RequestAnswer.ScheduleProfessorCreateError.GetDescription());
-                var dto = _Mapper.Map<ScheduleProfessorMinDto>(response);
-                return new RequestResult<ScheduleProfessorMinDto>(dto);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleProfessorCreateError, true);
+                
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleProfessorCreateSuccess);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new RequestResult<ScheduleProfessorMinDto>(null, true, ex.Message);
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleProfessorCreateError, true);
             }
         }
 

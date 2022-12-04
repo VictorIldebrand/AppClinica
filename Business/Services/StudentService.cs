@@ -25,14 +25,14 @@ namespace Business.Services
             _studentRepository = studentRepository;
         }
 
-        public async Task<RequestResult<StudentMinDto>> CreateStudent(StudentDto studentDto)
+        public async Task<RequestResult<RequestAnswer>> CreateStudent(StudentDto studentDto)
         {
             try
             {
                 var studentExists = await _studentRepository.CheckIfStudentExistsByEmail(studentDto.Email);
 
                 if (studentExists)
-                    return new RequestResult<StudentMinDto>(null, true, RequestAnswer.StudentDuplicateCreateError.GetDescription());
+                    return new RequestResult<RequestAnswer>(RequestAnswer.StudentDuplicateCreateError, true);
 
                 var model = _Mapper.Map<Student>(studentDto);
                 model.Active = true;
@@ -40,15 +40,13 @@ namespace Business.Services
                 var response = await _studentRepository.CreateStudent(model);
 
                 if (response.Id == 0)
-                    return new RequestResult<StudentMinDto>(null, true, RequestAnswer.StudentCreateError.GetDescription());
+                    return new RequestResult<RequestAnswer>(RequestAnswer.StudentCreateError, true);
 
-                var dto = _Mapper.Map<StudentMinDto>(response);
-
-                return new RequestResult<StudentMinDto>(dto);
+                return new RequestResult<RequestAnswer>(RequestAnswer.StudentCreateSuccess);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new RequestResult<StudentMinDto>(null, true, ex.Message);
+                return new RequestResult<RequestAnswer>(RequestAnswer.StudentCreateError, true);
             }
         }
 
@@ -120,14 +118,14 @@ namespace Business.Services
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateStudent(StudentDto student)
+        public async Task<RequestResult<RequestAnswer>> UpdateStudent(StudentDto student, int id)
         {
             try
             {
-                var studentCheck = await _studentRepository.CheckIfStudentExistsById(student.Id);
+                var studentCheck = await _studentRepository.CheckIfStudentExistsById(id);
 
                 if (!studentCheck)
-                    return new RequestResult<RequestAnswer>(RequestAnswer.StudentNotFound);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.StudentNotFound, true);
 
                 var model = _Mapper.Map<Student>(student);
                 await _studentRepository.UpdateStudent(model);

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
+using System;
 
 namespace Repository.Repositories {
     public class NotificationRepository : INotificationRepository
@@ -32,19 +33,19 @@ namespace Repository.Repositories {
         public async Task DeleteNotification(int id)
         {
             var notification = await _context.Notifications.Where(u => u.Id == id).FirstOrDefaultAsync();
-            if(!notification){
+            if(notification == null){
                 throw new Exception("Notificação já removida");
             }
 
-            _context.Notifications.Delete(notification);
+            _context.Notifications.Remove(notification);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Notification> GetNotificationByPatientId(int idPatientRequest) {
+        public async Task<Notification> GetNotificationByPatientRequestId(int idPatientRequest) {
             return await _context.Notifications.Where(u => u.PatientRequest.Id == idPatientRequest).FirstOrDefaultAsync();
         }
 
-        public async Task<Notification> GetNotificationByStudentId(int idAppointment) {
+        public async Task<Notification> GetNotificationByAppointmentId(int idAppointment) {
             return await _context.Notifications.Where(u => u.Appointment.Id == idAppointment).FirstOrDefaultAsync();
         }
 

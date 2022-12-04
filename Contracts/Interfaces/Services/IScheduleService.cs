@@ -6,9 +6,9 @@ namespace Contracts.Interfaces.Services
 {
     public interface IScheduleService
     {
-        Task<RequestResult<ScheduleMinDto>> CreateSchedule(ScheduleDto ScheduleDTO);
+        Task<RequestResult<RequestAnswer>> CreateSchedule(ScheduleDto ScheduleDTO);
         Task<RequestResult<ScheduleDto>> GetScheduleById(int id);
-        Task<RequestResult<RequestAnswer>> UpdateSchedule(ScheduleDto ScheduleDTO);
+        Task<RequestResult<RequestAnswer>> UpdateSchedule(ScheduleDto ScheduleDTO, int id);
         Task<RequestResult<RequestAnswer>> DeleteSchedule(int id);
     }
 }

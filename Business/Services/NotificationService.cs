@@ -22,7 +22,7 @@ namespace Business.Services {
             _notificationRepository = notificationRepository;
         }
 
-        public async Task<RequestResult<NotificationMinDto>> CreateNotification(NotificationDto notificationDto)
+        public async Task<RequestResult<RequestAnswer>> CreateNotification(NotificationDto notificationDto)
         {
             try
             {
@@ -30,13 +30,13 @@ namespace Business.Services {
                 model.Read = false;
                 var response = await _notificationRepository.CreateNotification(model);
                 if (response.Id == 0)
-                    return new RequestResult<NotificationMinDto>(null, true, RequestAnswer.NotificationCreateError.GetDescription());
-                var dto = _Mapper.Map<NotificationMinDto>(response);
-                return new RequestResult<NotificationMinDto>(dto);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.NotificationCreateError, true);
+                
+                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationCreateSuccess);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new RequestResult<NotificationMinDto>(null, true, ex.Message);
+                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationCreateError, true);
             }
         }
 
@@ -81,13 +81,13 @@ namespace Business.Services {
         }
 
 
-        public async Task<RequestResult<RequestAnswer>> UpdateNotification(NotificationDto notificationDto) {
+        public async Task<RequestResult<RequestAnswer>> UpdateNotification(NotificationDto notificationDto, int id) {
             try
             {
-                var notificationCheck = await _notificationRepository.CheckIfNotificationExistsById(notificationDto.Id);
+                var notificationCheck = await _notificationRepository.CheckIfNotificationExistsById(id);
 
                 if (!notificationCheck)
-                    return new RequestResult<RequestAnswer>(RequestAnswer.NotificationNotFound);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.NotificationNotFound, true);
 
                 var model = _Mapper.Map<Notification>(notificationDto);
                 await _notificationRepository.UpdateNotification(model);

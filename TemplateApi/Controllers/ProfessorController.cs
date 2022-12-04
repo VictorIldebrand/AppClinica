@@ -28,14 +28,14 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpPut("update")]
+        [HttpPut("update/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateProfessor(ProfessorDto professor) {
-            var result = await _professorService.UpdateProfessor(professor);
+        public async Task<IActionResult> UpdateProfessor(ProfessorDto professor, int id) {
+            var result = await _professorService.UpdateProfessor(professor, id);
             return Ok(result);
         }
 
-        [HttpDelete("delete{id}")]
+        [HttpDelete("delete/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> DeleteProfessor(int id) {
             var result = await _professorService.DeleteProfessor(id);

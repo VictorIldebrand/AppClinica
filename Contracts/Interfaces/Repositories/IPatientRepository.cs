@@ -7,6 +7,7 @@ namespace Contracts.Interfaces.Repositories {
         Task<Patient> GetPatientById(int id);
         Task<Patient[]> GetAllPatients();
         Task<Patient> GetPatientByEmailAndPassword(string email, string password);
+        Task<bool> CheckIfPatientExistsById(int id);
         Task<bool> CheckIfPatientExistsByEmail(string email);
         Task<Patient> GetPatientByEmail(string email);
         Task UpdatePatient(Patient patient);

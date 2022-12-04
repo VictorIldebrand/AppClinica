@@ -23,26 +23,25 @@ namespace Business.Services {
             _employeeRepository = employeeRepository;
         }
 
-        public async Task<RequestResult<EmployeeMinDto>> CreateEmployee(EmployeeDto registerRequest)
+        public async Task<RequestResult<RequestAnswer>> CreateEmployee(EmployeeDto registerRequest)
         {
             try
             {
                 var employeeExists = await _employeeRepository.CheckIfEmployeeExistsByEmail(registerRequest.Email);
                 if (employeeExists)
-                    return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.EmployeeDuplicateCreateError.GetDescription());
+                    return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeDuplicateCreateError, true);
                 var model = _Mapper.Map<Employee>(registerRequest);
                 model.Active = true;
 
                 var response = await _employeeRepository.Register(model);
                 if (response.Id == 0)
-                    return new RequestResult<EmployeeMinDto>(null, true, RequestAnswer.EmployeeCreateError.GetDescription());
-                var dto = _Mapper.Map<EmployeeMinDto>(response);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeCreateError, true);
 
-                return new RequestResult<EmployeeMinDto>(dto);
+                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeCreateSuccess);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                return new RequestResult<EmployeeMinDto>(null, true, ex.Message);
+                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeCreateError, true);
             }
         }
 
@@ -87,14 +86,14 @@ namespace Business.Services {
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateEmployee(EmployeeDto employeeDto)
+        public async Task<RequestResult<RequestAnswer>> UpdateEmployee(EmployeeDto employeeDto, int id)
         {
             try
             {
-                var employeeCheck = await _employeeRepository.CheckIfEmployeeExistsById(employeeDto.Id);
+                var employeeCheck = await _employeeRepository.CheckIfEmployeeExistsById(id);
 
                 if (!employeeCheck)
-                    return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeNotFound);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeNotFound, true);
 
                 var model = _Mapper.Map<Employee>(employeeDto);
                 await _employeeRepository.UpdateEmployee(model);
