@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Contracts.Dto.Schedule;
+using Microsoft.AspNetCore.Http;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
@@ -15,10 +16,11 @@ namespace TemplateApi.Controllers {
 
         [HttpPost("create")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateSchedule(ScheduleDto scheduleDTO)
         {
             var scheduleResult = await _scheduleService.CreateSchedule(scheduleDTO);
-            return Ok(scheduleResult);
+            return Created("Agenda criada",scheduleResult);
         }
 
         [HttpGet("get/{id}")]

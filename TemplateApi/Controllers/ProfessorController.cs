@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Contracts.Dto.Professor;
+using Microsoft.AspNetCore.Http;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
@@ -15,9 +16,10 @@ namespace TemplateApi.Controllers {
 
         [HttpPost("create")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateProfessor(ProfessorDto professorDTO) {
             var professorResult = await _professorService.CreateProfessor(professorDTO);
-            return Ok(professorResult);
+            return Created("Professor criado",professorResult);
         }
 
 

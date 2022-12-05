@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Contracts.Dto.Employee;
+using Microsoft.AspNetCore.Http;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
@@ -15,9 +16,10 @@ namespace TemplateApi.Controllers {
 
         [HttpPost("create")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateEmployee(EmployeeDto EmployeeDto) {
             var employeeResult = await _employeeService.CreateEmployee(EmployeeDto);
-            return Ok(employeeResult);
+            return Created("Funcionário criado",employeeResult);
         }
 
         [HttpGet("get/{id}")]

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Contracts.Dto.Appointment;
 using System;
+using Microsoft.AspNetCore.Http;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
@@ -16,9 +17,10 @@ namespace TemplateApi.Controllers {
 
         [HttpPost("create")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateAppointment(AppointmentDto appointmentDTO) {
             var appointmentResult = await _appointmentService.CreateAppointment(appointmentDTO);
-            return Ok(appointmentResult);
+            return Created("Consulta criada",appointmentResult);
         }
 
         [HttpGet("get/{id}")]

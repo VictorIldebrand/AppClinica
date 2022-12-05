@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Contracts.Dto.Student;
+using Microsoft.AspNetCore.Http;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
@@ -15,9 +16,10 @@ namespace TemplateApi.Controllers {
 
         [HttpPost("create")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> Create(StudentDto StudentDto) {
             var auth = await _studentService.CreateStudent(StudentDto);
-            return Ok(auth);
+            return Created("Estudante criado",auth);
         }
 
         [HttpGet("get/{id}")]

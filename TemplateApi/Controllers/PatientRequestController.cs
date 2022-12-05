@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Contracts.Dto.PatientRequest;
+using Microsoft.AspNetCore.Http;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
@@ -15,9 +16,10 @@ namespace TemplateApi.Controllers {
 
         [HttpPost("create")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreatePatient(PatientRequestDto patientRequestDto) {
             var patientRequestResult = await _patientRequestService.CreatePatientRequest(patientRequestDto);
-            return Ok(patientRequestResult);
+            return Created("Requisição de paciente criada",patientRequestResult);
         }
 
         [HttpGet("get/{id}")]

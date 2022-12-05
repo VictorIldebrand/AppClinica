@@ -1,6 +1,7 @@
 ﻿using Contracts.Dto.Notification;
 using Contracts.Interfaces.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -15,9 +16,10 @@ namespace TemplateApi.Controllers {
 
         [HttpPost("create")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateNotification(NotificationDto notificationDTO) {
             var notificationResult = await _notificationService.CreateNotification(notificationDTO);
-            return Ok(notificationResult);
+            return Created("Notificação criada",notificationResult);
         }
 
         [HttpGet("get/{id}")]
