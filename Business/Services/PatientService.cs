@@ -31,18 +31,18 @@ namespace Business.Services
             {
                 var patientExists = await _patientRepository.CheckIfPatientExistsByEmail(patientDto.Email);
                 if (patientExists)
-                    return new RequestResult<RequestAnswer>(RequestAnswer.UserDuplicateCreateError, true);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.PatientDuplicateCreateError, true);
                 var model = _Mapper.Map<Patient>(patientDto);
                 model.Active = true;
                 var response = await _patientRepository.CreatePatient(model);
                 if (response.Id == 0)
-                    return new RequestResult<RequestAnswer>(RequestAnswer.UserCreateError, true);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.PatientCreateError, true);
                 var dto = _Mapper.Map<PatientMinDto>(response);
-                return new RequestResult<RequestAnswer>(RequestAnswer.UserCreateSuccess);
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientCreateSuccess);
             }
             catch (Exception)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientCreateError, true);
             }
         }
 

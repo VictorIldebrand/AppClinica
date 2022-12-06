@@ -31,12 +31,12 @@ namespace Business.Services
             {
                 var patientExists = await _professorRepository.CheckIfProfessorExistsByEmail(professorDto.Email);
                 if (patientExists)
-                    return new RequestResult<RequestAnswer>(RequestAnswer.UserDuplicateCreateError, true);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDuplicateCreateError, true);
                 var model = _Mapper.Map<Professor>(professorDto);
                 model.Active = true;
                 var response = await _professorRepository.CreateProfessor(model);
                 if (response.Id == 0)
-                    return new RequestResult<RequestAnswer>(RequestAnswer.UserCreateError, true);
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateError, true);
                 
                 return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateSuccess);
             }

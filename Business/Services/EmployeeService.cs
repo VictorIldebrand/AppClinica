@@ -38,8 +38,7 @@ namespace Business.Services {
                     return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeCreateError, true);
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeCreateSuccess);
-            }
-            catch (Exception)
+            } catch (Exception)
             {
                 return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeCreateError, true);
             }

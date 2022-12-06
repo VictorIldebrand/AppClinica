@@ -49,6 +49,13 @@ namespace Repository.Context
                     }
                 }
             }
+
+            modelBuilder.Entity<Appointment>()
+                .HasOne(g => g.Student)
+                .WithMany(s => s.Appointments);
+            modelBuilder.Entity<Appointment>()
+                .HasOne(g => g.Student)
+                .WithMany(s => s.Appointments);
         }
     }
 }

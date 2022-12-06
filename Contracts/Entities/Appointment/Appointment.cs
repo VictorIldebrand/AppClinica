@@ -5,8 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Contracts.Entities {
     [Table("appointment")]
-    public partial class Appointment
-    {
+    public partial class Appointment {
         [Column("id")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
@@ -24,15 +23,22 @@ namespace Contracts.Entities {
         public string CancellationReason { get; set; }
 
         [Column("id_schedule")]
+        [Required]
         public Schedule Schedule { get; set; }
 
         [Column("id_patient")]
+        [Required]
         public Patient Patient { get; set; }
 
         [Column("id_employee")]
+        [Required]
         public Employee Employee { get; set; }
 
         [Column("id_student")]
+        [Required]
+        public int StudentId { get; set; }
+
+        [Required]
         public Student Student { get; set; }
 
         [Column("new_patient")]

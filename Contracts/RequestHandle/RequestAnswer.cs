@@ -64,6 +64,9 @@ namespace Contracts.RequestHandle
         [Display(Description = "Aluno já cadastrado.")]
         StudentDuplicateCreateError,
 
+        [Display(Description = "Aluno com período inválido")]
+        StudentPeriodError,
+
         [Display(Description = "Aluno atualizado com sucesso!")]
         StudentUpdateSuccess,
 

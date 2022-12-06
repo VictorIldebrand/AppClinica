@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Contracts.Interfaces.Repositories;
 using Contracts.Utils;
 using Contracts.TransactionObjects.User;
+using System.Text.RegularExpressions;
 
 namespace Business.Services
 {
@@ -33,6 +34,11 @@ namespace Business.Services
 
                 if (studentExists)
                     return new RequestResult<RequestAnswer>(RequestAnswer.StudentDuplicateCreateError, true);
+
+                var regex = new Regex(@"^\d{2}$");
+                if (!regex.Match(studentDto.Period).Success) {
+                    return new RequestResult<RequestAnswer>(RequestAnswer.StudentPeriodError, true);
+                }                   
 
                 var model = _Mapper.Map<Student>(studentDto);
                 model.Active = true;
