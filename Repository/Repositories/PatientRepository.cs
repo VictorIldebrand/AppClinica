@@ -37,7 +37,7 @@ namespace Repository.Repositories
 
         public async Task<Patient> GetPatientByEmailAndPassword(string email, string password)
         {
-            throw new System.NotImplementedException();
+            return await _context.Patients.Where(x => x.Email == email && x.Password == password && x.Active).FirstOrDefaultAsync();
         }
         
         public async Task<bool> CheckIfPatientExistsById(int id)

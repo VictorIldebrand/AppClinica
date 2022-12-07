@@ -35,7 +35,7 @@ namespace Business.Services
                 if (studentExists)
                     return new RequestResult<RequestAnswer>(RequestAnswer.StudentDuplicateCreateError, true);
 
-                var regex = new Regex(@"^\d{2}$");
+                var regex = new Regex(@"^\d{1,2}$");
                 if (!regex.Match(studentDto.Period).Success) {
                     return new RequestResult<RequestAnswer>(RequestAnswer.StudentPeriodError, true);
                 }                   

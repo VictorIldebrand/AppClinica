@@ -13,6 +13,8 @@ namespace Contracts.Entities {
         public int Id { get; set; }
 
         [Column("id_appointment")]
+        public int AppointmentId { get; set; }
+
         public Appointment Appointment { get; set; }
 
         [Column("id_patient_request")]

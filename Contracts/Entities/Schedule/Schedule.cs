@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Contracts.Entities {
@@ -16,5 +17,7 @@ namespace Contracts.Entities {
 
         [Column("active")]
         public bool Active { get; set; }
+
+        public ICollection<Appointment> Appointment { get; set; }
     }
 }

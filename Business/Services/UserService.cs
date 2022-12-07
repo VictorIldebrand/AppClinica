@@ -91,19 +91,19 @@ namespace Business.Services
                 if (employee != null){
                     user.Id = employee.Id;
                     user.Email = employee.Email;
-                    user.Password = employee.Password;
+                    user.Name = employee.Name;
                 } else if(student != null){
                     user.Id = student.Id;
                     user.Email = student.Email;
-                    user.Password = student.Password;
+                    user.Name= student.Name;
                 } else if(patient != null){
                     user.Id = patient.Id;
                     user.Email = patient.Email;
-                    user.Password = patient.Password;
+                    user.Name = patient.Name;
                 } else if(professor != null){
                     user.Id = professor.Id;
                     user.Email = professor.Email;
-                    user.Password = professor.Password;
+                    user.Name = professor.Name;
                 } else
                     return new RequestResult<LoginResponseDto>(null, true, RequestAnswer.UserCredError.GetDescription());
 

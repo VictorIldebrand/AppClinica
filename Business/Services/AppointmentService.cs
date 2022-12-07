@@ -36,7 +36,7 @@ namespace Business.Services {
                 model.Status = StatusEnum.Created;
 
                 //Check if the patient, schedule, employee and student exists
-                if(appointmentDto.IdPatient != null) {
+                if(appointmentDto.IdPatient > 0) {
                     var responsePatient  = await _patientRepository.GetPatientById(appointmentDto.IdPatient);
                     if(responsePatient == null) { 
                         return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
@@ -44,21 +44,21 @@ namespace Business.Services {
                     model.Patient = responsePatient;
                 }
 
-                if(appointmentDto.IdSchedule != null) {
+                if(appointmentDto.IdSchedule > 0) {
                     var responseSchedule  = await _scheduleRepository.GetScheduleById(appointmentDto.IdSchedule);
                     if(responseSchedule == null)
                         return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
                     model.Schedule = responseSchedule;
                 }
 
-                if(appointmentDto.IdStudent != null) {
+                if(appointmentDto.IdStudent > 0) {
                     var responseStudent  = await _studentRepository.GetStudentById(appointmentDto.IdStudent);
                     if(responseStudent == null)
                         return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError,true);
                     model.Student = responseStudent;
                 }
 
-                if(appointmentDto.IdEmployee != null) {
+                if(appointmentDto.IdEmployee > 0) {
                     var responseEmployee  = await _employeeRepository.GetEmployeeById(appointmentDto.IdEmployee);
                     if(responseEmployee == null)
                         return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
@@ -141,8 +141,14 @@ namespace Business.Services {
             }
         }
 
-        public Task<RequestResult<AppointmentDto>> GetAppointments() {
-            throw new NotImplementedException();
+        public async Task<RequestResult<AppointmentDto[]>> GetAppointments() {
+            try {
+                var result = await _appointmentRepository.GetAppointments();
+                var dto = _Mapper.Map<AppointmentDto[]>(result);
+                return new RequestResult<AppointmentDto[]>(dto);
+            } catch(Exception) {
+                return new RequestResult<AppointmentDto[]>(null, true, RequestAnswer.AppointmentNotFound.GetDescription());
+            }
         }
     }
 }

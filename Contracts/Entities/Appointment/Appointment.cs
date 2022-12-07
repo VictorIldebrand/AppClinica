@@ -1,5 +1,6 @@
 ﻿using Contracts.Enums.Status;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -24,13 +25,22 @@ namespace Contracts.Entities {
 
         [Column("id_schedule")]
         [Required]
+        public int ScheduleId { get; set; }
+
+        [Required]
         public Schedule Schedule { get; set; }
 
         [Column("id_patient")]
         [Required]
+        public int PatientId { get; set; }
+
+        [Required]
         public Patient Patient { get; set; }
 
         [Column("id_employee")]
+        [Required]
+        public int EmployeeId { get; set; }
+
         [Required]
         public Employee Employee { get; set; }
 
@@ -58,5 +68,7 @@ namespace Contracts.Entities {
 
         [Column("location")]
         public string Location { get; set; }
+
+        public ICollection<Notification> Notifications { get; set; }
     }
 }

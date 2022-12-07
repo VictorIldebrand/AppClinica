@@ -51,11 +51,32 @@ namespace Repository.Context
             }
 
             modelBuilder.Entity<Appointment>()
-                .HasOne(g => g.Student)
-                .WithMany(s => s.Appointments);
+                .HasOne(s => s.Student)
+                .WithMany(a => a.Appointments);
             modelBuilder.Entity<Appointment>()
-                .HasOne(g => g.Student)
-                .WithMany(s => s.Appointments);
+                .HasOne(e => e.Employee)
+                .WithMany(a => a.Appointments);
+            modelBuilder.Entity<Appointment>()
+                .HasOne(p => p.Patient)
+                .WithMany(a => a.Appointments);
+            modelBuilder.Entity<Appointment>()
+                .HasOne(p => p.Schedule)
+                .WithMany(a => a.Appointment);
+            modelBuilder.Entity<Notification>()
+                .HasOne(a => a.Appointment)
+                .WithMany(b => b.Notifications);
+            /*modelBuilder.Entity<PatientRequest>()
+                .HasOne(ss => ss.Student)
+                .WithMany(b => b.Notifications); 
+            modelBuilder.Entity<PatientRequest>()
+                .HasOne(s => s.ScheduleProfessor)
+                .WithMany(b => b.PatientRequest);    
+            modelBuilder.Entity<PatientRequest>()
+                .hasOne(s => s.Student)
+                .WithMany(pr => pr.PatientRequest)*/
+            //modelBuilder.Entity<>
+
+
         }
     }
 }
