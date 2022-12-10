@@ -38,9 +38,9 @@ namespace Business.Services {
                     return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeCreateError, true);
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeCreateSuccess);
-            } catch (Exception)
+            } catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeCreateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeCreateError, true, ex.Message);
             }
         }
 
@@ -99,9 +99,9 @@ namespace Business.Services {
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeUpdateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeUpdateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeUpdateError, true, ex.Message);
             }
         }
         
@@ -113,9 +113,9 @@ namespace Business.Services {
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeDeleteSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeDeleteError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeDeleteError, true, ex.Message);
             }
         }
 

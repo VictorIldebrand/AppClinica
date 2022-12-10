@@ -19,5 +19,6 @@ namespace Contracts.Entities {
         public bool Active { get; set; }
 
         public ICollection<Appointment> Appointment { get; set; }
+        public ICollection<ScheduleProfessor> ScheduleProfessors { get; set; }
     }
 }

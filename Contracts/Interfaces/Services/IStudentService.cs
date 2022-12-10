@@ -13,7 +13,6 @@ namespace Contracts.Interfaces.Services {
         Task<RequestResult<StudentDto>> GetStudentByRa(string ra);
         Task<RequestResult<RequestAnswer>> UpdateStudent(StudentDto student, int id);
         Task<RequestResult<RequestAnswer>> DeleteStudent(int id);
-        Task<RequestResult<RequestAnswer>> RequestPatient();
 
         Task<FilterInfoDto[]> GetAllStudents();
     }

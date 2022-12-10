@@ -337,24 +337,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Helayne.DESKTOP-UMFI8VM\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Ildebrand\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Helayne.DESKTOP-UMFI8VM\\Documents\\Github\\AppClinica\\Contracts\\Contracts.csproj",
+      "projectUniqueName": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Contracts\\Contracts.csproj",
       "projectName": "Contracts",
-      "projectPath": "C:\\Users\\Helayne.DESKTOP-UMFI8VM\\Documents\\Github\\AppClinica\\Contracts\\Contracts.csproj",
-      "packagesPath": "C:\\Users\\Helayne.DESKTOP-UMFI8VM\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Helayne.DESKTOP-UMFI8VM\\Documents\\Github\\AppClinica\\Contracts\\obj\\",
+      "projectPath": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Contracts\\Contracts.csproj",
+      "packagesPath": "C:\\Users\\Ildebrand\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Contracts\\obj\\",
       "projectStyle": "PackageReference",
-      "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-      ],
       "configFilePaths": [
-        "C:\\Users\\Helayne.DESKTOP-UMFI8VM\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\Ildebrand\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -404,7 +399,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.414\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.413\\RuntimeIdentifierGraph.json"
       }
     }
   }

@@ -37,13 +37,6 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpPost("request-patient")]
-        [AllowAnonymous]
-        public async Task<IActionResult> RequestPatient() {
-            var result = await _studentService.RequestPatient();
-            return Ok(result);
-        }
-
         [HttpDelete("delete/{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> Delete(int id)

@@ -14,21 +14,32 @@ namespace Business.Services {
         private readonly IMapper _Mapper;
         private readonly IConfiguration _configuration;
         private readonly IPatientRequestRepository _patientRequestRepository;
+        private readonly IScheduleProfessorRepository _scheduleProfessorRepository;
+        private readonly IStudentRepository _studentRepository;
 
-        public PatientRequestService(IMapper Mapper, IConfiguration configuration, IPatientRequestRepository patientRequestRepository)
+        public PatientRequestService(IMapper Mapper, IConfiguration configuration, IPatientRequestRepository patientRequestRepository, IScheduleProfessorRepository scheduleProfessorRepository, IStudentRepository studentRepository)
         {
             _Mapper = Mapper;
             _configuration = configuration;
             _patientRequestRepository = patientRequestRepository;
+            _scheduleProfessorRepository = scheduleProfessorRepository;
+            _studentRepository = studentRepository;
         }
 
         public async Task<RequestResult<RequestAnswer>> CreatePatientRequest(PatientRequestDto patientRequestDto)
         {
             try{
-                var model = _Mapper.Map<PatientRequest>(patientRequestDto);
-                model.Status = true;
-            
+                
+
                 if (Rules.Check48HoursBefore(patientRequestDto.DataSolicitation, patientRequestDto.DataTreatment)) {
+                    var student = await _studentRepository.GetStudentById(patientRequestDto.StudentId);
+                    if (student == null)
+                    {
+                        return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestCreateError, true);
+                    }
+                    var model = _Mapper.Map<PatientRequest>(patientRequestDto);
+                    model.Student = student;
+                    model.Active = true;
                     var response = await _patientRequestRepository.CreatePatientRequest(model);
                     if (response.Id == 0)
                         return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestCreateError, true);
@@ -37,9 +48,9 @@ namespace Business.Services {
                 } else
                     return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequest48HoursBefore, true);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestCreateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestCreateError, true, ex.Message);
             }
         }
 
@@ -77,9 +88,9 @@ namespace Business.Services {
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateError, true, ex.Message);
             }
         }
 
@@ -91,9 +102,9 @@ namespace Business.Services {
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestDeleteSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestDeleteError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientRequestDeleteError, true, ex.Message);
             }
         }
     }

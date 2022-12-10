@@ -11,7 +11,6 @@ namespace Contracts.Dto.PatientRequest
         public bool Status { get; set; }
         public int IdStudent { get; set; }
         public bool NewPatient { get; set; }
-        public int IdScheduleProfessor { get; set; }
         public string Procedure { get; set; }
         public string Note { get; set; }
     }

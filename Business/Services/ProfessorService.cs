@@ -40,9 +40,9 @@ namespace Business.Services
                 
                 return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateError, true, ex.Message);
             }
         }
 
@@ -89,9 +89,9 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorUpdateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorUpdateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorUpdateError, true, ex.Message);
             }
         }
         
@@ -103,9 +103,9 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDeleteSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDeleteError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDeleteError, true, ex.Message);
             }
         }
         public async Task<FilterInfoDto[]> GetAllProfessors() {

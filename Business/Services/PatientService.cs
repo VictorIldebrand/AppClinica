@@ -40,9 +40,9 @@ namespace Business.Services
                 var dto = _Mapper.Map<PatientMinDto>(response);
                 return new RequestResult<RequestAnswer>(RequestAnswer.PatientCreateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.PatientCreateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientCreateError, true, ex.Message);
             }
         }
 
@@ -89,9 +89,9 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientUpdateError, true, ex.Message);
             }
         }
 
@@ -103,9 +103,9 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.PatientDeleteSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.PatientDeleteError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.PatientDeleteError, true, ex.Message);
             }
         }
 

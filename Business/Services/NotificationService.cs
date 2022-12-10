@@ -14,12 +14,16 @@ namespace Business.Services {
         private readonly IMapper _Mapper;
         private readonly IConfiguration _configuration;
         private readonly INotificationRepository _notificationRepository;
+        private readonly IAppointmentRepository _appointmentRepository;
+        private readonly IPatientRequestRepository _patientRequestRepository;
 
-        public NotificationService(IMapper Mapper, IConfiguration configuration, INotificationRepository notificationRepository)
+        public NotificationService(IMapper Mapper, IConfiguration configuration, INotificationRepository notificationRepository, IAppointmentRepository appointmentRepository, IPatientRequestRepository patientRequestRepository)
         {
             _Mapper = Mapper;
             _configuration = configuration;
             _notificationRepository = notificationRepository;
+            _appointmentRepository = appointmentRepository;
+            _patientRequestRepository = patientRequestRepository;
         }
 
         public async Task<RequestResult<RequestAnswer>> CreateNotification(NotificationDto notificationDto)
@@ -34,9 +38,9 @@ namespace Business.Services {
                 
                 return new RequestResult<RequestAnswer>(RequestAnswer.NotificationCreateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationCreateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationCreateError, true, ex.Message);
             }
         }
 
@@ -94,9 +98,9 @@ namespace Business.Services {
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.NotificationUpdateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationUpdateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationUpdateError, true, ex.Message);
             }
         }
 
@@ -108,9 +112,9 @@ namespace Business.Services {
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.NotificationDeleteSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationDeleteError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.NotificationDeleteError, true, ex.Message);
             }
         }
     }

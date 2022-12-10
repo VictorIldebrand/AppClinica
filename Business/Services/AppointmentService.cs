@@ -20,12 +20,15 @@ namespace Business.Services {
         private readonly IStudentRepository _studentRepository;
         private readonly IEmployeeRepository _employeeRepository;
         
-        public AppointmentService(IMapper Mapper, IConfiguration configuration, IAppointmentRepository appointmentRepository, IPatientRepository patientRepository)
+        public AppointmentService(IMapper Mapper, IConfiguration configuration, IAppointmentRepository appointmentRepository, IPatientRepository patientRepository, IScheduleRepository scheduleRepository, IStudentRepository studentRepository, IEmployeeRepository employeeRepository)
         {
             _Mapper = Mapper;
             _configuration = configuration;
             _appointmentRepository = appointmentRepository;
             _patientRepository = patientRepository;
+            _scheduleRepository = scheduleRepository;
+            _studentRepository = studentRepository;
+            _employeeRepository = employeeRepository;
         }
 
         public async Task<RequestResult<RequestAnswer>> CreateAppointment(AppointmentDto appointmentDto)
@@ -71,9 +74,9 @@ namespace Business.Services {
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true, ex.Message);
             }
         }
 
@@ -116,9 +119,9 @@ namespace Business.Services {
                     return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentNotFound, true);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentUpdateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentUpdateError, true, ex.Message);
             }
         }
 
@@ -135,9 +138,9 @@ namespace Business.Services {
                     return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentLessThan48Hours, true); 
                 }          
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentDeleteError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentDeleteError, true, ex.Message);
             }
         }
 
@@ -146,7 +149,7 @@ namespace Business.Services {
                 var result = await _appointmentRepository.GetAppointments();
                 var dto = _Mapper.Map<AppointmentDto[]>(result);
                 return new RequestResult<AppointmentDto[]>(dto);
-            } catch(Exception) {
+            } catch(Exception ex) {
                 return new RequestResult<AppointmentDto[]>(null, true, RequestAnswer.AppointmentNotFound.GetDescription());
             }
         }

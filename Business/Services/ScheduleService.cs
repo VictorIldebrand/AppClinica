@@ -36,9 +36,9 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleCreateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleCreateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleCreateError, true, ex.Message);
             }
         }
 
@@ -76,9 +76,9 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleUpdateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleUpdateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleUpdateError, true, ex.Message);
             }
         }
         
@@ -90,9 +90,9 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleDeleteSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleDeleteError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleDeleteError, true, ex.Message);
             }
         }
     }

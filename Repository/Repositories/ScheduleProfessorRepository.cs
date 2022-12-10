@@ -33,10 +33,14 @@ namespace Repository.Repositories {
 
         public async Task<ScheduleProfessor> CreateScheduleProfessor(ScheduleProfessor schedule_professor)
         {
-            var result = await _context.ScheduleProfessors.AddAsync(schedule_professor);
-            await _context.SaveChangesAsync();
+            try{
+                var result = await _context.ScheduleProfessors.AddAsync(schedule_professor);
+                await _context.SaveChangesAsync();
 
-            return result.Entity;
+                return result.Entity;
+            } catch(Exception ex) {
+                throw new Exception(ex.Message);
+            }
         }
 
         public async Task UpdateScheduleProfessor(ScheduleProfessor schedule_professor)
@@ -44,7 +48,7 @@ namespace Repository.Repositories {
             _context.ScheduleProfessors.Update(schedule_professor);
             await _context.SaveChangesAsync();
         }
-        
+
         public async Task DeleteScheduleProfessor(int id)
         {
             var schedule_professor = await _context.ScheduleProfessors.Where(u => u.Id == id).FirstOrDefaultAsync();

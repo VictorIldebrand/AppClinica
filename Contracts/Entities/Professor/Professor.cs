@@ -1,4 +1,5 @@
 ﻿using Contracts.Entities.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -35,5 +36,7 @@ namespace Contracts.Entities
 
         [Column("active")]
         public bool Active { get; set; }
+
+        public ICollection<ScheduleProfessor> ScheduleProfessors { get; set; }
     }
 }

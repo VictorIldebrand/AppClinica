@@ -50,9 +50,9 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.StudentCreateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.StudentCreateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.StudentCreateError, true, ex.Message);
             }
         }
 
@@ -138,9 +138,9 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.StudentUpdateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.StudentUpdateError, true);
+                return new RequestResult<RequestAnswer>(RequestAnswer.StudentUpdateError, true, ex.Message);
             }
         }
 
@@ -152,21 +152,9 @@ namespace Business.Services
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.StudentDeleteSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new RequestResult<RequestAnswer>(RequestAnswer.StudentDeleteError, true);
-            }
-        }
-
-        public async Task<RequestResult<RequestAnswer>> RequestPatient()
-        {
-            try
-            {
-                throw new NotImplementedException();
-            }
-            catch (Exception)
-            {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.StudentDeleteError, true, ex.Message);
             }
         }
 

@@ -42,5 +42,7 @@ namespace Contracts.Entities
         public bool Active { get; set; }
 
         public ICollection<Appointment> Appointments { get; set; }
+
+        public ICollection<PatientRequest> PatientRequests { get; set; }
     }
 }

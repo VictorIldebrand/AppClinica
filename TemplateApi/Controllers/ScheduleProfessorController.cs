@@ -30,10 +30,10 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpPut("update")]
+        [HttpPut("update/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateScheduleProfessor(ScheduleProfessorDto scheduleProfessorDto) {
-            var result = await _scheduleProfessorService.UpdateScheduleProfessor(scheduleProfessorDto);
+        public async Task<IActionResult> UpdateScheduleProfessor(ScheduleProfessorDto scheduleProfessorDto, int id) {
+            var result = await _scheduleProfessorService.UpdateScheduleProfessor(scheduleProfessorDto, id);
             return Ok(result);
         }
 

@@ -49,7 +49,7 @@ namespace Repository.Context
                     }
                 }
             }
-
+            //Appointment
             modelBuilder.Entity<Appointment>()
                 .HasOne(s => s.Student)
                 .WithMany(a => a.Appointments);
@@ -62,19 +62,35 @@ namespace Repository.Context
             modelBuilder.Entity<Appointment>()
                 .HasOne(p => p.Schedule)
                 .WithMany(a => a.Appointment);
+
+            //Notification
             modelBuilder.Entity<Notification>()
                 .HasOne(a => a.Appointment)
                 .WithMany(b => b.Notifications);
-            /*modelBuilder.Entity<PatientRequest>()
+            modelBuilder.Entity<Notification>()
+                .HasOne(a => a.PatientRequest)
+                .WithMany(b => b.Notifications);
+
+            //PatientRequest
+            modelBuilder.Entity<PatientRequest>()
                 .HasOne(ss => ss.Student)
-                .WithMany(b => b.Notifications); 
+                .WithMany(b => b.PatientRequests)
+                .HasForeignKey(sp => sp.StudentId);
             modelBuilder.Entity<PatientRequest>()
-                .HasOne(s => s.ScheduleProfessor)
-                .WithMany(b => b.PatientRequest);    
-            modelBuilder.Entity<PatientRequest>()
-                .hasOne(s => s.Student)
-                .WithMany(pr => pr.PatientRequest)*/
-            //modelBuilder.Entity<>
+                .HasMany(s => s.Notifications)
+                .WithOne(pr => pr.PatientRequest);
+
+            // Schedule Professor
+            modelBuilder.Entity<ScheduleProfessor>()
+                .HasKey(bc => new { bc.ScheduleId, bc.ProfessorId });
+            modelBuilder.Entity<ScheduleProfessor>()
+                .HasOne(sp => sp.Professor)
+                .WithMany(p => p.ScheduleProfessors)
+                .HasForeignKey(sp => sp.ProfessorId);
+            modelBuilder.Entity<ScheduleProfessor>()
+                .HasOne(sp => sp.Schedule)
+                .WithMany(p => p.ScheduleProfessors)
+                .HasForeignKey(sp => sp.ScheduleId);
 
 
         }
