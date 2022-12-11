@@ -18,6 +18,7 @@ namespace Business.Services
         private readonly IMapper _Mapper;
         private readonly IConfiguration _configuration;
         private readonly IStudentRepository _studentRepository;
+        private readonly Regex PeriodRegex = new Regex(@"^(10|[1-9])$");
 
         public StudentService(IMapper Mapper, IConfiguration configuration, IStudentRepository studentRepository)
         {
@@ -30,15 +31,15 @@ namespace Business.Services
         {
             try
             {
-                var studentExists = await _studentRepository.CheckIfStudentExistsByEmail(studentDto.Email);
+                var studentExistsByEmail = await _studentRepository.CheckIfStudentExistsByEmail(studentDto.Email);
+                var studentExistsByRa = await _studentRepository.CheckIfStudentExistsByRa(studentDto.Ra);
 
-                if (studentExists)
+                if (studentExistsByEmail || studentExistsByRa)
                     return new RequestResult<RequestAnswer>(RequestAnswer.StudentDuplicateCreateError, true);
 
-                var regex = new Regex(@"^\d{1,2}$");
-                if (!regex.Match(studentDto.Period).Success) {
+                if (!PeriodRegex.Match(studentDto.Period).Success) {
                     return new RequestResult<RequestAnswer>(RequestAnswer.StudentPeriodError, true);
-                }                   
+                }
 
                 var model = _Mapper.Map<Student>(studentDto);
                 model.Active = true;
@@ -56,23 +57,23 @@ namespace Business.Services
             }
         }
 
-        public async Task<RequestResult<StudentDto>> GetStudentById(int id)
+        public async Task<RequestResult<StudentMinDto>> GetStudentById(int id)
         {
             try
             {
                 var model = await _studentRepository.GetStudentById(id);
 
                 if (model == null)
-                    return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentNotFound.GetDescription());
+                    return new RequestResult<StudentMinDto>(null, true, RequestAnswer.StudentNotFound.GetDescription());
 
-                var dto = _Mapper.Map<StudentDto>(model);
-                var result = new RequestResult<StudentDto>(dto);
+                var dto = _Mapper.Map<StudentMinDto>(model);
+                var result = new RequestResult<StudentMinDto>(dto);
 
                 return result;
             }
             catch (Exception ex)
             {
-                return new RequestResult<StudentDto>(null, true, ex.Message);
+                return new RequestResult<StudentMinDto>(null, true, ex.Message);
             }
         }
 
@@ -85,42 +86,42 @@ namespace Business.Services
             return array;
         }
 
-        public async Task<RequestResult<StudentDto>> GetStudentByEmail(string email)
+        public async Task<RequestResult<StudentMinDto>> GetStudentByEmail(string email)
         {
             try
             {
                 var model = await _studentRepository.GetStudentByEmail(email);
 
                 if (model == null)
-                    return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentNotFound.GetDescription());
+                    return new RequestResult<StudentMinDto>(null, true, RequestAnswer.StudentNotFound.GetDescription());
 
-                var dto = _Mapper.Map<StudentDto>(model);
-                var result = new RequestResult<StudentDto>(dto);
+                var dto = _Mapper.Map<StudentMinDto>(model);
+                var result = new RequestResult<StudentMinDto>(dto);
 
                 return result;
             }
             catch (Exception ex)
             {
-                return new RequestResult<StudentDto>(null, true, ex.Message);
+                return new RequestResult<StudentMinDto>(null, true, ex.Message);
             }
         }
 
-        public async Task<RequestResult<StudentDto>> GetStudentByRa(string ra){
+        public async Task<RequestResult<StudentMinDto>> GetStudentByRa(string ra){
             try
             {
                 var model = await _studentRepository.GetStudentByRa(ra);
 
                 if (model == null)
-                    return new RequestResult<StudentDto>(null, true, RequestAnswer.StudentNotFound.GetDescription());
+                    return new RequestResult<StudentMinDto>(null, true, RequestAnswer.StudentNotFound.GetDescription());
 
-                var dto = _Mapper.Map<StudentDto>(model);
-                var result = new RequestResult<StudentDto>(dto);
+                var dto = _Mapper.Map<StudentMinDto>(model);
+                var result = new RequestResult<StudentMinDto>(dto);
 
                 return result;
             }
             catch (Exception ex)
             {
-                return new RequestResult<StudentDto>(null, true, ex.Message);
+                return new RequestResult<StudentMinDto>(null, true, ex.Message);
             }
         }
 
@@ -128,12 +129,25 @@ namespace Business.Services
         {
             try
             {
-                var studentCheck = await _studentRepository.CheckIfStudentExistsById(id);
+                bool studentCheck = await _studentRepository.CheckIfStudentExistsById(id);
 
                 if (!studentCheck)
                     return new RequestResult<RequestAnswer>(RequestAnswer.StudentNotFound, true);
 
+                bool studentExistsByEmail = false;
+                bool studentExistsByRa = false;
+
+                if(student.Email != null)
+                    studentExistsByEmail = await _studentRepository.CheckIfStudentExistsByEmail(student.Email);
+                if(student.Ra != null)
+                    studentExistsByRa = await _studentRepository.CheckIfStudentExistsByRa(student.Ra);
+
+                if (studentExistsByEmail || studentExistsByRa)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.StudentDuplicateCreateError, true);
+                if (!PeriodRegex.Match(student.Period).Success)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.StudentPeriodError, true);
                 var model = _Mapper.Map<Student>(student);
+                model.Id = id;
                 await _studentRepository.UpdateStudent(model);
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.StudentUpdateSuccess);
@@ -158,32 +172,5 @@ namespace Business.Services
             }
         }
 
-        // public async Task<RequestResult<LoginResponseDto>> Login(StudentDto studentDto)
-		// {
-        //     try
-        //     {
-        //         var student = await _studentRepository.GetStudentByEmailAndPassword(studentDto.Email, studentDto.Password);
-
-        //         if (student == null)
-        //             return new RequestResult<LoginResponseDto>(null, true, RequestAnswer.StudentCredError.GetDescription());
-
-        //         var loginResponse = new LoginResponseDto
-        //         {
-        //             UserId = student.id,
-        //             UserName = student.name,
-        //             UserEmail = student.email,
-        //             Token = TokenService.GenerateStudentToken(student, _configuration["Settings:JwtSecret"])
-        //         };
-
-        //         var result = new RequestResult<LoginResponseDto>(loginResponse, false);
-
-        //         return result;
-        //     }
-        //     catch (Exception ex)
-        //     {
-        //         var msg = ex.Message.Contains("See the inner exception for details") ? ex.InnerException.Message : ex.Message;
-        //         return new RequestResult<LoginResponseDto>(null, true, msg);
-        //     }
-        // }
     }
 }

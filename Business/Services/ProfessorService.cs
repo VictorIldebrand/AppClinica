@@ -29,15 +29,16 @@ namespace Business.Services
         {
             try
             {
-                var patientExists = await _professorRepository.CheckIfProfessorExistsByEmail(professorDto.Email);
-                if (patientExists)
+                var patientExistsByEmail = await _professorRepository.CheckIfProfessorExistsByEmail(professorDto.Email);
+                var patientExistsByRp = await _professorRepository.CheckIfProfessorExistsByRp(professorDto.Rp);
+                if (patientExistsByEmail || patientExistsByRp)
                     return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDuplicateCreateError, true);
                 var model = _Mapper.Map<Professor>(professorDto);
                 model.Active = true;
                 var response = await _professorRepository.CreateProfessor(model);
                 if (response.Id == 0)
                     return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateError, true);
-                
+
                 return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateSuccess);
             }
             catch (Exception ex)
@@ -80,7 +81,14 @@ namespace Business.Services
             try
             {
                 var professorCheck = await _professorRepository.CheckIfProfessorExistsById(id);
-
+                bool patientExistsByEmail = false;
+                bool patientExistsByRp = false;
+                if(professorDto.Email != null)
+                    await _professorRepository.CheckIfProfessorExistsByEmail(professorDto.Email);
+                if(professorDto.Rp != null)
+                    await _professorRepository.CheckIfProfessorExistsByRp(professorDto.Rp);
+                if (patientExistsByEmail || patientExistsByRp)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDuplicateCreateError, true);
                 if (!professorCheck)
                     return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorNotFound);
 
@@ -94,7 +102,7 @@ namespace Business.Services
                 return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorUpdateError, true, ex.Message);
             }
         }
-        
+
         public async Task<RequestResult<RequestAnswer>> DeleteProfessor(int id)
         {
             try
@@ -110,11 +118,11 @@ namespace Business.Services
         }
         public async Task<FilterInfoDto[]> GetAllProfessors() {
             Professor[] professors = await _professorRepository.GetAllProfessors();
-            
+
             var array = _Mapper.Map<FilterInfoDto[]>(professors);
 
             return array;
         }
-        
+
     }
 }

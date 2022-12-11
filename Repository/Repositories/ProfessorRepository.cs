@@ -19,25 +19,24 @@ namespace Repository.Repositories
             return await _context.Professors.Where(u => u.Id == id && u.Active).FirstOrDefaultAsync();
         }
 
-
-
         public async Task<Professor> GetProfessorByEmailAndPassword(string email, string password) {
             return await _context.Professors.Where(x => x.Email == email && x.Password == password && x.Active).FirstOrDefaultAsync();
         }
 
         public async Task<bool> CheckIfProfessorExistsByEmail(string email) {
-            var result = await _context.Professors.AnyAsync(u => u.Email == email && u.Active);
-            return result;
+            return await _context.Professors.AnyAsync(u => u.Email == email && u.Active);
+        }
+
+        public async Task<bool> CheckIfProfessorExistsByRp(string rp) {
+            return await _context.Professors.AnyAsync(u => u.Rp == rp && u.Active);
         }
 
         public async Task<bool> CheckIfProfessorExistsById(int id) {
-            var result = await _context.Professors.AnyAsync(u => u.Id == id && u.Active);
-            return result;
+            return await _context.Professors.AnyAsync(u => u.Id == id && u.Active);
         }
 
         public async Task<Professor> GetProfessorByEmail(string email) {
-            var result = await _context.Professors.Where(u => u.Email == email && u.Active).FirstOrDefaultAsync();
-            return result;
+            return await _context.Professors.Where(u => u.Email == email && u.Active).FirstOrDefaultAsync();
         }
 
         public async Task<Professor> CreateProfessor(Professor professor) {
@@ -54,8 +53,8 @@ namespace Repository.Repositories
 
         public async Task DeleteProfessor(int id) {
             var professor = await _context.Professors.Where(u => u.Id == id).FirstOrDefaultAsync();
-            if(!professor.Active){
-                throw new Exception("Professor já removido");
+            if(professor == null || !professor.Active){
+                throw new Exception("Professor já removido ou não encontrado");
             }
             professor.Active = false;
 

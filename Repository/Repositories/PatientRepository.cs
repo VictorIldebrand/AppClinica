@@ -42,13 +42,15 @@ namespace Repository.Repositories
         
         public async Task<bool> CheckIfPatientExistsById(int id)
         {
-            var result = await _context.Patients.AnyAsync(u => u.Id == id && u.Active);
-            return result;
+            return await _context.Patients.AnyAsync(u => u.Id == id && u.Active);
         }
 
         public async Task<bool> CheckIfPatientExistsByEmail(string email) {
-            var result = await _context.Patients.AnyAsync(u => u.Email == email && u.Active);
-            return result;
+            return await _context.Patients.AnyAsync(u => u.Email == email && u.Active);
+        }
+
+        public async Task<bool> CheckIfPatientExistsByCpf(string cpf) {
+            return await _context.Patients.AnyAsync(u => u.Cpf == cpf && u.Active);
         }
 
         public async Task UpdatePatient(Patient patient)
@@ -60,8 +62,8 @@ namespace Repository.Repositories
         public async Task DeletePatient(int id)
         {
             var patient = await _context.Patients.Where(u => u.Id == id).FirstOrDefaultAsync();
-            if(!patient.Active){
-                throw new Exception("Paciente já removido");
+            if(patient == null || !patient.Active){
+                throw new Exception("Paciente já removido ou não encontrado");
             }
             patient.Active = false;
 

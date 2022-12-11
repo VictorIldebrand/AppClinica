@@ -38,18 +38,19 @@ namespace Repository.Repositories {
         }
 
         public async Task<bool> CheckIfEmployeeExistsById(int id) {
-            var result = await _context.Employees.AnyAsync(u => u.Id == id && u.Active);
-            return result;
+            return await _context.Employees.AnyAsync(u => u.Id == id && u.Active);
         }
 
         public async Task<bool> CheckIfEmployeeExistsByEmail(string email) {
-            var result = await _context.Employees.AnyAsync(u => u.Email == email && u.Active);
-            return result;
+            return await _context.Employees.AnyAsync(u => u.Email == email && u.Active);
+        }
+
+        public async Task<bool> CheckIfEmployeeExistsByCpf(string cpf) {
+            return await _context.Employees.AnyAsync(u => u.Cpf == cpf && u.Active);
         }
 
         public async Task<bool> CheckIfEmployeeIsAdminById(int id, bool is_admin) {
-            var result = await _context.Employees.AnyAsync(u => u.Id == id && u.IsAdmin && u.Active);
-            return result;
+            return await _context.Employees.AnyAsync(u => u.Id == id && u.IsAdmin && u.Active);
         }
 
         public async Task UpdateEmployee(Employee employee)
@@ -61,8 +62,8 @@ namespace Repository.Repositories {
         public async Task DeleteEmployee(int id)
         {
             var employee = await _context.Employees.Where(e => e.Id == id).FirstOrDefaultAsync();
-            if(!employee.Active){
-                throw new Exception("Funcionário já removido");
+            if(employee == null || !employee.Active){
+                throw new Exception("Funcionário já removido ou não encontrado");
             }
             employee.Active = false;
 

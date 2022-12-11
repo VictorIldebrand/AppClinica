@@ -10,6 +10,7 @@ namespace Contracts.Interfaces.Repositories {
         Task<Employee> GetEmployeeByEmail(string email);
         Task<bool> CheckIfEmployeeExistsById(int id);
         Task<bool> CheckIfEmployeeExistsByEmail(string email);
+        Task<bool> CheckIfEmployeeExistsByCpf(string cpf);
         Task<bool> CheckIfEmployeeIsAdminById(int id, bool is_admin);
         Task UpdateEmployee(Employee employee);
         Task DeleteEmployee(int id);

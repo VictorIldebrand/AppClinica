@@ -52,8 +52,8 @@ namespace TemplateApi
             CreateMap<Employee, EmployeeDto>().ReverseMap();
             CreateMap<Employee, EmployeeMinDto>();
             CreateMap<Employee, EmployeeMinDto>().ReverseMap();
-            CreateMap<Employee, FilterInfoDto>();
-            CreateMap<Employee, FilterInfoDto>().ReverseMap();
+            CreateMap<Employee[], FilterInfoDto[]>();
+            CreateMap<Employee[], FilterInfoDto[]>().ReverseMap();
         }
 
         private void NotificationMap()
@@ -78,8 +78,8 @@ namespace TemplateApi
             CreateMap<Patient, PatientDto>().ReverseMap();
             CreateMap<Patient, PatientMinDto>();
             CreateMap<Patient, PatientMinDto>().ReverseMap();
-            CreateMap<Patient, FilterInfoDto>();
-            CreateMap<Patient, FilterInfoDto>().ReverseMap();
+            CreateMap<Patient[], FilterInfoDto[]>();
+            CreateMap<Patient[], FilterInfoDto[]>().ReverseMap();
         }
 
         private void PatientRequestMap()
@@ -96,8 +96,8 @@ namespace TemplateApi
             CreateMap<Professor, ProfessorDto>().ReverseMap();
             CreateMap<Professor, ProfessorMinDto>();
             CreateMap<Professor, ProfessorMinDto>().ReverseMap();
-            CreateMap<Professor, FilterInfoDto>();
-            CreateMap<Professor, FilterInfoDto>().ReverseMap();
+            CreateMap<Professor[], FilterInfoDto[]>();
+            CreateMap<Professor[], FilterInfoDto[]>().ReverseMap();
         }
 
         private void ScheduleProfessorMap()
@@ -122,8 +122,8 @@ namespace TemplateApi
             CreateMap<Student, StudentDto>().ReverseMap();
             CreateMap<Student, StudentMinDto>();
             CreateMap<Student, StudentMinDto>().ReverseMap();
-            CreateMap<Student, FilterInfoDto>();
-            CreateMap<Student, FilterInfoDto>().ReverseMap();
+            CreateMap<Student[], FilterInfoDto[]>();
+            CreateMap<Student[], FilterInfoDto[]>().ReverseMap();
         }
     }
 }

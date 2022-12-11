@@ -8,6 +8,7 @@ using Contracts.TransactionObjects.User;
 using Contracts.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 namespace Business.Services {
     public class EmployeeService : IEmployeeService
@@ -15,6 +16,7 @@ namespace Business.Services {
         private readonly IMapper _Mapper;
         private readonly IConfiguration _configuration;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly Regex CpfRegex = new Regex("^\\d{11}$");
 
         public EmployeeService(IMapper Mapper, IConfiguration configuration, IEmployeeRepository employeeRepository)
         {
@@ -27,12 +29,17 @@ namespace Business.Services {
         {
             try
             {
-                var employeeExists = await _employeeRepository.CheckIfEmployeeExistsByEmail(registerRequest.Email);
-                if (employeeExists)
+                var employeeExistsByEmail = await _employeeRepository.CheckIfEmployeeExistsByEmail(registerRequest.Email);
+                var employeeExistsByCpf = await _employeeRepository.CheckIfEmployeeExistsByCpf(registerRequest.Cpf);
+                
+                if (employeeExistsByEmail || employeeExistsByCpf)
                     return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeDuplicateCreateError, true);
+
+                if (!CpfRegex.Match(registerRequest.Cpf).Success)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.InvalidCpf, true);
                 var model = _Mapper.Map<Employee>(registerRequest);
                 model.Active = true;
-
+                
                 var response = await _employeeRepository.Register(model);
                 if (response.Id == 0)
                     return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeCreateError, true);
@@ -89,10 +96,22 @@ namespace Business.Services {
         {
             try
             {
-                var employeeCheck = await _employeeRepository.CheckIfEmployeeExistsById(id);
+                bool employeeCheckById = await _employeeRepository.CheckIfEmployeeExistsById(id);
+                bool employeeCheckByEmail = false;
+                bool employeeCheckByCpf = false;
 
-                if (!employeeCheck)
+                if(employeeDto.Email != null)
+                    employeeCheckByEmail = await _employeeRepository.CheckIfEmployeeExistsByEmail(employeeDto.Email);
+                if(employeeDto.Cpf != null){
+                    if (!CpfRegex.Match(employeeDto.Cpf).Success)
+                        return new RequestResult<RequestAnswer>(RequestAnswer.InvalidCpf, true);
+                    employeeCheckByCpf = await _employeeRepository.CheckIfEmployeeExistsByCpf(employeeDto.Cpf);
+                }
+                if (employeeCheckByEmail || employeeCheckByCpf)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeDuplicateCreateError, true);
+                if (!employeeCheckById)
                     return new RequestResult<RequestAnswer>(RequestAnswer.EmployeeNotFound, true);
+
 
                 var model = _Mapper.Map<Employee>(employeeDto);
                 await _employeeRepository.UpdateEmployee(model);

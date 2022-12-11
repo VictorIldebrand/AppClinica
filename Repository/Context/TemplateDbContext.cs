@@ -92,6 +92,9 @@ namespace Repository.Context
                 .WithMany(p => p.ScheduleProfessors)
                 .HasForeignKey(sp => sp.ScheduleId);
 
+            modelBuilder.Entity<Appointment>()
+                .Property(e => e.Status)
+                .HasConversion<string>();
 
         }
     }

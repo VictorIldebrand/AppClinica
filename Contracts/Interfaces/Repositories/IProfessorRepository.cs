@@ -6,6 +6,7 @@ namespace Contracts.Interfaces.Repositories {
         Task<Professor> GetProfessorById(int id);
         Task<Professor> GetProfessorByEmailAndPassword(string email, string password);
         Task<bool> CheckIfProfessorExistsByEmail(string email);
+        Task<bool> CheckIfProfessorExistsByRp(string rp);
         Task<bool> CheckIfProfessorExistsById(int id);
         Task<Professor> GetProfessorByEmail(string email);
         Task<Professor> CreateProfessor(Professor professor);

@@ -24,7 +24,7 @@ GO
 CREATE TABLE [employee] (
   [id] integer PRIMARY KEY NOT NULL IDENTITY(1, 1),
   [email] varchar(255),
-  [cpf] varchar(15),
+  [cpf] varchar(255),
   [password] varchar(255),
   [name] varchar(255),
   [phone] varchar(255),
@@ -55,7 +55,7 @@ GO
 CREATE TABLE [appointment] (
   [id] integer PRIMARY KEY NOT NULL IDENTITY(1, 1),
   [date] date,
-  [status] integer NOT NULL CHECK (status IN('cancelado','confirmado','notificado')),
+  [status] varchar(10) NOT NULL CHECK (status IN('cancelado','confirmado','notificado', 'criado')),
   [cancellation_reason] varchar(512),
   [id_schedule] integer,
   [id_patient] integer,
@@ -65,7 +65,7 @@ CREATE TABLE [appointment] (
   [type] varchar(512),
   [note] varchar(512),
   [duration] varchar(30),
-  [companion] BIT, 
+  [companion] BIT,
   [location] VARCHAR(50)
 )
 GO

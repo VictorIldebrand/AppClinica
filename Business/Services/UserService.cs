@@ -202,17 +202,13 @@ namespace Business.Services
 
         public async Task<RequestResult<UserFilterDto>> GetUserFilter() {
             try {
-                var employeeModelList = await _employeeService.GetAllEmployees();
-                var dtoEmployeeList = _Mapper.Map<FilterInfoDto[]>(employeeModelList);
+                var dtoEmployeeList = await _employeeService.GetAllEmployees();
 
-                var patientModelList = await _patientService.GetAllPatients();
-                var dtoPatientList = _Mapper.Map<FilterInfoDto[]>(patientModelList);
+                var dtoPatientList = await _patientService.GetAllPatients();
 
-                var studentModelList = await _studentService.GetAllStudents();
-                var dtoStudentList = _Mapper.Map<FilterInfoDto[]>(studentModelList);
+                var dtoStudentList = await _studentService.GetAllStudents();
 
-                var professorModelList = await _professorService.GetAllProfessors();
-                var dtoProfessorList = _Mapper.Map<FilterInfoDto[]>(professorModelList);
+                var dtoProfessorList = await _professorService.GetAllProfessors();
 
                 var resultList = new UserFilterDto {
                     employees = dtoEmployeeList,

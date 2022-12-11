@@ -1,5 +1,10 @@
 ﻿using AutoMapper;
 using Contracts.Dto.Appointment;
+using Contracts.Dto.Employee;
+using Contracts.Dto.Patient;
+using Contracts.Dto.Professor;
+using Contracts.Dto.Schedule;
+using Contracts.Dto.Student;
 using Contracts.Entities;
 using Contracts.Enums.Status;
 using Contracts.Interfaces.Repositories;
@@ -19,7 +24,7 @@ namespace Business.Services {
         private readonly IScheduleRepository _scheduleRepository;
         private readonly IStudentRepository _studentRepository;
         private readonly IEmployeeRepository _employeeRepository;
-        
+
         public AppointmentService(IMapper Mapper, IConfiguration configuration, IAppointmentRepository appointmentRepository, IPatientRepository patientRepository, IScheduleRepository scheduleRepository, IStudentRepository studentRepository, IEmployeeRepository employeeRepository)
         {
             _Mapper = Mapper;
@@ -41,10 +46,11 @@ namespace Business.Services {
                 //Check if the patient, schedule, employee and student exists
                 if(appointmentDto.IdPatient > 0) {
                     var responsePatient  = await _patientRepository.GetPatientById(appointmentDto.IdPatient);
-                    if(responsePatient == null) { 
+                    if(responsePatient == null) {
                         return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
                     }
                     model.Patient = responsePatient;
+                    model.PatientId = responsePatient.Id;
                 }
 
                 if(appointmentDto.IdSchedule > 0) {
@@ -52,6 +58,7 @@ namespace Business.Services {
                     if(responseSchedule == null)
                         return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
                     model.Schedule = responseSchedule;
+                    model.ScheduleId = responseSchedule.Id;
                 }
 
                 if(appointmentDto.IdStudent > 0) {
@@ -59,6 +66,7 @@ namespace Business.Services {
                     if(responseStudent == null)
                         return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError,true);
                     model.Student = responseStudent;
+                    model.StudentId = responseStudent.Id;
                 }
 
                 if(appointmentDto.IdEmployee > 0) {
@@ -66,6 +74,7 @@ namespace Business.Services {
                     if(responseEmployee == null)
                         return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentCreateError, true);
                     model.Employee = responseEmployee;
+                    model.EmployeeId = responseEmployee.Id;
                 }
 
                 var response = await _appointmentRepository.CreateAppointment(model);
@@ -80,31 +89,31 @@ namespace Business.Services {
             }
         }
 
-        public async Task<RequestResult<AppointmentDto>> GetAppointmentByDate(DateTime date)
+        public async Task<RequestResult<AppointmentMinDto>> GetAppointmentById(int id)
         {
             try
             {
-                var model = await _appointmentRepository.GetAppointmentByDate(date);
+                var model = await _appointmentRepository.GetAppointmentById(id);
 
                 if(model == null)
-                    return new RequestResult<AppointmentDto>(null, true, RequestAnswer.AppointmentNotFound.GetDescription());
+                    return new RequestResult<AppointmentMinDto>(null, true, RequestAnswer.AppointmentNotFound.GetDescription());
 
-                var dto = _Mapper.Map<AppointmentDto>(model);
-                var result = new RequestResult<AppointmentDto>(dto);
+                var dto = _Mapper.Map<AppointmentMinDto>(model);
+                var result = new RequestResult<AppointmentMinDto>(dto);
 
                 return result;
             }
             catch (Exception ex)
             {
-                return new RequestResult<AppointmentDto>(null, true, ex.Message);
+                return new RequestResult<AppointmentMinDto>(null, true, ex.Message);
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateAppointment(AppointmentDto appointment, int id) 
+        public async Task<RequestResult<RequestAnswer>> UpdateAppointment(AppointmentDto appointment, int id)
         {
             try
             {
-                var appointmentDatabase = await _appointmentRepository.GetAppointmentById(id); 
+                var appointmentDatabase = await _appointmentRepository.GetAppointmentById(id);
 
                 if(appointmentDatabase != null) {
                     if(Rules.Check48HoursBefore(appointmentDatabase.DateAndTime, DateTime.Now)){
@@ -129,14 +138,14 @@ namespace Business.Services {
         {
             try
             {
-                var appointment = await _appointmentRepository.GetAppointmentById(id); 
-                
-                if(Rules.Check48HoursBefore(appointment.DateAndTime, DateTime.Now)){ 
+                var appointment = await _appointmentRepository.GetAppointmentById(id);
+
+                if(Rules.Check48HoursBefore(appointment.DateAndTime, DateTime.Now)){
                     await _appointmentRepository.DeleteAppointment(id);
                     return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentDeleteSuccess);
                 }else{
-                    return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentLessThan48Hours, true); 
-                }          
+                    return new RequestResult<RequestAnswer>(RequestAnswer.AppointmentLessThan48Hours, true);
+                }
             }
             catch (Exception ex)
             {

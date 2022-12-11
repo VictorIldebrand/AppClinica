@@ -159,6 +159,9 @@ namespace Contracts.RequestHandle
         [Display(Description = "Erro ao enviar o email informando a sua senha.")]
         PatientPasswordReminderEmailRequestError,
 
+        [Display(Description = "CPF inválido.")]
+        InvalidCpf,
+
         #endregion
 
         #region Employee

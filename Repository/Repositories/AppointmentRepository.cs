@@ -25,7 +25,11 @@ namespace Repository.Repositories {
         public async Task<Appointment> CreateAppointment(Appointment appointment)
         {
             var result = await _context.Appointments.AddAsync(appointment);
-            await _context.SaveChangesAsync();
+            try{
+                await _context.SaveChangesAsync();
+            }catch(Exception ex){
+                throw new Exception(ex.Message);
+            }
 
             return result.Entity;
         }

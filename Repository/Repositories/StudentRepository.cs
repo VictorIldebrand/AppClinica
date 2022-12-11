@@ -34,8 +34,8 @@ namespace Repository.Repositories
         public async Task DeleteStudent(int id)
         {
             var student = await _context.Students.Where(u => u.Id == id).FirstOrDefaultAsync();
-            if(!student.Active){
-                throw new Exception("Aluno já removido");
+            if(student == null || !student.Active){
+                throw new Exception("Aluno já removido ou não encontrado");
             }
             student.Active = false;
 
@@ -50,26 +50,22 @@ namespace Repository.Repositories
 
         public async Task<bool> CheckIfStudentExistsById(int id)
         {
-            var result = await _context.Students.AnyAsync(u => u.Id == id && u.Active);
-            return result;
+            return await _context.Students.AnyAsync(u => u.Id == id && u.Active);
         }
 
         public async Task<bool> CheckIfStudentExistsByEmail(string email)
         {
-            var result = await _context.Students.AnyAsync(u => u.Email == email && u.Active);
-            return result;
+            return await _context.Students.AnyAsync(u => u.Email == email && u.Active);
         }
 
         public async Task<bool> CheckIfStudentExistsByRa(string ra)
         {
-            var result = await _context.Students.AnyAsync(u => u.Ra == ra && u.Active);
-            return result;
+            return await _context.Students.AnyAsync(u => u.Ra == ra && u.Active);
         }
 
         public async Task<string> GetStudentPasswordByEmail(string email)
         {
-            var result = await _context.Students.Where(u => u.Email == email && u.Active).Select(p => p.Password).FirstOrDefaultAsync();
-            return result;
+            return await _context.Students.Where(u => u.Email == email && u.Active).Select(p => p.Password).FirstOrDefaultAsync();
         }
 
         public async Task<Student> GetStudentByEmailAndPassword(string email, string password)

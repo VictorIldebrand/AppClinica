@@ -8,7 +8,7 @@ namespace Contracts.Dto.Appointment
     {
         public int Id { get; set; }
         public DateTime DateTime { get; set; }
-        public DateTime Status { get; set; }
+        public StatusEnum Status { get; set; }
         public string CancellationReason { get; set; }
         public int IdSchedule { get; set; }
         public int IdPatient { get; set; }

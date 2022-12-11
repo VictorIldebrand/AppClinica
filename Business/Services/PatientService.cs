@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Contracts.Interfaces.Repositories;
 using Contracts.Utils;
 using Contracts.TransactionObjects.User;
+using System.Text.RegularExpressions;
 
 namespace Business.Services
 {
@@ -17,6 +18,7 @@ namespace Business.Services
         private readonly IMapper _Mapper;
         private readonly IConfiguration _configuration;
         private readonly IPatientRepository _patientRepository;
+        private readonly Regex CpfRegex = new Regex("^\\d{11}$");
 
         public PatientService(IMapper Mapper, IConfiguration configuration, IPatientRepository patientRepository)
         {
@@ -29,9 +31,12 @@ namespace Business.Services
         {
             try
             {
-                var patientExists = await _patientRepository.CheckIfPatientExistsByEmail(patientDto.Email);
-                if (patientExists)
+                var patientExistsByEmail = await _patientRepository.CheckIfPatientExistsByEmail(patientDto.Email);
+                var patientExistsByCpf = await _patientRepository.CheckIfPatientExistsByCpf(patientDto.Cpf);
+                if (patientExistsByEmail || patientExistsByCpf)
                     return new RequestResult<RequestAnswer>(RequestAnswer.PatientDuplicateCreateError, true);
+                if (!CpfRegex.Match(patientDto.Cpf).Success)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.InvalidCpf, true);
                 var model = _Mapper.Map<Patient>(patientDto);
                 model.Active = true;
                 var response = await _patientRepository.CreatePatient(model);
@@ -80,7 +85,18 @@ namespace Business.Services
             try
             {
                 var patientCheck = await _patientRepository.CheckIfPatientExistsById(id);
+                bool patientCheckByEmail = false;
+                bool patientCheckByCpf = false;
 
+                if(patientDto.Email != null)
+                    patientCheckByEmail = await _patientRepository.CheckIfPatientExistsByEmail(patientDto.Email);
+                if(patientDto.Cpf != null) {
+                    if (!CpfRegex.Match(patientDto.Cpf).Success)
+                        return new RequestResult<RequestAnswer>(RequestAnswer.InvalidCpf, true);
+                    patientCheckByCpf = await _patientRepository.CheckIfPatientExistsByCpf(patientDto.Cpf);
+                }
+                if(patientCheckByEmail || patientCheckByCpf)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.PatientDuplicateCreateError, true);
                 if(!patientCheck)
                     return new RequestResult<RequestAnswer>(RequestAnswer.PatientNotFound, true);
                 

@@ -25,8 +25,8 @@ namespace TemplateApi.Controllers {
 
         [HttpGet("get/{id}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetAppointment(DateTime date) {
-            var result = await _appointmentService.GetAppointmentByDate(date);
+        public async Task<IActionResult> GetAppointment(int id) {
+            var result = await _appointmentService.GetAppointmentById(id);
             return Ok(result);
         }
 
