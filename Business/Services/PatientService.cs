@@ -10,6 +10,7 @@ using Contracts.Interfaces.Repositories;
 using Contracts.Utils;
 using Contracts.TransactionObjects.User;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace Business.Services
 {
@@ -71,11 +72,11 @@ namespace Business.Services
             }
         }
 
-        public async Task<FilterInfoDto[]> GetAllPatients()
+        public async Task<IEnumerable<FilterInfoDto>> GetAllPatients()
         {
-            Patient[] patients  = await _patientRepository.GetAllPatients();
+            var patients  = await _patientRepository.GetAllPatients();
 
-            var array = _Mapper.Map<FilterInfoDto[]>(patients);
+            var array = _Mapper.Map<IEnumerable<Patient>, IEnumerable<FilterInfoDto>>(patients);
 
             return array;
         }

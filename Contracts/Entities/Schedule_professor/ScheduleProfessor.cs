@@ -26,7 +26,7 @@ namespace Contracts.Entities {
         [Required]
         public Professor Professor { get; set; }
 
-        public PatientRequest PatientRequest { get; set; }
+        //public PatientRequest PatientRequest { get; set; }
 
     }
 }

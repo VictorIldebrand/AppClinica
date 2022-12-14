@@ -18,7 +18,7 @@ namespace Repository.Repositories {
 
         public async Task<ScheduleProfessor> GetScheduleProfessorById(int id)
         {
-            return await _context.ScheduleProfessors.Where(u => u.Id == id).FirstOrDefaultAsync();
+            return await _context.ScheduleProfessors.Where(u => u.Id == id).Include(p => p.Professor).Include(s => s.Schedule).FirstOrDefaultAsync();
         }
 
         public async Task<ScheduleProfessor> GetScheduleProfessorByProfessorId(int idProfessor)

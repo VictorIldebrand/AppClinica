@@ -10,6 +10,7 @@ using Contracts.Interfaces.Repositories;
 using Contracts.Utils;
 using Contracts.TransactionObjects.User;
 using System.Text.RegularExpressions;
+using System.Collections.Generic;
 
 namespace Business.Services
 {
@@ -77,11 +78,11 @@ namespace Business.Services
             }
         }
 
-        public async Task<FilterInfoDto[]> GetAllStudents()
+        public async Task<IEnumerable<FilterInfoDto>> GetAllStudents()
         {
-            Student[] students = await _studentRepository.GetAllStudents();
+            var students = await _studentRepository.GetAllStudents();
 
-            var array = _Mapper.Map<FilterInfoDto[]>(students);
+            var array = _Mapper.Map<IEnumerable<Student>, IEnumerable<FilterInfoDto>>(students);
 
             return array;
         }
@@ -125,11 +126,11 @@ namespace Business.Services
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateStudent(StudentDto student, int id)
+        public async Task<RequestResult<RequestAnswer>> UpdateStudent(StudentDto student)
         {
             try
             {
-                bool studentCheck = await _studentRepository.CheckIfStudentExistsById(id);
+                bool studentCheck = await _studentRepository.CheckIfStudentExistsById(student.Id);
 
                 if (!studentCheck)
                     return new RequestResult<RequestAnswer>(RequestAnswer.StudentNotFound, true);
@@ -147,7 +148,7 @@ namespace Business.Services
                 if (!PeriodRegex.Match(student.Period).Success)
                     return new RequestResult<RequestAnswer>(RequestAnswer.StudentPeriodError, true);
                 var model = _Mapper.Map<Student>(student);
-                model.Id = id;
+                model.Id = student.Id;
                 await _studentRepository.UpdateStudent(model);
 
                 return new RequestResult<RequestAnswer>(RequestAnswer.StudentUpdateSuccess);

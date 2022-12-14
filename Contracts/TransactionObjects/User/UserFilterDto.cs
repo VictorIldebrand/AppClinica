@@ -8,15 +8,15 @@ namespace Contracts.TransactionObjects.User
 {
     public class UserFilterDto
     {
-        public FilterInfoDto[] employees { get; set; }
-        public FilterInfoDto[] professors { get; set; }
-        public FilterInfoDto[] students { get; set; }
-        public FilterInfoDto[] patients { get; set; }
+        public IEnumerable<FilterInfoDto> employees { get; set; }
+        public IEnumerable<FilterInfoDto> professors { get; set; }
+        public IEnumerable<FilterInfoDto> students { get; set; }
+        public IEnumerable<FilterInfoDto> patients { get; set; }
     }
     public class FilterInfoDto 
     {
         public int Id { get; set; }
-        public int Name { get; set; }
+        public string Name { get; set; }
     }
 
 }

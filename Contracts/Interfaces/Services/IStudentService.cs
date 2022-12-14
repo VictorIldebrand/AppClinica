@@ -1,6 +1,7 @@
 ﻿using Contracts.Dto.Student;
 using Contracts.RequestHandle;
 using Contracts.TransactionObjects.User;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Services {
@@ -10,9 +11,9 @@ namespace Contracts.Interfaces.Services {
         Task<RequestResult<StudentMinDto>> GetStudentById(int id);
         Task<RequestResult<StudentMinDto>> GetStudentByEmail(string email);
         Task<RequestResult<StudentMinDto>> GetStudentByRa(string ra);
-        Task<RequestResult<RequestAnswer>> UpdateStudent(StudentDto student, int id);
+        Task<RequestResult<RequestAnswer>> UpdateStudent(StudentDto student);
         Task<RequestResult<RequestAnswer>> DeleteStudent(int id);
 
-        Task<FilterInfoDto[]> GetAllStudents();
+        Task<IEnumerable<FilterInfoDto>> GetAllStudents();
     }
 }

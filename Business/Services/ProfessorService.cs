@@ -9,6 +9,7 @@ using AutoMapper;
 using Microsoft.Extensions.Configuration;
 using Contracts.Utils;
 using Contracts.TransactionObjects.User;
+using System.Collections.Generic;
 
 namespace Business.Services
 {
@@ -116,10 +117,10 @@ namespace Business.Services
                 return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDeleteError, true, ex.Message);
             }
         }
-        public async Task<FilterInfoDto[]> GetAllProfessors() {
-            Professor[] professors = await _professorRepository.GetAllProfessors();
+        public async Task<IEnumerable<FilterInfoDto>> GetAllProfessors() {
+            var professors = await _professorRepository.GetAllProfessors();
 
-            var array = _Mapper.Map<FilterInfoDto[]>(professors);
+            var array = _Mapper.Map<IEnumerable<Professor>, IEnumerable<FilterInfoDto>>(professors);
 
             return array;
         }

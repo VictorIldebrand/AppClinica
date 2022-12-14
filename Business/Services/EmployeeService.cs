@@ -8,6 +8,7 @@ using Contracts.TransactionObjects.User;
 using Contracts.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 namespace Business.Services {
@@ -138,12 +139,18 @@ namespace Business.Services {
             }
         }
 
-        public async Task<FilterInfoDto[]> GetAllEmployees() {
-            Employee[] employees = await _employeeRepository.GetAllEmployees();
-
-            var array = _Mapper.Map<FilterInfoDto[]>(employees);
-
-            return array;
+        public async Task<IEnumerable<FilterInfoDto>> GetAllEmployees() {
+            try
+            {
+                var employees = await _employeeRepository.GetAllEmployees();
+                var array = _Mapper.Map<IEnumerable<Employee>,IEnumerable<FilterInfoDto>>(employees);
+                return array;
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
         }
     }
 }
