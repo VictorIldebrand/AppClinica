@@ -5,6 +5,7 @@ using Contracts.Interfaces.Repositories;
 using Contracts.Interfaces.Services;
 using Contracts.RequestHandle;
 using Contracts.TransactionObjects.Login;
+using Contracts.TransactionObjects.User;
 using Contracts.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -17,13 +18,28 @@ namespace Business.Services
         private readonly IMapper _Mapper;
         private readonly IConfiguration _configuration;
         private readonly IUserRepository _userRepository;
+        private readonly IEmployeeService _employeeService;
+        private readonly IProfessorService _professorService;
+        private readonly IStudentService _studentService;
+        private readonly IPatientService _patientService;
+        private readonly IEmployeeRepository _employeeRepository;
+        private readonly IStudentRepository _studentRepository;
+        private readonly IProfessorRepository _professorRepository;
+        private readonly IPatientRepository _patientRepository;
 
-
-        public UserService(IMapper Mapper, IConfiguration configuration, IUserRepository userRepository)
+        public UserService(IMapper Mapper, IConfiguration configuration, IUserRepository userRepository, IEmployeeService employeeService, IProfessorService professorService, IStudentService studentService, IPatientService patientService, IEmployeeRepository employeeRepository, IStudentRepository studentRepository, IProfessorRepository professorRepository, IPatientRepository patientRepository)
         {
             _Mapper = Mapper;
             _configuration = configuration;
             _userRepository = userRepository;
+            _employeeService = employeeService;
+            _professorService = professorService;
+            _studentService = studentService;
+            _patientService = patientService;
+            _employeeRepository = employeeRepository;
+            _studentRepository = studentRepository;
+            _professorRepository = professorRepository;
+            _patientRepository = patientRepository;
         }
 
         public async Task<RequestResult<LoginResponseDto>> Register(UserDto registerRequest)
@@ -58,13 +74,37 @@ namespace Business.Services
                 return new RequestResult<LoginResponseDto>(null, true, ex.Message);
             }
         }
+
         public async Task<RequestResult<LoginResponseDto>> Login(LoginRequestDto loginRequest)
         {
             try
             {
-                var user = await _userRepository.GetUserByEmailAndPassword(loginRequest.Email, loginRequest.Password);
 
-                if (user == null)
+                User user = new User();
+                // Coletar dos 4 repositórios Student, Patient, Professor, Employee
+                // Verificar para cada retorno se existe, se existir, montar o obj user e gerar o token
+                var employee = await _employeeRepository.GetEmployeeByEmailAndPassword(loginRequest.Email, loginRequest.Password);
+                var student = await _studentRepository.GetStudentByEmailAndPassword(loginRequest.Email, loginRequest.Password);
+                var patient = await _patientRepository.GetPatientByEmailAndPassword(loginRequest.Email, loginRequest.Password);
+                var professor = await _professorRepository.GetProfessorByEmailAndPassword(loginRequest.Email, loginRequest.Password);
+
+                if (employee != null){
+                    user.Id = employee.Id;
+                    user.Email = employee.Email;
+                    user.Name = employee.Name;
+                } else if(student != null){
+                    user.Id = student.Id;
+                    user.Email = student.Email;
+                    user.Name= student.Name;
+                } else if(patient != null){
+                    user.Id = patient.Id;
+                    user.Email = patient.Email;
+                    user.Name = patient.Name;
+                } else if(professor != null){
+                    user.Id = professor.Id;
+                    user.Email = professor.Email;
+                    user.Name = professor.Name;
+                } else
                     return new RequestResult<LoginResponseDto>(null, true, RequestAnswer.UserCredError.GetDescription());
 
                 var loginResponse = new LoginResponseDto
@@ -85,6 +125,7 @@ namespace Business.Services
                 return new RequestResult<LoginResponseDto>(null, true, msg);
             }
         }
+
         public async Task<RequestResult<UserDto>> GetUserById(int id)
         {
             try
@@ -104,6 +145,7 @@ namespace Business.Services
                 return new RequestResult<UserDto>(null, true, ex.Message);
             }
         }
+
         public async Task<RequestResult<UserDto>> GetUserByEmail(string email)
         {
             try
@@ -123,6 +165,7 @@ namespace Business.Services
                 return new RequestResult<UserDto>(null, true, ex.Message);
             }
         }
+
         public async Task<RequestResult<RequestAnswer>> UpdateUser(UserDto user)
         {
             try
@@ -142,6 +185,7 @@ namespace Business.Services
                 return new RequestResult<RequestAnswer>(RequestAnswer.UserUpdateError, true);
             }
         }
+        
         public async Task<RequestResult<RequestAnswer>> DeleteUser(int id)
         {
             try
@@ -153,6 +197,31 @@ namespace Business.Services
             catch (Exception)
             {
                 return new RequestResult<RequestAnswer>(RequestAnswer.UserDeleteError, true);
+            }
+        }
+
+        public async Task<RequestResult<UserFilterDto>> GetUserFilter() {
+            try {
+                var dtoEmployeeList = await _employeeService.GetAllEmployees();
+
+                var dtoPatientList = await _patientService.GetAllPatients();
+
+                var dtoStudentList = await _studentService.GetAllStudents();
+
+                var dtoProfessorList = await _professorService.GetAllProfessors();
+
+                var resultList = new UserFilterDto {
+                    employees = dtoEmployeeList,
+                    professors = dtoProfessorList,
+                    students = dtoStudentList,
+                    patients = dtoPatientList
+                };
+
+                var result = new RequestResult<UserFilterDto>(resultList);
+
+                return result;
+            } catch (Exception) {
+                return new RequestResult<UserFilterDto>(null, true, RequestAnswer.UserFilterError.GetDescription());
             }
         }
     }

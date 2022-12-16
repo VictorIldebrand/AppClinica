@@ -10,13 +10,14 @@ namespace TemplateApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class UserController : Controller
     {
         private readonly IUserService _userService;
+
         public UserController(IUserService userService) => _userService = userService;
 
-        [HttpPost("register")]
+        [HttpPost("create")]
         [AllowAnonymous]
         public async Task<IActionResult> Register(UserDto registerRequest)
         {
@@ -24,14 +25,16 @@ namespace TemplateApi.Controllers
             return Ok(result);
         }
 
-        [HttpPut("updateUser")]
+        [HttpPut("update")]
+        [AllowAnonymous]
         public async Task<IActionResult> Update(UserDto user)
         {
             var result = await _userService.UpdateUser(user);
             return Ok(result);
         }
 
-        [HttpPut("deleteUser")]
+        [HttpDelete("delete/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _userService.DeleteUser(id);
@@ -46,14 +49,15 @@ namespace TemplateApi.Controllers
             return Ok(auth);
         }
 
-        [HttpGet("getUser/{id}")]
+        [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUser(int id)
         {
             var result = await _userService.GetUserById(id);
             return Ok(result);
         }
         
-        [HttpDelete("getLoggedUser")]
+        [HttpGet("getLogged")]
         public async Task<IActionResult> GetLoggedUser()
         {
             var id = User.GetUserId();
@@ -62,5 +66,13 @@ namespace TemplateApi.Controllers
             return Ok(result);
         }
 
+        [HttpGet("getAll")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAll()
+        {
+            var result = await _userService.GetUserFilter();
+
+            return Ok(result);
+        }
     }
 }

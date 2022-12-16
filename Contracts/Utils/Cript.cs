@@ -3,6 +3,23 @@ using System.Security.Cryptography;
 
 namespace Contracts.Utils
 {
+    public class Rules{
+        public static bool Check48HoursBefore(DateTime value, DateTime timeNow)
+        {
+            var weekDay = (int)value.DayOfWeek; //1->segunda 2->terça
+            if (weekDay == 1){
+                timeNow.AddHours(96);
+            }else if (weekDay == 2){
+                timeNow.AddHours(72);
+            }else{
+                timeNow.AddHours(48);
+            }
+            if(timeNow <= value)
+                return true;
+            return false;
+        }
+    }
+
     public class Cript
     {
         private static string key = EnviromentVariables.GetEncryptKey().Result;

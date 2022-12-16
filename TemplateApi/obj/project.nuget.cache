@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UnMRcYFZjdmarinqkLbZzcjWNr8JsLYhdhd8EKtpaiBnE9fo/gK5moXlEnphke+Zx1Kk+3B+wdSi+ucQ7ymT4g==",
+  "dgSpecHash": "Uci36rzoR/mSVPdzCW2/Iw0uUAfh4eH8SFvhRDljRTBA90KlTHn99paiR8e4Q7/wByjNzOUVY6qa7GwOW/AZuw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\TemplateApi\\TemplateApi.csproj",
+  "projectFilePath": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\TemplateApi\\TemplateApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Ildebrand\\.nuget\\packages\\automapper\\11.0.1\\automapper.11.0.1.nupkg.sha512",
     "C:\\Users\\Ildebrand\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

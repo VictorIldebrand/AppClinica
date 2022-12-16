@@ -1,10 +1,8 @@
-﻿using Contracts.Entities.Attributes;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Contracts.Entities
-{
+namespace Contracts.Entities {
     [Table("notification")]
     public partial class Notification
     {
@@ -12,21 +10,24 @@ namespace Contracts.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Required]
-        public int id { get; set; }
+        public int Id { get; set; }
 
-        [Column("id_student")]
-        public int idStudent { get; set; }
+        [Column("id_appointment")]
+        public int AppointmentId { get; set; }
 
+        public virtual Appointment Appointment { get; set; }
 
-        [Column("id_patient")]
-        public int idPatient { get; set; }
+        [Column("id_patient_request")]
+        public int PatientRequestId { get; set; }
 
-        [Column("status")]
+        public virtual PatientRequest PatientRequest { get; set; }
+
+        [Column("read")]
         [Required]
-        public int status { get; set; }
+        public bool Read { get; set; }
 
         [Column("message")]
         [Required]
-        public String message { get; set; }
+        public string Message { get; set; }
     }
 }

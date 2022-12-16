@@ -1,16 +1,16 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-
 using Repository.Context;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
+using System;
 
-namespace Repository.Repositories
-{
+namespace Repository.Repositories {
     public class NotificationRepository : INotificationRepository
     {
         private readonly TemplateDbContext _context;
+
         public NotificationRepository(TemplateDbContext context)
         {
             _context = context;
@@ -32,19 +32,36 @@ namespace Repository.Repositories
 
         public async Task DeleteNotification(int id)
         {
-            var notification = await _context.Notifications.Where(u => u.id == id).FirstOrDefaultAsync();
-            notification.status = 0;
+            var notification = await _context.Notifications.Where(u => u.Id == id).FirstOrDefaultAsync();
+            if(notification == null){
+                throw new Exception("Notificação já removida");
+            }
 
-            _context.Notifications.Update(notification);
+            _context.Notifications.Remove(notification);
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Notification> GetNotificationByPatientId(int idPatient) {
-            return await _context.Notifications.Where(u => u.id == idPatient).FirstOrDefaultAsync();
+        public async Task<Notification> GetNotificationByPatientRequestId(int idPatientRequest) {
+            return await _context.Notifications.Where(u => u.PatientRequest.Id == idPatientRequest).Include(a => a.Appointment).Include(pr => pr.PatientRequest).FirstOrDefaultAsync();
         }
 
-        public async Task<Notification> GetNotificationByStudentId(int idStudent) {
-            return await _context.Notifications.Where(u => u.id == idStudent).FirstOrDefaultAsync();
+        public async Task<Notification> GetNotificationByAppointmentId(int idAppointment) {
+            return await _context.Notifications.Where(u => u.Appointment.Id == idAppointment).Include(a => a.Appointment).Include(pr => pr.PatientRequest).FirstOrDefaultAsync();
+        }
+
+        public async Task<Notification> GetNotificationById(int id)
+        {
+            return await _context.Notifications.Where(u => u.Id == id).Include(a => a.Appointment).Include(pr => pr.PatientRequest).FirstOrDefaultAsync();
+        }
+
+        public async Task<Notification[]> GetAllNotification() {
+            return await _context.Notifications.Where(u => !u.Read).Include(a => a.Appointment).Include(pr => pr.PatientRequest).ToArrayAsync(); //0->Notifications NOT read yet 
+        }
+
+        public async Task<bool> CheckIfNotificationExistsById(int id)
+        {
+            var result = await _context.Notifications.AnyAsync(u => u.Id == id);
+            return result;
         }
     }
 }

@@ -5913,11 +5913,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\TemplateApi\\TemplateApi.csproj",
+      "projectUniqueName": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\TemplateApi\\TemplateApi.csproj",
       "projectName": "TemplateApi",
-      "projectPath": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\TemplateApi\\TemplateApi.csproj",
+      "projectPath": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\TemplateApi\\TemplateApi.csproj",
       "packagesPath": "C:\\Users\\Ildebrand\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\TemplateApi\\obj\\",
+      "outputPath": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\TemplateApi\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Ildebrand\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -5934,14 +5934,14 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "projectReferences": {
-            "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\Business\\Business.csproj": {
-              "projectPath": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\Business\\Business.csproj"
+            "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Business\\Business.csproj": {
+              "projectPath": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Business\\Business.csproj"
             },
-            "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\Contracts\\Contracts.csproj": {
-              "projectPath": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\Contracts\\Contracts.csproj"
+            "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Contracts\\Contracts.csproj": {
+              "projectPath": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Contracts\\Contracts.csproj"
             },
-            "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\Repository\\Repository.csproj": {
-              "projectPath": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\Repository\\Repository.csproj"
+            "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Repository\\Repository.csproj": {
+              "projectPath": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Repository\\Repository.csproj"
             }
           }
         }

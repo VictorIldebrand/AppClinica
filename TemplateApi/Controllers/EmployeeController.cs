@@ -1,16 +1,14 @@
 ﻿using Contracts.Interfaces.Services;
-using Contracts.TransactionObjects.Login;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Contracts.Utils;
 using Contracts.Dto.Employee;
-using Contracts.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class EmployeeController : Controller {
         private readonly IEmployeeService _employeeService;
 
@@ -18,24 +16,28 @@ namespace TemplateApi.Controllers {
 
         [HttpPost("create")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateEmployee(EmployeeDto EmployeeDto) {
             var employeeResult = await _employeeService.CreateEmployee(EmployeeDto);
-            return Ok(employeeResult);
+            return Created("Funcionário criado",employeeResult);
         }
 
         [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetEmployee(int id) {
             var result = await _employeeService.GetEmployeeById(id);
             return Ok(result);
         }
 
-        [HttpPut("update")]
-        public async Task<IActionResult> UpdateEmployee(EmployeeDto employee) {
-            var result = await _employeeService.UpdateEmployee(employee);
+        [HttpPut("update/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateEmployee(EmployeeDto employee, int id) {
+            var result = await _employeeService.UpdateEmployee(employee, id);
             return Ok(result);
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete("delete/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteEmployee(int id) {
             var result = await _employeeService.DeleteEmployee(id);
             return Ok(result);

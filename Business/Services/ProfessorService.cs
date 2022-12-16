@@ -7,6 +7,9 @@ using Contracts.Interfaces.Repositories;
 using Contracts.Dto.Professor;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using Contracts.Utils;
+using Contracts.TransactionObjects.User;
+using System.Collections.Generic;
 
 namespace Business.Services
 {
@@ -23,15 +26,25 @@ namespace Business.Services
             _professorRepository = professorRepository;
         }
 
-        public async Task<RequestResult<ProfessorDto>> CreateProfessor(ProfessorDto ProfessorDto)
+        public async Task<RequestResult<RequestAnswer>> CreateProfessor(ProfessorDto professorDto)
         {
             try
             {
-                throw new NotImplementedException();
+                var patientExistsByEmail = await _professorRepository.CheckIfProfessorExistsByEmail(professorDto.Email);
+                var patientExistsByRp = await _professorRepository.CheckIfProfessorExistsByRp(professorDto.Rp);
+                if (patientExistsByEmail || patientExistsByRp)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDuplicateCreateError, true);
+                var model = _Mapper.Map<Professor>(professorDto);
+                model.Active = true;
+                var response = await _professorRepository.CreateProfessor(model);
+                if (response.Id == 0)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateError, true);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorCreateError, true, ex.Message);
             }
         }
 
@@ -39,36 +52,78 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var model = await _professorRepository.GetProfessorById(id);
+
+                if (model == null)
+                    return new RequestResult<ProfessorDto>(null, true, RequestAnswer.ProfessorNotFound.GetDescription());
+
+                var dto = _Mapper.Map<ProfessorDto>(model);
+                var result = new RequestResult<ProfessorDto>(dto);
+
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<ProfessorDto>(null, true, ex.Message);
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateProfessor(ProfessorDto ProfessorDto)
+        public async Task<FilterInfoDto[]> GetAllProfessor()
+        {
+            Professor[] professors = await _professorRepository.GetAllProfessors();
+
+            var array = _Mapper.Map<FilterInfoDto[]>(professors);
+
+            return array;
+        }
+
+        public async Task<RequestResult<RequestAnswer>> UpdateProfessor(ProfessorDto professorDto, int id)
         {
             try
             {
-                throw new NotImplementedException();
+                var professorCheck = await _professorRepository.CheckIfProfessorExistsById(id);
+                bool patientExistsByEmail = false;
+                bool patientExistsByRp = false;
+                if(professorDto.Email != null)
+                    await _professorRepository.CheckIfProfessorExistsByEmail(professorDto.Email);
+                if(professorDto.Rp != null)
+                    await _professorRepository.CheckIfProfessorExistsByRp(professorDto.Rp);
+                if (patientExistsByEmail || patientExistsByRp)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDuplicateCreateError, true);
+                if (!professorCheck)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorNotFound);
+
+                var model = _Mapper.Map<Professor>(professorDto);
+                await _professorRepository.UpdateProfessor(model);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorUpdateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorUpdateError, true, ex.Message);
             }
         }
-        
+
         public async Task<RequestResult<RequestAnswer>> DeleteProfessor(int id)
         {
             try
             {
-                throw new NotImplementedException();
+                await _professorRepository.DeleteProfessor(id);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDeleteSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.ProfessorDeleteError, true, ex.Message);
             }
         }
+        public async Task<IEnumerable<FilterInfoDto>> GetAllProfessors() {
+            var professors = await _professorRepository.GetAllProfessors();
+
+            var array = _Mapper.Map<IEnumerable<Professor>, IEnumerable<FilterInfoDto>>(professors);
+
+            return array;
+        }
+
     }
 }

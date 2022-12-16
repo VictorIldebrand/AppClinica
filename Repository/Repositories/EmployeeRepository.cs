@@ -1,25 +1,23 @@
 ﻿using Contracts.Entities;
-using Contracts.Enums.Auth;
 using Contracts.Interfaces.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Repository.Repositories {
     public class EmployeeRepository : IEmployeeRepository {
+
         private readonly TemplateDbContext _context;
 
         public EmployeeRepository(TemplateDbContext context) {
             _context = context;
         }
 
-        public Task<Employee> GetEmployeeById(int id)
+        public async Task<Employee> GetEmployeeById(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Employees.Where(u => u.Id == id && u.Active).FirstOrDefaultAsync();
         }
 
         public async Task<Employee> Register(Employee employee) {
@@ -28,30 +26,54 @@ namespace Repository.Repositories {
 
             return result.Entity;
         }
+
+        public async Task<Employee> GetEmployeeByEmailAndPassword(string email, string password)
+        {
+            return await _context.Employees.Where(x => x.Email == email && x.Password == password && x.Active).FirstOrDefaultAsync();
+        }
         
-        public Task<Employee> GetEmployeeByEmailAndPassword(string email, string password)
+        public async Task<Employee> GetEmployeeByEmail(string email)
         {
-            throw new NotImplementedException();
+            return await _context.Employees.Where(u => u.Email == email && u.Active).FirstOrDefaultAsync();
         }
 
-        public Task<bool> GetEmployeeByEmail(string email)
-        {
-            throw new NotImplementedException();
+        public async Task<bool> CheckIfEmployeeExistsById(int id) {
+            return await _context.Employees.AnyAsync(u => u.Id == id && u.Active);
         }
 
-        public async Task<bool> CheckIfUserExistsByEmail(string email) {
-            var result = await _context.Employees.AnyAsync(u => u.email == email && u.active);
-            return result;
+        public async Task<bool> CheckIfEmployeeExistsByEmail(string email) {
+            return await _context.Employees.AnyAsync(u => u.Email == email && u.Active);
         }
 
-        public Task UpdateEmployee(Employee employee)
-        {
-            throw new NotImplementedException();
+        public async Task<bool> CheckIfEmployeeExistsByCpf(string cpf) {
+            return await _context.Employees.AnyAsync(u => u.Cpf == cpf && u.Active);
         }
 
-        public Task DeleteEmployee(int id)
+        public async Task<bool> CheckIfEmployeeIsAdminById(int id, bool is_admin) {
+            return await _context.Employees.AnyAsync(u => u.Id == id && u.IsAdmin && u.Active);
+        }
+
+        public async Task UpdateEmployee(Employee employee)
         {
-            throw new NotImplementedException();
+            _context.Employees.Update(employee);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteEmployee(int id)
+        {
+            var employee = await _context.Employees.Where(e => e.Id == id).FirstOrDefaultAsync();
+            if(employee == null || !employee.Active){
+                throw new Exception("Funcionário já removido ou não encontrado");
+            }
+            employee.Active = false;
+
+            _context.Employees.Update(employee);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<Employee[]> GetAllEmployees(){
+            var employees = await _context.Employees.Where(x => x.Active).ToArrayAsync();
+            return employees;
         }
     }
 }

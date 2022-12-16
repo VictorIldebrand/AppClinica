@@ -1,6 +1,5 @@
 ﻿using Contracts.Dto.Schedule;
 using Contracts.RequestHandle;
-using Contracts.TransactionObjects.Login;
 using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Services
@@ -9,7 +8,7 @@ namespace Contracts.Interfaces.Services
     {
         Task<RequestResult<RequestAnswer>> CreateSchedule(ScheduleDto ScheduleDTO);
         Task<RequestResult<ScheduleDto>> GetScheduleById(int id);
-        Task<RequestResult<RequestAnswer>> UpdateSchedule(ScheduleDto ScheduleDTO);
+        Task<RequestResult<RequestAnswer>> UpdateSchedule(ScheduleDto ScheduleDTO, int id);
         Task<RequestResult<RequestAnswer>> DeleteSchedule(int id);
     }
 }

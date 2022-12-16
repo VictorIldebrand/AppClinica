@@ -1,6 +1,7 @@
 ﻿using Contracts.DTO.User;
 using Contracts.RequestHandle;
 using Contracts.TransactionObjects.Login;
+using Contracts.TransactionObjects.User;
 using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Services
@@ -13,5 +14,6 @@ namespace Contracts.Interfaces.Services
         Task<RequestResult<UserDto>> GetUserByEmail(string email);
         Task<RequestResult<RequestAnswer>> UpdateUser(UserDto user);
         Task<RequestResult<RequestAnswer>> DeleteUser(int id);
+        Task<RequestResult<UserFilterDto>> GetUserFilter();
     }
 }

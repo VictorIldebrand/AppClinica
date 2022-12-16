@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="TransactionObjects\NewFolder\**" />
+    <EmbeddedResource Remove="TransactionObjects\NewFolder\**" />
+    <None Remove="TransactionObjects\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Enums\Status\NewFile1.txt" />
     <None Remove="Interfaces\Services\NewFile1.txt" />
     <None Remove="Interfaces\Services\NewFile2.txt" />

@@ -1,9 +1,8 @@
-﻿using Contracts.Entities.Attributes;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Contracts.Entities
-{
+namespace Contracts.Entities {
     [Table("schedule")]
     public partial class Schedule
     {
@@ -11,13 +10,15 @@ namespace Contracts.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Required]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Column("name")]
-        [SensitiveData]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [Column("active")]
-        public bool active { get; set; }
+        public bool Active { get; set; }
+
+        public ICollection<Appointment> Appointment { get; set; }
+        public ICollection<ScheduleProfessor> ScheduleProfessors { get; set; }
     }
 }

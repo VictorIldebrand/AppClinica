@@ -1,41 +1,44 @@
 using Contracts.Interfaces.Services;
-using Contracts.TransactionObjects.Login;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Contracts.Utils;
-using Contracts.Dto.Schedule;
 using Contracts.Dto.ScheduleProfessor;
+using Microsoft.AspNetCore.Http;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class ScheduleProfessorController : Controller {
         private readonly IScheduleProfessorService _scheduleProfessorService;
 
         public ScheduleProfessorController(IScheduleProfessorService scheduleProfessorService) => _scheduleProfessorService = scheduleProfessorService;
 
         [HttpPost("create")]
+        [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreateScheduleProfessor(ScheduleProfessorDto scheduleProfessorDto)
         {
             var scheduleProfessorResult = await _scheduleProfessorService.CreateScheduleProfessor(scheduleProfessorDto);
-            return Ok(scheduleProfessorResult);
+            return Created("Agenda de professor criada",scheduleProfessorResult);
         }
 
-        [HttpGet("getScheduleProfessor/{id}")]
+        [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetScheduleProfessor(int id) {
             var result = await _scheduleProfessorService.GetScheduleProfessorById(id);
             return Ok(result);
         }
 
-        [HttpPut("updateScheduleProfessor")]
-        public async Task<IActionResult> UpdateScheduleProfessor(ScheduleProfessorDto scheduleProfessorDto) {
-            var result = await _scheduleProfessorService.UpdateScheduleProfessor(scheduleProfessorDto);
+        [HttpPut("update/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdateScheduleProfessor(ScheduleProfessorDto scheduleProfessorDto, int id) {
+            var result = await _scheduleProfessorService.UpdateScheduleProfessor(scheduleProfessorDto, id);
             return Ok(result);
         }
 
-        [HttpDelete("deleteScheduleProfessor")]
+        [HttpDelete("delete/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeleteScheduleProfessor(int id) {
             var result = await _scheduleProfessorService.DeleteScheduleProfessor(id);
             return Ok(result);

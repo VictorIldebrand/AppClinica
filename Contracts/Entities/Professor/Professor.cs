@@ -1,4 +1,5 @@
 ﻿using Contracts.Entities.Attributes;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -11,29 +12,31 @@ namespace Contracts.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Required]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Column("email")]
         [SensitiveData]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [Column("password")]
         [SensitiveData]
-        public string password { get; set; }
+        public string Password { get; set; }
 
         [Column("name")]
         [SensitiveData]
-        public string name { get; set; }
+        public string Name { get; set; }
 
         [Column("rp")]
         [SensitiveData]
-        public string rp { get; set; }
+        public string Rp { get; set; }
 
         [Column("phone")]
         [SensitiveData]
-        public string phone { get; set; }
+        public string Phone { get; set; }
 
         [Column("active")]
-        public bool active { get; set; }
+        public bool Active { get; set; }
+
+        public ICollection<ScheduleProfessor> ScheduleProfessors { get; set; }
     }
 }

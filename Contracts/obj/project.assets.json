@@ -342,11 +342,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\Contracts\\Contracts.csproj",
+      "projectUniqueName": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Contracts\\Contracts.csproj",
       "projectName": "Contracts",
-      "projectPath": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\Contracts\\Contracts.csproj",
+      "projectPath": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Contracts\\Contracts.csproj",
       "packagesPath": "C:\\Users\\Ildebrand\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ildebrand\\Desktop\\BackEnd\\AppClinica\\Contracts\\obj\\",
+      "outputPath": "C:\\Users\\Ildebrand\\Desktop\\Back\\AppClinica\\Contracts\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Ildebrand\\AppData\\Roaming\\NuGet\\NuGet.Config",

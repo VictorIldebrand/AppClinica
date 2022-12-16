@@ -7,6 +7,7 @@ using Contracts.Dto.Schedule;
 using Contracts.Interfaces.Services;
 using AutoMapper;
 using Microsoft.Extensions.Configuration;
+using Contracts.Utils;
 
 namespace Business.Services
 {
@@ -27,11 +28,17 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var model = _Mapper.Map<Schedule>(ScheduleDto);
+                model.Active = true;
+                var response = await _scheduleRepository.CreateSchedule(model);
+                if (response.Id == 0)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleCreateError, true);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleCreateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleCreateError, true, ex.Message);
             }
         }
 
@@ -39,23 +46,39 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                var model = await _scheduleRepository.GetScheduleById(id);
+
+                if (model == null)
+                    return new RequestResult<ScheduleDto>(null, true, RequestAnswer.ScheduleNotFound.GetDescription());
+
+                var dto = _Mapper.Map<ScheduleDto>(model);
+                var result = new RequestResult<ScheduleDto>(dto);
+
+                return result;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<ScheduleDto>(null, true, ex.Message);
             }
         }
 
-        public async Task<RequestResult<RequestAnswer>> UpdateSchedule(ScheduleDto ScheduleDto)
+        public async Task<RequestResult<RequestAnswer>> UpdateSchedule(ScheduleDto schedule, int id)
         {
             try
             {
-                throw new NotImplementedException();
+                var scheduleCheck = await _scheduleRepository.CheckIfScheduleExistsById(id);
+
+                if (!scheduleCheck)
+                    return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleNotFound, true);
+
+                var model = _Mapper.Map<Schedule>(schedule);
+                await _scheduleRepository.UpdateSchedule(model);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleUpdateSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleUpdateError, true, ex.Message);
             }
         }
         
@@ -63,11 +86,13 @@ namespace Business.Services
         {
             try
             {
-                throw new NotImplementedException();
+                await _scheduleRepository.DeleteSchedule(id);
+
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleDeleteSuccess);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                return new RequestResult<RequestAnswer>(RequestAnswer.ScheduleDeleteError, true, ex.Message);
             }
         }
     }

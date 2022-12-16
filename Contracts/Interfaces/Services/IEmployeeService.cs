@@ -1,13 +1,16 @@
 ﻿using Contracts.Dto.Employee;
 using Contracts.RequestHandle;
-using Contracts.TransactionObjects.Login;
+using Contracts.TransactionObjects.User;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Services {
     public interface IEmployeeService {
-        Task<RequestResult<EmployeeMinDto>> CreateEmployee(EmployeeDto EmployeeDTO);
+        Task<RequestResult<RequestAnswer>> CreateEmployee(EmployeeDto EmployeeDTO);
         Task<RequestResult<EmployeeDto>> GetEmployeeById(int id);
-        Task<RequestResult<RequestAnswer>> UpdateEmployee(EmployeeDto EmployeeDTO);
+        Task<RequestResult<RequestAnswer>> UpdateEmployee(EmployeeDto EmployeeDTO, int id);
         Task<RequestResult<RequestAnswer>> DeleteEmployee(int id);
+
+        Task<IEnumerable<FilterInfoDto>> GetAllEmployees();
     }
 }

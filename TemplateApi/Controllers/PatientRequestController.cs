@@ -1,15 +1,14 @@
 using Contracts.Interfaces.Services;
-using Contracts.TransactionObjects.Login;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using Contracts.Utils;
 using Contracts.Dto.PatientRequest;
+using Microsoft.AspNetCore.Http;
 
 namespace TemplateApi.Controllers {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class PatientRequestController : Controller {
         private readonly IPatientRequestService _patientRequestService;
 
@@ -17,24 +16,28 @@ namespace TemplateApi.Controllers {
 
         [HttpPost("create")]
         [AllowAnonymous]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         public async Task<IActionResult> CreatePatient(PatientRequestDto patientRequestDto) {
             var patientRequestResult = await _patientRequestService.CreatePatientRequest(patientRequestDto);
-            return Ok(patientRequestResult);
+            return Created("Requisição de paciente criada",patientRequestResult);
         }
 
-        [HttpGet("getpatientrequest/{id}")]
+        [HttpGet("get/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> GetPatientRequest(int id) {
             var result = await _patientRequestService.GetPatientRequestById(id);
             return Ok(result);
         }
 
-        [HttpPut("updatepatientRequest")]
-        public async Task<IActionResult> UpdatePatient(PatientRequestDto patientRequestDto) {
-            var result = await _patientRequestService.UpdatePatientRequest(patientRequestDto);
+        [HttpPut("update/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> UpdatePatient(PatientRequestDto patientRequestDto, int id) {
+            var result = await _patientRequestService.UpdatePatientRequest(patientRequestDto, id);
             return Ok(result);
         }
 
-        [HttpDelete("deletepatientRequest/{id}")]
+        [HttpDelete("delete/{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> DeletePatientRequest(int id) {
             var result = await _patientRequestService.DeletePatientRequest(id);
             return Ok(result);

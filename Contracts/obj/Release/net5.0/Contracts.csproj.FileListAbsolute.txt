@@ -1,0 +1,12 @@
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\bin\Release\net5.0\Contracts.deps.json
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\bin\Release\net5.0\Contracts.dll
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\bin\Release\net5.0\ref\Contracts.dll
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\bin\Release\net5.0\Contracts.pdb
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\obj\Release\net5.0\Contracts.csproj.AssemblyReference.cache
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\obj\Release\net5.0\Contracts.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\obj\Release\net5.0\Contracts.AssemblyInfoInputs.cache
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\obj\Release\net5.0\Contracts.AssemblyInfo.cs
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\obj\Release\net5.0\Contracts.csproj.CoreCompileInputs.cache
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\obj\Release\net5.0\Contracts.dll
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\obj\Release\net5.0\ref\Contracts.dll
+C:\Users\Ildebrand\Desktop\a\AppClinica\Contracts\obj\Release\net5.0\Contracts.pdb

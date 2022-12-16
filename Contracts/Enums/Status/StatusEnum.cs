@@ -13,6 +13,9 @@ namespace Contracts.Enums.Status {
         [Display(Name = "Notificado")]
         Notified = 3,
 
+        [Display(Name = "Criado")]
+        Created = 4,
+
         #endregion
     }
 }

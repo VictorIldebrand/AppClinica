@@ -9,6 +9,5 @@ namespace Contracts.Dto.Student
         public string Email { get; set; }
         public string Phone { get; set; }
         public string Period { get; set; }
-        public bool Active { get; set; }
     }
 }

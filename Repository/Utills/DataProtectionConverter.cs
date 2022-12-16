@@ -29,6 +29,7 @@ namespace Repository.Utills
         {
             return Cript.DecryptString(texto);
         }
+
     }
 
 }

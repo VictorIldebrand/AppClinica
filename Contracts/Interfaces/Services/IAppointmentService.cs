@@ -1,14 +1,16 @@
 ﻿using Contracts.Dto.Appointment;
 using Contracts.RequestHandle;
-using Contracts.TransactionObjects.Login;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Contracts.Interfaces.Services {
     public interface IAppointmentService {
-        Task<RequestResult<AppointmentDto>> CreateAppointment(AppointmentDto registerRequest);
-        Task<RequestResult<AppointmentDto>> GetAppointmentByDate(DateTime date);
-        Task<RequestResult<RequestAnswer>> UpdateAppointment(AppointmentDto appointment);
+        Task<RequestResult<RequestAnswer>> CreateAppointment(AppointmentDto registerRequest);
+        Task<RequestResult<AppointmentMinDto>> GetAppointmentById(int id);
+
+        Task<RequestResult<IEnumerable<AppointmentMinDto>>> GetAppointments();
+        Task<RequestResult<RequestAnswer>> UpdateAppointment(AppointmentDto appointment, int id);
         Task<RequestResult<RequestAnswer>> DeleteAppointment(int id);
     }
 }

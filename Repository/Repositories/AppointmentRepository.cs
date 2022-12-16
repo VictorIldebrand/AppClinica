@@ -4,32 +4,39 @@ using Microsoft.EntityFrameworkCore;
 using Repository.Context;
 using Contracts.Entities;
 using Contracts.Interfaces.Repositories;
-using Contracts.Dto.Appointment;
-using Contracts.RequestHandle;
 using System;
 using System.Collections.Generic;
 
-namespace Repository.Repositories
-{
+namespace Repository.Repositories {
     public class AppointmentRepository : IAppointmentRepository
     {
         private readonly TemplateDbContext _context;
+
         public AppointmentRepository(TemplateDbContext context)
         {
             _context = context;
         }
 
+        public async Task<Appointment> GetAppointmentById(int id)
+        {
+            return await _context.Appointments.Where(a => a.Id == id).Include(s => s.Student).Include(p => p.Patient).Include(sh => sh.Schedule).Include(e => e.Employee).FirstOrDefaultAsync();
+        }
+
         public async Task<Appointment> CreateAppointment(Appointment appointment)
         {
             var result = await _context.Appointments.AddAsync(appointment);
-            await _context.SaveChangesAsync();
+            try{
+                await _context.SaveChangesAsync();
+            }catch(Exception ex){
+                throw new Exception(ex.Message);
+            }
 
             return result.Entity;
         }
 
-        public async Task<Appointment> GetAppointmentById(int id)
+        public async Task<Appointment> GetAppointmentByDate(DateTime date)
         {
-            return await _context.Appointments.Where(a => a.id == id).FirstOrDefaultAsync();
+            return await _context.Appointments.Where(a => a.DateAndTime == date).FirstOrDefaultAsync();
         }
 
         public async Task UpdateAppointment(Appointment appointment)
@@ -40,16 +47,25 @@ namespace Repository.Repositories
 
         public async Task DeleteAppointment(int id)
         {
-            var appointment = await _context.Appointments.Where(u => u.id == id).FirstOrDefaultAsync();
-            appointment.status = 0;
+            var appointment = await _context.Appointments.Where(u => u.Id == id).FirstOrDefaultAsync();
+            if(appointment.Status == 0){
+                throw new Exception("Consulta já removida");
+            }
+            appointment.Status = 0;
 
             _context.Appointments.Update(appointment);
             await _context.SaveChangesAsync();
         }
 
-        public Task<List<Appointment>> GetAppointmentsByParameters(string especialidade, int professorId, int alunoId, int pacienteId, Enum status, DateTime data)
+        public async Task<Appointment[]> GetAppointments()
         {
-            throw new NotImplementedException();
+            return await _context.Appointments.Where(a => a.Id > 0).Include(s => s.Student).Include(p => p.Patient).Include(sh => sh.Schedule).Include(e => e.Employee).ToArrayAsync();
+        }
+
+        public async Task<bool> CheckIfAppointmentExistsById(int id)
+        {
+            var result = await _context.Appointments.AnyAsync(u => u.Id == id);
+            return result;
         }
     }
 }

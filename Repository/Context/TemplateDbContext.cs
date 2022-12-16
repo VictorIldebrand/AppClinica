@@ -12,7 +12,7 @@ namespace Repository.Context
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<Patient> Patients { get; set; }
-        public DbSet<PatientOrder> PatientOrders { get; set; }
+        //public DbSet<PatientOrder> PatientOrders { get; set; }
         public DbSet<PatientRequest> PatientRequests { get; set; }
         public DbSet<Professor> Professors { get; set; }
         public DbSet<ScheduleProfessor> ScheduleProfessors { get; set; }
@@ -49,6 +49,55 @@ namespace Repository.Context
                     }
                 }
             }
+            //Appointment
+            modelBuilder.Entity<Appointment>()
+                .HasOne(s => s.Student)
+                .WithMany(a => a.Appointments);
+            modelBuilder.Entity<Appointment>()
+                .HasOne(e => e.Employee)
+                .WithMany(a => a.Appointments);
+            modelBuilder.Entity<Appointment>()
+                .HasOne(p => p.Patient)
+                .WithMany(a => a.Appointments);
+            modelBuilder.Entity<Appointment>()
+                .HasOne(p => p.Schedule)
+                .WithMany(a => a.Appointment);
+
+            //Notification
+            modelBuilder.Entity<Notification>()
+                .HasOne(a => a.Appointment)
+                .WithMany(b => b.Notifications)
+                .IsRequired(false);
+            modelBuilder.Entity<Notification>()
+                .HasOne(a => a.PatientRequest)
+                .WithMany(b => b.Notifications)
+                .IsRequired(false);
+
+            //PatientRequest
+            modelBuilder.Entity<PatientRequest>()
+                .HasOne(ss => ss.Student)
+                .WithMany(b => b.PatientRequests)
+                .HasForeignKey(sp => sp.StudentId);
+            modelBuilder.Entity<PatientRequest>()
+                .HasMany(s => s.Notifications)
+                .WithOne(pr => pr.PatientRequest);
+
+            // Schedule Professor
+            modelBuilder.Entity<ScheduleProfessor>()
+                .HasKey(bc => new { bc.ScheduleId, bc.ProfessorId });
+            modelBuilder.Entity<ScheduleProfessor>()
+                .HasOne(sp => sp.Professor)
+                .WithMany(p => p.ScheduleProfessors)
+                .HasForeignKey(sp => sp.ProfessorId);
+            modelBuilder.Entity<ScheduleProfessor>()
+                .HasOne(sp => sp.Schedule)
+                .WithMany(p => p.ScheduleProfessors)
+                .HasForeignKey(sp => sp.ScheduleId);
+
+            modelBuilder.Entity<Appointment>()
+                .Property(e => e.Status)
+                .HasConversion<string>();
+
         }
     }
 }

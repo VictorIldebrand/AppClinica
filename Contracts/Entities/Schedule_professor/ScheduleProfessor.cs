@@ -1,10 +1,8 @@
-﻿using Contracts.Entities.Attributes;
-using System;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Contracts.Entities
-{
+namespace Contracts.Entities {
     [Table("schedule_professor")]
     public partial class ScheduleProfessor
     {
@@ -12,13 +10,23 @@ namespace Contracts.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         [Key]
         [Required]
-        public int id { get; set; }
+        public int Id { get; set; }
 
         [Column("id_schedule")]
-        public int idSchedule { get; set; }
+        [Required]
+        public int ScheduleId;
+
+        [Required]
+        public Schedule Schedule { get; set; }
 
         [Column("id_professor")]
-        public int idProfessor { get; set; }
+        [Required]
+        public int ProfessorId;
+
+        [Required]
+        public Professor Professor { get; set; }
+
+        //public PatientRequest PatientRequest { get; set; }
 
     }
 }

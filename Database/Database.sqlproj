@@ -58,12 +58,13 @@
     <Folder Include="Properties" />
     <Folder Include="dbo" />
     <Folder Include="dbo\Tables" />
+    <Folder Include="dbo\Scripts" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\student.sql" />
     <Build Include="dbo\Tables\professor.sql" />
     <Build Include="dbo\Tables\patient_order.sql" />
-    <Build Include="dbo\Tables\empolyee.sql" />
+    <Build Include="dbo\Tables\employee.sql" />
     <Build Include="dbo\Tables\patient_request.sql" />
     <Build Include="dbo\Tables\schedule_professor.sql" />
     <Build Include="dbo\Tables\appointment.sql" />
