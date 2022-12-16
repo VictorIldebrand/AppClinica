@@ -19,7 +19,7 @@ namespace Repository.Repositories {
 
         public async Task<Appointment> GetAppointmentById(int id)
         {
-            return await _context.Appointments.Where(a => a.Id == id).FirstOrDefaultAsync();
+            return await _context.Appointments.Where(a => a.Id == id).Include(s => s.Student).Include(p => p.Patient).Include(sh => sh.Schedule).Include(e => e.Employee).FirstOrDefaultAsync();
         }
 
         public async Task<Appointment> CreateAppointment(Appointment appointment)
@@ -59,7 +59,7 @@ namespace Repository.Repositories {
 
         public async Task<Appointment[]> GetAppointments()
         {
-            return await _context.Appointments.Where(a => a.Id > 0).ToArrayAsync();
+            return await _context.Appointments.Where(a => a.Id > 0).Include(s => s.Student).Include(p => p.Patient).Include(sh => sh.Schedule).Include(e => e.Employee).ToArrayAsync();
         }
 
         public async Task<bool> CheckIfAppointmentExistsById(int id)

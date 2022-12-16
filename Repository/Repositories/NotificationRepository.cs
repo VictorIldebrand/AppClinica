@@ -42,20 +42,20 @@ namespace Repository.Repositories {
         }
 
         public async Task<Notification> GetNotificationByPatientRequestId(int idPatientRequest) {
-            return await _context.Notifications.Where(u => u.PatientRequest.Id == idPatientRequest).FirstOrDefaultAsync();
+            return await _context.Notifications.Where(u => u.PatientRequest.Id == idPatientRequest).Include(a => a.Appointment).Include(pr => pr.PatientRequest).FirstOrDefaultAsync();
         }
 
         public async Task<Notification> GetNotificationByAppointmentId(int idAppointment) {
-            return await _context.Notifications.Where(u => u.Appointment.Id == idAppointment).FirstOrDefaultAsync();
+            return await _context.Notifications.Where(u => u.Appointment.Id == idAppointment).Include(a => a.Appointment).Include(pr => pr.PatientRequest).FirstOrDefaultAsync();
         }
 
         public async Task<Notification> GetNotificationById(int id)
         {
-            return await _context.Notifications.Where(u => u.Id == id).FirstOrDefaultAsync();
+            return await _context.Notifications.Where(u => u.Id == id).Include(a => a.Appointment).Include(pr => pr.PatientRequest).FirstOrDefaultAsync();
         }
 
         public async Task<Notification[]> GetAllNotification() {
-            return await _context.Notifications.Where(u => !u.Read).ToArrayAsync(); //0->Notifications NOT read yet 
+            return await _context.Notifications.Where(u => !u.Read).Include(a => a.Appointment).Include(pr => pr.PatientRequest).ToArrayAsync(); //0->Notifications NOT read yet 
         }
 
         public async Task<bool> CheckIfNotificationExistsById(int id)

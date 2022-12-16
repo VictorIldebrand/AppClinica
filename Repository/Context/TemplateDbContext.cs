@@ -66,10 +66,12 @@ namespace Repository.Context
             //Notification
             modelBuilder.Entity<Notification>()
                 .HasOne(a => a.Appointment)
-                .WithMany(b => b.Notifications);
+                .WithMany(b => b.Notifications)
+                .IsRequired(false);
             modelBuilder.Entity<Notification>()
                 .HasOne(a => a.PatientRequest)
-                .WithMany(b => b.Notifications);
+                .WithMany(b => b.Notifications)
+                .IsRequired(false);
 
             //PatientRequest
             modelBuilder.Entity<PatientRequest>()

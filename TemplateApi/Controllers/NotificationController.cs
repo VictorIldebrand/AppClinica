@@ -36,10 +36,10 @@ namespace TemplateApi.Controllers {
             return Ok(result);
         }
 
-        [HttpPut("update/{id}")]
+        [HttpPut("update")]
         [AllowAnonymous]
-        public async Task<IActionResult> UpdateNotification(NotificationDto notification, int id) {
-            var result = await _notificationService.UpdateNotification(notification, id);
+        public async Task<IActionResult> UpdateNotification(NotificationDto notification) {
+            var result = await _notificationService.UpdateNotification(notification);
             return Ok(result);
         }
 

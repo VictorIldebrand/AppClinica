@@ -15,10 +15,12 @@ namespace Contracts.Entities {
         [Column("id_appointment")]
         public int AppointmentId { get; set; }
 
-        public Appointment Appointment { get; set; }
+        public virtual Appointment Appointment { get; set; }
 
         [Column("id_patient_request")]
-        public PatientRequest PatientRequest { get; set; }
+        public int PatientRequestId { get; set; }
+
+        public virtual PatientRequest PatientRequest { get; set; }
 
         [Column("read")]
         [Required]

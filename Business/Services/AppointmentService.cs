@@ -13,6 +13,7 @@ using Contracts.RequestHandle;
 using Contracts.Utils;
 using Microsoft.Extensions.Configuration;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 namespace Business.Services {
     public class AppointmentService : IAppointmentService
@@ -153,13 +154,13 @@ namespace Business.Services {
             }
         }
 
-        public async Task<RequestResult<AppointmentDto[]>> GetAppointments() {
+        public async Task<RequestResult<IEnumerable<AppointmentMinDto>>> GetAppointments() {
             try {
                 var result = await _appointmentRepository.GetAppointments();
-                var dto = _Mapper.Map<AppointmentDto[]>(result);
-                return new RequestResult<AppointmentDto[]>(dto);
+                var dto = _Mapper.Map<IEnumerable<AppointmentMinDto>>(result);
+                return new RequestResult<IEnumerable<AppointmentMinDto>>(dto);
             } catch(Exception ex) {
-                return new RequestResult<AppointmentDto[]>(null, true, RequestAnswer.AppointmentNotFound.GetDescription());
+                return new RequestResult<IEnumerable<AppointmentMinDto>>(null, true, RequestAnswer.AppointmentNotFound.GetDescription());
             }
         }
     }
